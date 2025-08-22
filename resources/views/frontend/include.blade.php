@@ -87,7 +87,7 @@
                                                 <li><a class="dropdown-item" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
                                                 <li><a class="dropdown-item" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
                                                 <li><a class="dropdown-item" href="{{route('staffPage')}}">Staff Panel</a></li>
-                                                <li><a class="dropdown-item" href="{{route('comitteePage')}}">Managing Comittee</a></li>
+                                                <li><a class="dropdown-item" href="{{route('comitteePage')}}">Governing Body</a></li>
                                             </ul>
                                         </li>
                                         <li class="nav-item dropdown">
