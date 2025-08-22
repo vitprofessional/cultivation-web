@@ -64,9 +64,9 @@
                                                 <li><a class="dropdown-item" href="{{route('institutePage')}}">About Us</a></li>
                                                 <li><a class="dropdown-item" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
                                                 <li><a class="dropdown-item" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
-                                                <li><a class="dropdown-item" href="{{route('teacherPage')}}">Our Teacher</a></li>
+                                                <li><a class="dropdown-item" href="{{route('teacherPage')}}">Lecturer</a></li>
                                                 <li><a class="dropdown-item" href="{{route('staffPage')}}">Staff Corner</a></li>
-                                                <li><a class="dropdown-item" href="{{route('comitteePage')}}">Managing Comittee</a></li>
+                                                <li><a class="dropdown-item" href="{{route('comitteePage')}}">Governing Body</a></li>
                                             </ul>
                                         </li>
                                         <li class="nav-item dropdown">

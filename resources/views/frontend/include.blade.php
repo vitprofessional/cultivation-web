@@ -83,10 +83,10 @@
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="{{route('institutePage')}}">About Us</a></li>
                                                 <li><a class="dropdown-item" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
-                                                <li><a class="dropdown-item" href="{{route('student')}}">Our Student</a></li>
+                                                <li><a class="dropdown-item" href="{{route('student')}}">Student List</a></li>
                                                 <li><a class="dropdown-item" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
-                                                <li><a class="dropdown-item" href="{{route('teacherPage')}}">Our Teacher</a></li>
-                                                <li><a class="dropdown-item" href="{{route('staffPage')}}">Staff Corner</a></li>
+                                                <li><a class="dropdown-item" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
+                                                <li><a class="dropdown-item" href="{{route('staffPage')}}">Staff Panel</a></li>
                                                 <li><a class="dropdown-item" href="{{route('comitteePage')}}">Managing Comittee</a></li>
                                             </ul>
                                         </li>
