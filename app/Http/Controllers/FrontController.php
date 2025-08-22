@@ -76,5 +76,15 @@ class FrontController extends Controller
          $slider = HomeSlider::orderBy('ID','DESC')->limit(5)->get();
         return view('frontend.index',['Datakey'=>$home,'sliderData'=>$slider,'gallery'=>$photo,'config'=>$server]);
     }
+
+    public function visitor(Request $request) {
+        $today = now()->toDateString();
+
+        $todayVisitors = Visitor::where('visit_date', $today)->count();
+        $totalVisitors = Visitor::count();
+        $ip = $request->ip();
+
+        return view('visitor', compact('todayVisitors', 'totalVisitors', 'ip'));
+    }
     
 }

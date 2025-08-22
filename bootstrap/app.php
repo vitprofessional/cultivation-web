@@ -8,6 +8,7 @@ use App\Http\Middleware\SuperAdmin;
 use App\Http\Middleware\BasicAdmin;
 use App\Http\Middleware\DealerAdmin;
 use App\Http\Middleware\adminGuard;
+use App\Http\Middleware\TrackVisitors;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,6 +24,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'basicAdmin'    => BasicAdmin::class,
             'dealerAdmin'   => DealerAdmin::class,
             'adminGuard'    => adminGuard::class,
+        ]);
+        // run for all web routes
+        $middleware->web(append: [
+            TrackVisitors::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

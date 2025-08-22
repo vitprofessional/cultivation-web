@@ -22,7 +22,7 @@
         <div class="bg-success p-2 h5 mb-0"><i class="fa-solid fa-message-music"></i> National Song</div>
         <a href="#" class="list-group-item list-group-item-action">
             <audio controls="" style="width: 100%;" class="mt-3">
-                <source src="music/bd_national_anthem.mp3" type="audio/mpeg" />
+                <source src="{{ env('APP_URL') }}/public/music/bd_national_anthem.mp3" type="audio/mpeg" />
             </audio>
         </a>
     </div>
@@ -34,7 +34,5 @@
     </div>
     <div class="list-group rounded-0 my-4 small">
         <div class="bg-success p-2 h5 mb-0"><i class="fa-light fa-users"></i> Visitor Corner</div>
-        <a href="#" class="list-group-item list-group-item-action"> <span class="fw-bold">Today Visitor:</span> <span class="badge text-bg-success">35</span> </a>
-        <a href="#" class="list-group-item list-group-item-action"> <span class="fw-bold">Total Visitor:</span> <span class="badge text-bg-success">364567</span> </a>
-        <a href="#" class="list-group-item list-group-item-action"> <span class="fw-bold">Your IP Address:</span> <span class="badge text-bg-info">{{ request()->ip() }}</span> </a>
+        <x-visitor-corner />
     </div>
