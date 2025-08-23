@@ -12,6 +12,16 @@ Syllabus
         </div>
         <div class="row">
             <div class="col-md-12">
+                
+                @error('attachment')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                
+                
+                @error('avatar')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+
                 @if(Session::get('success'))
                   <div class="alert alert-success">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -97,7 +107,7 @@ Syllabus
                     </div>
                     <div class="tab-pane fade card rounded-0" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                         <div class="card-body">
-                            <form class="form row" method="POST" action="#" enctype="multipart/form-data">
+                            <form class="form row" method="POST" action="{{route('saveNeedyStdPanel')}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3">

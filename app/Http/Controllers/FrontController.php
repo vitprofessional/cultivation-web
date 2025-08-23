@@ -224,5 +224,95 @@ class FrontController extends Controller
     }
      //fontend end
 
+     
+
+    public function savePlacementCell(Request $requ){
+        if(empty($requ->itemId)):
+            $item   = new PlacementCell();
+        else:
+            $item   = PlacementCell::find($requ->itemId);
+        endif;
+
+        $item->fullName            = $requ->fullName;
+        $item->mobile              = $requ->mobile;
+        $item->email               = $requ->email;
+        $item->sessionYear         = $requ->sessionYear;
+        $item->rollNumber          = $requ->rollNumber;
+        $item->companyName         = $requ->companyName;
+        $item->joinDate            = $requ->joinDate;
+        $item->designation         = $requ->designation;
+        $item->jobDetails          = $requ->jobDetails;
+        if(!empty($requ->avatar)):
+            $validated = $requ->validate([
+                    'avatar' => 'required|mimes:pdf,jpeg,png,jpg,gif,webp,avif,|max:5120',
+                     // max 5 MB
+                ],[
+                    'avatar.mimes'  => 'Allowed formats: PDF, JPEG, PNG, JPG, GIF, WEBP, AVIF.',
+                    'avatar.max'    => 'Each file must be less than 5MB.'
+                ]);
+            $stdAvatar = $requ->file('avatar');
+            $newAvatar = rand().date('Ymd').'.'.$stdAvatar->getClientOriginalExtension();
+            $stdAvatar->move(public_path('upload/image/placementCell/'),$newAvatar);
+
+            $item->avatar = $newAvatar;
+        endif;
+        // $item->status        = $requ->status;
+
+        if($item->save()):
+            return back()->with('success','Item successfully saved');
+        else:
+            return back()->with('error','Item failed to save');
+        endif;
+    }
+    
+    public function saveNeedyStdPanel(Request $requ){
+        if(empty($requ->itemId)):
+            $item   = new needyStudentPanel();
+        else:
+            $item   = needyStudentPanel::find($requ->itemId);
+        endif;
+
+        $item->fullName            = $requ->fullName;
+        $item->mobile              = $requ->mobile;
+        $item->email               = $requ->email;
+        $item->sessionYear         = $requ->sessionYear;
+        $item->rollNumber          = $requ->rollNumber;
+        if(!empty($requ->avatar)):
+            $validated = $requ->validate([
+                    'avatar' => 'required|mimes:pdf,jpeg,png,jpg,gif,webp,avif,|max:5120',
+                     // max 5 MB
+                ],[
+                    'avatar.mimes'  => 'Allowed formats: PDF, JPEG, PNG, JPG, GIF, WEBP, AVIF.',
+                    'avatar.max'    => 'Each file must be less than 5MB.'
+                ]);
+            $stdAvatar = $requ->file('avatar');
+            $newAvatar = rand().date('Ymd').'.'.$stdAvatar->getClientOriginalExtension();
+            $stdAvatar->move(public_path('upload/image/neddyStudent/'),$newAvatar);
+
+            $item->avatar = $newAvatar;
+        endif;
+
+        if(!empty($requ->attachment)):
+            $validated = $requ->validate([
+                    'attachment' => 'required|mimes:pdf,jpeg,png,jpg,gif,webp,avif,|max:5120',
+                     // max 5 MB
+                ],[
+                    'attachment.mimes'  => 'Allowed formats: PDF, JPEG, PNG, JPG, GIF, WEBP, AVIF.',
+                    'attachment.max'    => 'Each file must be less than 5MB.'
+                ]);
+            $stdAttachment = $requ->file('attachment');
+            $newAttachment = rand().date('Ymd').'.'.$stdAttachment->getClientOriginalExtension();
+            $stdAttachment->move(public_path('upload/image/neddyStudent/'),$newAttachment);
+
+            $item->attachment = $newAttachment;
+        endif;
+        // $item->status        = $requ->status;
+
+        if($item->save()):
+            return back()->with('success','Item successfully saved');
+        else:
+            return back()->with('error','Item failed to save');
+        endif;
+    }
     
 }

@@ -124,14 +124,14 @@ Route::get('/contact-us',[
     'supportPage'
 ])->name('supportPage');
 
-Route::post('admin/placement/placementCell/save',[
-    PlacementCellController::class ,
+Route::post('placementCell/save',[
+    FrontController::class ,
     'savePlacementCell'
 ])->name('savePlacementCell');
 
 
-Route::post('admin/placement/needyStudentPanel/save',[
-    PlacementCellController::class ,
+Route::post('jobNeedyStudentPanel/save',[
+    FrontController::class ,
     'saveNeedyStdPanel'
 ])->name('saveNeedyStdPanel');
 
