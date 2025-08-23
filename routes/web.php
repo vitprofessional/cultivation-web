@@ -48,89 +48,89 @@ Route::get('/semister/plan',[
 
 //MarksheetController str
 Route::get('/internal/result',[
-    MarksheetController::class,
+    FrontController::class,
     'internalResult'
 ])->name('internalResult');
 
 Route::get('/individual/result',[
-    MarksheetController::class,
+    FrontController::class,
     'individualResult'
 ])->name('individualResult');
 //MarksheetController end
 
 //PlacementCellController str
 Route::get('/job/placement-cell',[
-    PlacementCellController::class,
+    FrontController::class,
     'placementCellView'
 ])->name('placementCellView');
 
 Route::get('/job/needy-student',[
-    PlacementCellController::class,
+    FrontController::class,
     'jobNeedyStudentView'
 ])->name('jobNeedyStudentView');
 //PlacementCellController end
 
 //GalleryController str
 Route::get('/video/gallary',[
-    GalleryController::class,
+    FrontController::class,
     'videoPage'
 ])->name('videoPage');
 
 Route::get('/image/gallary',[
-    GalleryController::class,
+    FrontController::class,
     'imagePage'
 ])->name('imagePage');
 //GalleryController end
 
 //InstituteController str
 Route::get('/about-us',[
-    InstituteController::class,
+    FrontController::class,
     'institutePage'
 ])->name('institutePage');
 
 Route::get('/principal-speech',[
-    InstituteController::class,
+    FrontController::class,
     'principalSpeechPage'
     ])->name('principalSpeechPage');
 
      Route::get('/student',[
-    InstituteController::class,
+    FrontController::class,
     'student'
     ])->name('student');
 
 Route::get('/exPrincipal',[
-    InstituteController::class,
+    FrontController::class,
     'exprincipalPage'
     ])->name('exprincipalPage');
 
 Route::get('/our-teacher',[
-    InstituteController::class,
+    FrontController::class,
     'teacherPage'
     ])->name('teacherPage');
 
 Route::get('/our-staff',[
-    InstituteController::class,
+    FrontController::class,
     'staffPage'
     ])->name('staffPage');
 
 Route::get('/our-comittee',[
-    InstituteController::class,
+    FrontController::class,
     'comitteePage'
     ])->name('comitteePage');
     
 
 Route::get('/contact-us',[
-    InstituteController::class,
+    FrontController::class,
     'supportPage'
 ])->name('supportPage');
 
-Route::post('/admin/placement/placementCell/save',[
+Route::post('admin/placement/placementCell/save',[
     PlacementCellController::class ,
     'savePlacementCell'
 ])->name('savePlacementCell');
 
 
-Route::post('/admin/placement/needyStudentPanel/save',[
+Route::post('admin/placement/needyStudentPanel/save',[
     PlacementCellController::class ,
     'saveNeedyStdPanel'
 ])->name('saveNeedyStdPanel');
