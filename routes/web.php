@@ -2,12 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontController;
-use App\Http\Controllers\AcademicController;
-use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\InstituteController;
-use App\Http\Controllers\MarksheetController;
-use App\Http\Controllers\NoticeController;
-use App\Http\Controllers\PlacementCellController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,22 +20,22 @@ Route::get('/',[
 ])->name('homePage');
 
 Route::get('/syllabus',[
-    AcademicController::class ,
+    FrontController::class ,
     'newSyllabus'
 ])->name('newSyllabus');
 
 Route::get('/class/schedule',[
-    AcademicController::class ,
+    FrontController::class ,
     'newClassSchedule'
 ])->name('newClassSchedule');
 
 Route::get('/exam/schedule',[
-    AcademicController::class,
+    FrontController::class,
     'newExamSchedule'
 ])->name('newExamSchedule');
 
 Route::get('/semister/plan',[
-    AcademicController::class,
+    FrontController::class,
     'newSemister'
 ])->name('newSemister');
 //academic end

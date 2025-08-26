@@ -35,9 +35,9 @@ Syllabus
                                 <tr>
                                     <td>{{$data->title}}</td>
                                     @php 
-                                        $itemClass      = \App\Models\classManage::find($data->assignClass);
-                                        $itemDepartment = \App\Models\Department::find($data->assignDepartment);
-                                        $itemSession    = \App\Models\sessionManage::find($data->assignSession);
+                                        $itemClass      =\App\Models\classManage::find($data->assignClass);
+                                        $itemDepartment =\App\Models\Department::find($data->assignDepartment);
+                                        $itemSession    =\App\Models\sessionManage::find($data->assignSession);
                                     @endphp
                                     <td>{{ $itemClass->className }}</td>
                                     <td>{{ $itemDepartment->departmentName }}</td>
