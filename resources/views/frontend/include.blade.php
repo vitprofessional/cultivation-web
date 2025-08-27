@@ -63,7 +63,14 @@
             <div class="container">
                 <div class="row align-items-center p-2">
                     <div class="col-12 col-md-2 text-center">
+                        @php
+                        $config =\App\Models\ServerConfig::first();
+                        @endphp
+                        @if(($config))
+                        <img class="w-100" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="SBC" />
+                        @else
                         <img class="w-100" src="{{ asset('/public/') }}/img/sbcWhiteLogo.png" alt="SBC" />
+                        @endif
                     </div>
                     <div class="col-12 col-md-8">
                         <nav class="navbar bg-success navbar-expand-lg navbar-light" data-bs-theme="dark">
