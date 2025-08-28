@@ -1,16 +1,22 @@
-
+    @php
+        $config = \App\Models\ServerConfig::first();
+    @endphp
     <div class="list-group rounded-0 border border-success">
         <div class="p-2 bg-success h5"><i class="fa-regular fa-user-tie"></i> Principal</div>
         <div class="p-2 text-center">
-            @if(!empty($Datakey->principalImg)) 
-            <img class="w-75" alt="Principal" src="{{ env('APP_URL') }}/public/upload/image/webHomepage/{{ $Datakey->principalImg }}" />
+            @if($config)
+                @if(!empty($config->avatar)) 
+                <img class="w-75" alt="Principal" src="{{ env('APP_URL') }}/public/upload/image/webHomepage/{{ $config->avatar }}" />
+                @else
+                <img class="w-75" alt="Principal" src="{{ env('APP_URL') }}/public/img/principal.jpg" />
+                @endif
+                <p class="fw-bold my-0">{{$config->principalName}}</p>
+                <a class="btn btn-success btn-sm" href="{{ route('principalSpeechPage') }}"> Details </a>
             @else
-            <img class="w-75" alt="Principal" src="{{ env('APP_URL') }}/public/img/principal.jpg" />
+                <img class="w-75" alt="Principal" src="{{ env('APP_URL') }}/public/img/principal.jpg" />
+                <p class="fw-bold my-0">Engr. Abu Yousuf</p>
+                <a class="btn btn-success btn-sm" href="#"> Details </a>
             @endif
-
-            <p class="fw-bold my-0">{{$Datakey->principalName}}</p>
-            <p class="fw-bold my-0 small">{{$Datakey->principalDetail}}</p>
-            <a href="#"> Details </a>
         </div>
     </div>
     <div class="list-group rounded-0 my-4 small">

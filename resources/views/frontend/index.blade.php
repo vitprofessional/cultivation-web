@@ -3,8 +3,6 @@
 Enter to learn & Leave to serve
 @endsection
 
-@if(!empty($Datakey)) 
-
 @section('sliderninfo')
     @include('frontend.sliderinfo')
 @endsection
@@ -25,17 +23,28 @@ Enter to learn & Leave to serve
             <div class="col-11 latest-news np-1">
                 <marquee>
                     <ul>
+                        @if($noticeBoard->count()>0)
+                        @foreach($noticeBoard as $notice)
                         <li>
-                            <a href="#"><i class="fa-thin fa-hand-point-right"></i>{{$Datakey->notice}} </a>
+                            <a href="#"><i class="fa-thin fa-hand-point-right"></i> $notice->headline</a>
                         </li>
+                        @endforeach
+                        @else
+                        <li>
+                            <a href="#"><i class="fa-thin fa-hand-point-right"></i> Lorem ipsom text notice here. </a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa-thin fa-hand-point-right"></i> Another lorem ipsom text notice here. </a>
+                        </li>
+                        @endif
                     </ul>
                 </marquee>
             </div>
         </div>
-
+        @if($insData)
         <div class="col-12 mx-auto my-2">
-            <h2>Welcome to {{$Datakey->wcMsgHadeline}}</h2>
-            <p class="text-justify">{{$Datakey->wclMsgDescription}} <a href="#">Readmore</a></p>
+            <h2>{{$insData->insHeadline}}</h2>
+            <p class="text-justify">{{ \Illuminate\Support\Str::limit($insData->insDetails, 100, '...') }} <a href="#">Readmore</a></p>
         </div>
         <!-- mission & vission -->
         <div class="col-12 mx-auto my-4">
@@ -46,19 +55,50 @@ Enter to learn & Leave to serve
                 <div class="card-body">
                     <figure class="text-center">
                         <blockquote class="blockquote">
-                            <p class="h4">{{$Datakey->missionDescription}}</p>
+                            <p class="h4">{{$insData->mission}}</p>
                         </blockquote>
-                        <figcaption class="blockquote-footer">{{$Datakey->writerName}}
-                        </figcaption>
                     </figure>
-                    <div class="alert alert-success">{{$Datakey->mainGoal}}</div>
+                    <div class="alert alert-success">{{$insData->vision}}</div>
                 </div>
             </div>
         </div>
+        @else
+        <div class="col-12 mx-auto my-2">
+            <h2>Welcome to Jahanara-Ayub Academy</h2>
+            <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing..... <a href="#">Readmore</a></p>
+        </div>
+        <!-- mission & vission -->
+        <div class="col-12 mx-auto my-4">
+            <div class="card rounded-0">
+                <div class="card-header rounded-0 bg-success text-white h5">
+                    Mission & Vission
+                </div>
+                <div class="card-body">
+                    <figure class="text-center">
+                        <blockquote class="blockquote">
+                            <p class="h4">when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                        </blockquote>
+                    </figure>
+                    <div class="alert alert-success">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+                </div>
+            </div>
+        </div>
+        @endif
 
         <!-- Notice board start here -->
         <div class="col-12 mx-auto mb-4">
             <h2>Leatest Notice</h2>
+            @if($noticeBoard->count()>0)
+            @foreach($noticeBoard as $ntc)
+            <div class="bg-success p-2 notice-box my-2">
+                <div class="row align-items-center">
+                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> {{ $ntc->created_at->format('d M Y') }}</div>
+                    <div class="col-8 mx-auto">{{ $ntc->headline }}</div>
+                    <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
+                </div>
+            </div>
+            @endforeach
+            @else
             <div class="bg-success p-2 notice-box my-2">
                 <div class="row align-items-center">
                     <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th September</div>
@@ -94,6 +134,7 @@ Enter to learn & Leave to serve
                     <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
                 </div>
             </div>
+            @endif
             <a href="#" class="btn btn-primary rounded-0">All Notice</a>
         </div>
         <div class="row g-0">
@@ -422,4 +463,3 @@ Enter to learn & Leave to serve
     </div>
 </div>
 @endsection
-@endif

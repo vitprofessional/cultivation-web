@@ -1,3 +1,6 @@
+@php
+    $insInfo = \App\Models\InstituteDetails::first();
+@endphp
 <div class="row">
     <div class="col-12">
         <div id="carouselExampleCaptions" class="carousel slide">
@@ -61,6 +64,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mx-auto my-4">
+                @if($insInfo)
                 <div class="row align-items-center">
                     <div class="col-md-3 col-12">
                         <div class="bg-success text-white details-box p-3">
@@ -69,7 +73,7 @@
                             </div>
                             <div class="details-box-content">
                                 <h3>Founded</h3>
-                                <p>{{$Datakey->founded}}</p>
+                                <p>{{$insInfo->establishDate}}</p>
                             </div>
                         </div>
                     </div>
@@ -80,7 +84,7 @@
                             </div>
                             <div class="details-box-content">
                                 <h3>Green Campus</h3>
-                                <p>{{$Datakey->area}}</p>
+                                <p>{{$insInfo->landSize}}</p>
                             </div>
                         </div>
                     </div>
@@ -91,7 +95,7 @@
                             </div>
                             <div class="details-box-content">
                                 <h3>Teacher & Staff</h3>
-                                <p>{{$Datakey->teacherTotal}}</p>
+                                <p>{{$insInfo->totalTeacher}}</p>
                             </div>
                         </div>
                     </div>
@@ -102,11 +106,59 @@
                             </div>
                             <div class="details-box-content">
                                 <h3>Students</h3>
-                                <p>{{$Datakey->studentTotal}}</p>
+                                <p>{{$insInfo->totalStudent}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
+                @else
+                <div class="row align-items-center">
+                    <div class="col-md-3 col-12">
+                        <div class="bg-success text-white details-box p-3">
+                            <div class="details-box-icon">
+                                <i class="fa-duotone fa-school-flag"></i>
+                            </div>
+                            <div class="details-box-content">
+                                <h3>Founded</h3>
+                                <p>2015</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="bg-success text-white details-box p-3">
+                            <div class="details-box-icon">
+                                <i class="fa-duotone fa-book-open-reader"></i>
+                            </div>
+                            <div class="details-box-content">
+                                <h3>Green Campus</h3>
+                                <p>26 Acres</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="bg-success text-white details-box p-3">
+                            <div class="details-box-icon">
+                                <i class="fa-duotone fa-screen-users"></i>
+                            </div>
+                            <div class="details-box-content">
+                                <h3>Teacher & Staff</h3>
+                                <p>25+</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="bg-success text-white details-box p-3">
+                            <div class="details-box-icon">
+                                <i class="fa-light fa-users-viewfinder"></i>
+                            </div>
+                            <div class="details-box-content">
+                                <h3>Students</h3>
+                                <p>1500+</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </div>
