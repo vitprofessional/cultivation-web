@@ -3,7 +3,15 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Sonar Bangla College | @yield('fronttitle')</title>
+        @php
+        $config =App\Models\ServerConfig::first()
+        @endphp
+        <title>
+        @if($config)
+        {{$config->institueName}} | @yield('fronttitle')
+        @else 
+        Jahanara Ayiub Acadimic | @yield('fronttitle')
+        @endif  </title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
         <link href="{{ asset('/public/') }}/assets/css/custom.css" rel="stylesheet" />
         <link href="{{ asset('/public/') }}/assets/css/style.css" rel="stylesheet" />
@@ -63,13 +71,10 @@
             <div class="container">
                 <div class="row align-items-center p-2">
                     <div class="col-12 col-md-2 text-center">
-                        @php
-                        $config =\App\Models\ServerConfig::first();
-                        @endphp
                         @if(($config))
                         <img class="w-100" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="SBC" />
                         @else
-                        <img class="w-100" src="{{ asset('/public/') }}/img/sbcWhiteLogo.png" alt="SBC" />
+                        <img class="w-100" src="{{ asset('/public/') }}/img/sbcWhiteLogo.png" alt="Jahanar Ayiub Academic" />
                         @endif
                     </div>
                     <div class="col-12 col-md-8">
