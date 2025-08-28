@@ -77,7 +77,7 @@
                         <img class="w-100" src="{{ asset('/public/') }}/img/sbcWhiteLogo.png" alt="Jahanar Ayiub Academic" />
                         @endif
                     </div>
-                    <div class="col-12 col-md-8">
+                    <div class="col-12 col-md-10">
                         <nav class="navbar bg-success navbar-expand-lg navbar-light" data-bs-theme="dark">
                             <div class="container-fluid">
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
