@@ -70,9 +70,9 @@
         <div class="menubar">
             <div class="container">
                 <div class="row align-items-center p-2">
-                    <div class="col-12 col-md-2 text-center">
+                    <div class="col-12 col-md-2 mx-auto text-center">
                         @if(($config))
-                        <img class="w-50" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="SBC" />
+                        <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="SBC" />
                         @else
                         <img class="w-100" src="{{ asset('/public/') }}/img/sbcWhiteLogo.png" alt="Jahanar Ayiub Academic" />
                         @endif
