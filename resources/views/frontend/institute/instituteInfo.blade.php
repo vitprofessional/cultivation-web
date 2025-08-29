@@ -36,7 +36,7 @@ Syllabus
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center con-title mt-4">
-                <h1 class="wow fadeInLeft animated my-4" data-wow-delay=".60s">Let's have a look abount <span>SBC</span></h1>
+                <h1 class="wow fadeInLeft animated my-4" data-wow-delay=".60s">Let's have a look abount <span>Us</span></h1>
            </div>
         </div>
         @if($data)
@@ -48,7 +48,7 @@ Syllabus
 
         <div class="row align-items-center mt-0">
              <div class="col-md-8 col-12 mx-auto">
-                <img  class="w-100 wow fadeIn animated" data-wow-delay="1s" src="{{ asset('/public/upload/image/cultivation/').'/'.$data->heroImg}}">
+                <img  class="w-100 wow fadeIn animated" data-wow-delay="1s" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $data->heroImg}}">
            </div>
              <div class="col-md-10 col-12 mx-auto">
                 <h4 class="mt-4">About Us</h4>
