@@ -1,7 +1,10 @@
 @extends('frontend.include')
 @section('fronttitle')
-Syllabus
+About Us
 @endsection
+@php
+$config =App\Models\ServerConfig::first()
+@endphp
 @section('frontcontent')
 <style>
     .hedingAbout{
@@ -36,7 +39,7 @@ Syllabus
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center con-title mt-4">
-                <h1 class="wow fadeInLeft animated my-4" data-wow-delay=".60s">Let's have a look abount <span>Us</span></h1>
+                <h1 class="wow fadeInLeft animated my-4" data-wow-delay=".60s">Let's have a look about <span>@if(!empty($config->instituteName)){{ $config->instituteName }}@else jahanaraayubacademy @endif</span></h1>
            </div>
         </div>
         @if($data)
@@ -48,7 +51,7 @@ Syllabus
 
         <div class="row align-items-center mt-0">
              <div class="col-md-8 col-12 mx-auto">
-                <img  class="w-100 wow fadeIn animated" data-wow-delay="1s" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $data->heroImg}}">
+                <img  class="w-75 wow fadeIn animated" data-wow-delay="1s" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $data->heroImg}}">
            </div>
              <div class="col-md-10 col-12 mx-auto">
                 <h4 class="mt-4">About Us</h4>
