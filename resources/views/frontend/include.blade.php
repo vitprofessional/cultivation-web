@@ -76,18 +76,18 @@
                 display:inline-flex; 
                 align-items:center; 
                 justify-content:center;
-                font-size: 2.4rem;
+                font-size: 1.8rem;
                 color: #fff;
             }
             .call-text{ 
+                font-size:0.8rem; 
                 line-height:1.25; 
             }
             .call-label{
-                font-size:1rem; 
+                font-size:0.6rem; 
                 letter-spacing:.04em;;
             }
             .call-phone{
-                font-size:16px; 
                 font-weight:700; 
                 color:#fff; 
                 text-decoration:none;
@@ -99,6 +99,11 @@
             @media (max-width:480px){ 
                 .call-phone{ font-size:15px; } 
                 .call-label{ font-size:11px; } 
+            }
+
+            .nav-link {
+                font-size: 1.1rem;
+                font-weight: 550 !important;
             }
         </style>
     </head>
