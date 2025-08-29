@@ -64,6 +64,42 @@
                     height: 220px !important;
                 }
             }
+            
+            .call-box{
+                color: #fff;
+                display:flex; 
+                align-items:center; 
+                gap:10px;
+                font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            }
+            .call-icon{
+                display:inline-flex; 
+                align-items:center; 
+                justify-content:center;
+                font-size: 2.4rem;
+                color: #fff;
+            }
+            .call-text{ 
+                line-height:1.25; 
+            }
+            .call-label{
+                font-size:1rem; 
+                letter-spacing:.04em;;
+            }
+            .call-phone{
+                font-size:16px; 
+                font-weight:700; 
+                color:#fff; 
+                text-decoration:none;
+            }
+            .call-phone:hover{ 
+                text-decoration:underline; 
+            }
+        /* Optional: shrink nicely on small screens */
+            @media (max-width:480px){ 
+                .call-phone{ font-size:15px; } 
+                .call-label{ font-size:11px; } 
+            }
         </style>
     </head>
     <body>
@@ -71,83 +107,140 @@
             <div class="container">
                 <div class="row align-items-center p-2">
                     <div class="col-12 col-md-2 mx-auto text-center">
-                        @if(($config))
-                        <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="SBC" />
+                        @if(!empty($config->logo))
+                        <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
                         @else
-                        <img class="w-100" src="{{ asset('/public/') }}/img/sbcWhiteLogo.png" alt="Jahanar Ayiub Academic" />
+                        <img class="w-75" src="{{ asset('/public/') }}/logo.png" alt="Jahanar Ayiub Academic" />
                         @endif
                     </div>
                     <div class="col-12 col-md-10">
-                        <nav class="navbar bg-success navbar-expand-lg navbar-light" data-bs-theme="dark">
-                            <div class="container-fluid">
-                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                                    <ul class="navbar-nav text-white sbc">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="{{route('homePage')}}">Home</a>
-                                        </li>
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Institute
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{route('institutePage')}}">About Us</a></li>
-                                                <li><a class="dropdown-item" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
-                                                <li><a class="dropdown-item" href="{{route('student')}}">Student List</a></li>
-                                                <li><a class="dropdown-item" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
-                                                <li><a class="dropdown-item" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
-                                                <li><a class="dropdown-item" href="{{route('staffPage')}}">Staff Panel</a></li>
-                                                <li><a class="dropdown-item" href="{{route('comitteePage')}}">Governing Body</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Academic
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{route('newSyllabus')}}">Syllabus</a></li>
-                                                <li><a class="dropdown-item" href="{{route('newClassSchedule')}}">Class Routine</a></li>
-                                                <li><a class="dropdown-item" href="{{route('newExamSchedule')}}">Exam Routine</a></li>
-                                                <li><a class="dropdown-item" href="{{route('newSemister')}}">Semister Plans</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Result Archive
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{route('internalResult')}}">Internal Result</a></li>
-                                                <li><a class="dropdown-item" href="{{route('individualResult')}}">Individual Result</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Job Placement
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{route('placementCellView')}}">Placement Cell</a></li>
-                                                <li><a class="dropdown-item" href="{{route('jobNeedyStudentView')}}">Job Needy Student</a></li>
-                                                <li><a class="dropdown-item" href="https://bdjobs.com/">Job Circular</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Gallery
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{route('imagePage')}}">Photo Gallery</a></li>
-                                                <li><a class="dropdown-item" href="{{route('videoPage')}}">Video Gallery</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{route('supportPage')}}">Support</a>
-                                        </li>
-                                    </ul>
+                        <div class="row mb-2">
+                            <div class="col-4 mx-auto">
+                                <!-- CALL BOX -->
+                                <div class="call-box">
+                                    <span class="call-icon" aria-hidden="true">
+                                        <i class="fa-regular fa-headset"></i>
+                                    </span>
+
+                                    <div class="call-text">
+                                        <div class="call-label fw-bold text-uppercase">CALL US FOR MORE DETAILS</div>
+                                        @if(!empty($config->officeMobile))
+                                            <span>{{ $config->officeMobile }}</span>
+                                        @else
+                                            <span>+(012) 345 6789</span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </nav>
+                            <div class="col-4 mx-auto">
+                                <!-- CALL BOX -->
+                                <div class="call-box">
+                                    <span class="call-icon" aria-hidden="true">
+                                        <i class="fa-regular fa-envelopes"></i>
+                                    </span>
+
+                                    <div class="call-text">
+                                        <div class="call-label fw-bold text-uppercase">Let's connect with mail</div>
+                                        @if(!empty($config->officeEmail))
+                                            <span>{{ $config->officeEmail }}</span>
+                                        @else
+                                            <span>ja@gmail.com</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 mx-auto">
+                                <!-- CALL BOX -->
+                                <div class="call-box">
+                                    <span class="call-icon" aria-hidden="true">
+                                        <i class="fa-regular fa-location-crosshairs"></i>
+                                    </span>
+
+                                    <div class="call-text">
+                                        <div class="call-label fw-bold text-uppercase">Office Address</div>
+                                        @if(!empty($config->address))
+                                            <span>{{ $config->address }}</span>
+                                        @else
+                                            <span>North Shampur, Burichong, Cumilla</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 mx-auto">
+                                <nav class="navbar bg-success navbar-expand-lg navbar-light shadow" data-bs-theme="dark">
+                                    <div class="container-fluid">
+                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                            <span class="navbar-toggler-icon"></span>
+                                        </button>
+                                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                            <ul class="navbar-nav text-white sbc">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" aria-current="page" href="{{route('homePage')}}">Home</a>
+                                                </li>
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Institute
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="{{route('institutePage')}}">About Us</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('student')}}">Student List</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('staffPage')}}">Staff Panel</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('comitteePage')}}">Governing Body</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Academic
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="{{route('newSyllabus')}}">Syllabus</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('newClassSchedule')}}">Class Routine</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('newExamSchedule')}}">Exam Routine</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('newSemister')}}">Semister Plans</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Result Archive
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="{{route('internalResult')}}">Internal Result</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('individualResult')}}">Individual Result</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Job Placement
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="{{route('placementCellView')}}">Placement Cell</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('jobNeedyStudentView')}}">Job Needy Student</a></li>
+                                                        <li><a class="dropdown-item" href="https://bdjobs.com/">Job Circular</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Gallery
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="{{route('imagePage')}}">Photo Gallery</a></li>
+                                                        <li><a class="dropdown-item" href="{{route('videoPage')}}">Video Gallery</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{{route('supportPage')}}">Support</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -163,11 +256,11 @@
             <div class="row g-0">
                 <div class="col-12 col-md-5 mx-auto">
                     <h3>Contact Details</h3>
-                    <p><i class="fa-solid fa-phone-office"></i> {{$config->officeMobile}}</p>
-                    <p><i class="fa-solid fa-buildings"></i> {{$config->address}}</p>
-                    <p><i class="fa-solid fa-envelopes"></i> <a class="text-muted" style="text-decoration:none" href="mailto:{{ $config->officeEmail }}">{{$config->officeEmail}}</a></p>
+                    <p><i class="fa-solid fa-phone-office"></i>@if(!empty($config->officeMobile)) {{$config->officeMobile}} @else 01836994770 @endif</p>
+                    <p><i class="fa-solid fa-buildings"></i> @if(!empty($config->address)) {{$config->address}} @else North Shampur, Burichong, Cumilla. @endif</p>
+                    <p><i class="fa-solid fa-envelopes"></i> <a class="text-muted" style="text-decoration:none" href="mailto:@if(!empty($config->officeEmail)) {{ $config->officeEmail }} @else cultivation@virtualitprofessional.com @endif">@if(!empty($config)) {{$config->officeEmail}} @else cultivation@virtualitprofessional.com @endif</a></p>
                     <p>
-                        <i class="fa-brands fa-square-facebook"></i> <a class="text-muted" style="text-decoration:none" target="_blank" href="{{ $config->facebookPage }}">{{$config->facebookPage}}</a>
+                        <i class="fa-brands fa-square-facebook"></i> <a class="text-muted" style="text-decoration:none" target="_blank" href="{{ $config->facebookPage }}">@if(!empty($config->facebookPage)){{$config->facebookPage}} @else <a class="text-muted" style="text-decoration:none" href="https://www.facebook.com/profile.php?id=61572769304729">Cultivation-The Education Manager</a> @endif</a>
                     </p>
                 </div>
                 <div class="col-12 col-md-5 mx-auto">
@@ -203,12 +296,12 @@
             <div class="row g-0">
                 <div class="col-12 col-md-5 mx-auto">
                     <h3>Contact Details</h3>
-                    <p><i class="fa-solid fa-link"></i> www.sbccumilla.edu.bd</p>
+                    <p><i class="fa-solid fa-link"></i> www.jahanaraayubacademy.edu.bd</p>
                     <p><i class="fa-solid fa-phone-office"></i> 0123 4567 890</p>
-                    <p><i class="fa-solid fa-envelopes"></i> sbccumilla@gmail.com</p>
+                    <p><i class="fa-solid fa-envelopes"></i> ja@gmail.com</p>
                     <p><i class="fa-brands fa-square-whatsapp"></i> 0123 4567 890</p>
-                    <p><i class="fa-brands fa-square-facebook"></i> Sonar Bangla College</p>
-                    <p><i class="fa-solid fa-buildings"></i> Poyat, Gobindapur, Vorasar, Burichong, Cumilla</p>
+                    <p><i class="fa-brands fa-square-facebook"></i> Jahanara Ayub Academy</p>
+                    <p><i class="fa-solid fa-buildings"></i> Northshampur, Pirjatrapur, Burichong, Cumilla</p>
                 </div>
                 <div class="col-12 col-md-5 mx-auto">
                     <h3>Google Map</h3>
