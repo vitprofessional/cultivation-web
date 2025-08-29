@@ -13,9 +13,9 @@
                 <p class="fw-bold my-0">{{$config->principalName}}</p>
                 <a class="btn btn-success btn-sm" href="{{ route('principalSpeechPage') }}"> Details </a>
             @else
-                <img class="w-75" alt="Principal" src="{{ env('APP_URL') }}/public/img/principal.jpg" />
-                <p class="fw-bold my-0">Engr. Abu Yousuf</p>
-                <a class="btn btn-success btn-sm" href="#"> Details </a>
+                <img class="w-75 img-thumbnail shadow" alt="Principal" src="{{ env('APP_URL') }}/public/avatar.png" />
+                <p class="fw-bold my-2">Engr. Abu Yousuf</p>
+                <a class="btn btn-success btn-sm mb-4" href="#"> Details </a>
             @endif
         </div>
     </div>
