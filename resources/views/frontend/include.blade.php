@@ -7,7 +7,7 @@
         $config =App\Models\ServerConfig::first()
         @endphp
         <title>
-        @if($config)
+        @if($config->institueName)
         {{$config->institueName}} | @yield('fronttitle')
         @else 
         Jahanara Ayiub Acadimic | @yield('fronttitle')
@@ -232,8 +232,8 @@
                                             </span>
                                             <div class="call-text">
                                                 <div class="call-label fw-bold text-uppercase">
-                                                    @if(!empty($config->instituteName))
-                                                        <span>{{ $config->instituteName }}</span>
+                                                    @if(!empty($config->institueName))
+                                                        <span>{{ $config->institueName }}</span>
                                                     @else
                                                         <span>Jahanara Ayub Academy</span>
                                                     @endif
