@@ -108,6 +108,10 @@
                 font-size: 1.1rem;
                 font-weight: 550 !important;
             }
+
+            .w-90 {
+                width: 90% !important;
+            }
         </style>
     </head>
     <body>
@@ -207,7 +211,7 @@
                                 </div>
                             </nav>
                             <!-- Offcanvas Side Menu -->
-                            <div class="offcanvas offcanvas-start w-75 bg-success row" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+                            <div class="offcanvas offcanvas-start w-90 bg-success row" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
                                 <div class="col-6 col-md-2 mx-auto text-center">
                                     @if(!empty($config->logo))
                                     <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
@@ -474,9 +478,9 @@
             <div class="p-2">
                 <div class="row">
                     <div class="col-md-6 col-12">
-                        <p><span class="fw-bold">Planning and Implementation:</span> Principal   ({{$config->institueName}})</p>
+                        <p><span class="fw-bold text-center text-md-start">Planning and Implementation:</span> Principal   ({{$config->institueName}})</p>
                     </div>
-                    <div class="col-md-6 col-12 text-end">
+                    <div class="col-md-6 col-12 text-center text-md-end">
                         <p><span class="fw-bold">Powered By:</span> Cultivation(Version 0.0.5) by Virtual IT Professional</p>
                     </div>
                     <div class="col-12 text-center">
