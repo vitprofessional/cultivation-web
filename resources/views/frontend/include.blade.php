@@ -443,7 +443,7 @@
             <div class="row g-0">
                 <div class="col-12 col-md-3 mx-auto">
                     <h3>Contact Details</h3>
-                    <p><i class="fa-solid fa-link"></i> {{  env('APP_URL') }}</p>
+                    <p><i class="fa-solid fa-link"></i> {{  url('/') }}</p>
                     <p><i class="fa-solid fa-phone-office"></i>@if(!empty($config->officeMobile)) {{$config->officeMobile}} @else 01836994770 @endif</p>
                     <p><i class="fa-solid fa-buildings"></i> @if(!empty($config->address)) {{$config->address}} @else North Shampur, Burichong, Cumilla. @endif</p>
                     <p><i class="fa-solid fa-envelopes"></i> <a class="text-muted" style="text-decoration:none" href="mailto:@if(!empty($config->officeEmail)) {{ $config->officeEmail }} @else cultivation@virtualitprofessional.com @endif">@if(!empty($config)) {{$config->officeEmail}} @else cultivation@virtualitprofessional.com @endif</a></p>
