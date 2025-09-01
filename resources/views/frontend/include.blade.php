@@ -205,48 +205,47 @@
                                 <div class="container-fluid">
                                     <!-- Mobile Menu Button -->
                                     <button class="btn btn-success d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
-                                    <i class="fa fa-bars"></i>
+                                        <i class="fa fa-bars"></i>
                                     </button>
                                     <i class="fa-solid fa-arrow-turn-left"></i>
                                 </div>
                             </nav>
                             <!-- Offcanvas Side Menu -->
-                            <div class="offcanvas offcanvas-start w-90 bg-success row" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
-                                <div class="col-6 col-md-2 mx-auto text-center">
-                                    @if(!empty($config->logo))
-                                    <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
-                                    @else
-                                    <img class="w-75" src="{{ asset('/public/') }}/logo.png" alt="Jahanar Ayiub Academic" />
-                                    @endif
-                                </div>
-                                <div class="col-12 mx-auto text-small">
-                                    <!-- CALL BOX -->
-                                    <div class="call-box">
-                                        <span class="call-icon" aria-hidden="true">
-                                            <i class="fa-regular fa-location-crosshairs"></i>
-                                        </span>
-
-                                        <div class="call-text">
-                                            <div class="call-label fw-bold text-uppercase">
-                                                @if(!empty($config->institueName))
-                                                <span>{{ $config->institueName }}</span>
-                                                @else
-                                                    <span>Jahanara Ayub Academy</span>
-                                                @endif
-                                            </div>
-                                            @if(!empty($config->address))
-                                                <span>{{ $config->address }}</span>
-                                            @else
-                                                <span>North Shampur, Burichong, Cumilla</span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="offcanvas offcanvas-start w-75 bg-success" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
                                 <div class="offcanvas-header">
                                     <h5 class="offcanvas-title" id="mobileMenuLabel">Menu</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                 </div>
                                 <div class="offcanvas-body">
+                                    <div class="text-center mb-3">
+                                        @if(!empty($config->logo))
+                                            <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
+                                        @else
+                                            <img class="w-75" src="{{ asset('/public/') }}/logo.png" alt="Jahanar Ayiub Academic" />
+                                        @endif
+                                    </div>
+                                    <div class="text-small mb-3">
+                                        <!-- CALL BOX -->
+                                        <div class="call-box">
+                                            <span class="call-icon" aria-hidden="true">
+                                                <i class="fa-solid fa-location-crosshairs"></i>
+                                            </span>
+                                            <div class="call-text">
+                                                <div class="call-label fw-bold text-uppercase">
+                                                    @if(!empty($config->instituteName))
+                                                        <span>{{ $config->instituteName }}</span>
+                                                    @else
+                                                        <span>Jahanara Ayub Academy</span>
+                                                    @endif
+                                                </div>
+                                                @if(!empty($config->address))
+                                                    <span>{{ $config->address }}</span>
+                                                @else
+                                                    <span>North Shampur, Burichong, Cumilla</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
                                     <ul class="navbar-nav">
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{route('homePage')}}">Home</a>
@@ -254,52 +253,31 @@
                                         <!-- Institute submenu -->
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="collapse" href="#mobileInstituteMenu" role="button" aria-expanded="false" aria-controls="mobileInstituteMenu">
-                                            Institute <i class="fa fa-chevron-down float-end"></i>
+                                                Institute <i class="fa fa-chevron-down float-end"></i>
                                             </a>
                                             <div class="collapse" id="mobileInstituteMenu">
                                                 <ul class="list-unstyled ps-3">
-                                                    <li><a class="nav-link" href="{{route('institutePage')}}">About Us</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('principalSpeechPage')}}">Principal Speech</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('student')}}">Student List</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('exprincipalPage')}}">EX-Principals</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('teacherPage')}}">Lecturer Corner</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('staffPage')}}">Staff Panel</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('comitteePage')}}">Governing Body</a>
-                                                    </li>
+                                                    <li><a class="nav-link" href="{{route('institutePage')}}">About Us</a></li>
+                                                    <li><a class="nav-link" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
+                                                    <li><a class="nav-link" href="{{route('student')}}">Student List</a></li>
+                                                    <li><a class="nav-link" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
+                                                    <li><a class="nav-link" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
+                                                    <li><a class="nav-link" href="{{route('staffPage')}}">Staff Panel</a></li>
+                                                    <li><a class="nav-link" href="{{route('comitteePage')}}">Governing Body</a></li>
                                                 </ul>
                                             </div>
                                         </li>
                                         <!-- Academic submenu -->
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="collapse" href="#mobileAcademicMenu" role="button" aria-expanded="false" aria-controls="mobileAcademicMenu">
-                                            Academic <i class="fa fa-chevron-down float-end"></i>
+                                                Academic <i class="fa fa-chevron-down float-end"></i>
                                             </a>
                                             <div class="collapse" id="mobileAcademicMenu">
                                                 <ul class="list-unstyled ps-3">
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('newSyllabus')}}">Syllabus</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('newClassSchedule')}}">Class Routine</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('newExamSchedule')}}">Exam Routine</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('newSemister')}}">Semister Plans</a>
-                                                    </li>
+                                                    <li><a class="nav-link" href="{{route('newSyllabus')}}">Syllabus</a></li>
+                                                    <li><a class="nav-link" href="{{route('newClassSchedule')}}">Class Routine</a></li>
+                                                    <li><a class="nav-link" href="{{route('newExamSchedule')}}">Exam Routine</a></li>
+                                                    <li><a class="nav-link" href="{{route('newSemister')}}">Semister Plans</a></li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -310,12 +288,8 @@
                                             </a>
                                             <div class="collapse" id="mobileResultMenu">
                                                 <ul class="list-unstyled ps-3">
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('internalResult')}}">Internal Result</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('individualResult')}}">Individual Result</a>
-                                                    </li>
+                                                    <li><a class="nav-link" href="{{route('internalResult')}}">Internal Result</a></li>
+                                                    <li><a class="nav-link" href="{{route('individualResult')}}">Individual Result</a></li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -326,29 +300,21 @@
                                             </a>
                                             <div class="collapse" id="mobileJobMenu">
                                                 <ul class="list-unstyled ps-3">
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('placementCellView')}}">Placement Cell</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('jobNeedyStudentView')}}">Job Needy Student</a></li>
-                                                    <li>
-                                                        <a class="nav-link" href="https://bdjobs.com/">Job Circular</a>
-                                                    </li>
+                                                    <li><a class="nav-link" href="{{route('placementCellView')}}">Placement Cell</a></li>
+                                                    <li><a class="nav-link" href="{{route('jobNeedyStudentView')}}">Job Needy Student</a></li>
+                                                    <li><a class="nav-link" href="https://bdjobs.com/">Job Circular</a></li>
                                                 </ul>
                                             </div>
                                         </li>
                                         <!-- Gallery submenu -->
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="collapse" href="#mobileGalleryMenu" role="button" aria-expanded="false" aria-controls="mobileGalleryMenu">
-                                            Gallery <i class="fa fa-chevron-down float-end"></i>
+                                                Gallery <i class="fa fa-chevron-down float-end"></i>
                                             </a>
                                             <div class="collapse" id="mobileGalleryMenu">
                                                 <ul class="list-unstyled ps-3">
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('imagePage')}}">Photo Gallery</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="nav-link" href="{{route('videoPage')}}">Video Gallery</a></li>
+                                                    <li><a class="nav-link" href="{{route('imagePage')}}">Photo Gallery</a></li>
+                                                    <li><a class="nav-link" href="{{route('videoPage')}}">Video Gallery</a></li>
                                                 </ul>
                                             </div>
                                         </li>
