@@ -7,7 +7,7 @@
         $config =App\Models\ServerConfig::first()
         @endphp
         <title>
-        @if($config->institueName)
+        @if(!empty($config->institueName))
         {{$config->institueName}} | @yield('fronttitle')
         @else 
         Jahanara Ayiub Acadimic | @yield('fronttitle')
