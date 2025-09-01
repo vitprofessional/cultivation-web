@@ -2,7 +2,7 @@
         $config = \App\Models\ServerConfig::first();
     @endphp
     <div class="row mb-3">
-        <div class="col-8 mx-auto">
+        <div class="col-10 mx-auto">
             <div class="list-group rounded-0 border border-success">
                 <div class="p-2 bg-success"><i class="fa-regular fa-user-graduate"></i> Principal</div>
                 <div class="text-center py-2">
@@ -25,7 +25,7 @@
             </div>
         </div>
         @if(!empty($config->eduMinName))
-        <div class="col-6">
+        <div class="col-6 mx-auto">
             <div class="list-group rounded-0 border border-success my-3">
                 <div class="p-2 bg-success h5"><i class="fa-regular fa-user-crown"></i> Education Minister</div>
                 <div class="p-2 text-center">
@@ -40,7 +40,7 @@
         </div>
         @endif
         @if(!empty($config->boardChairmanName))
-        <div class="col-6"> 
+        <div class="col-6 mx-auto"> 
             <div class="list-group rounded-0 border border-success my-3">
                 <div class="p-2 bg-success h5"><i class="fa-regular fa-user-tie"></i> Board Chairman</div>
                 <div class="p-2 text-center">
