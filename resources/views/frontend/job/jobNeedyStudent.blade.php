@@ -1,6 +1,6 @@
 @extends('frontend.include')
 @section('fronttitle')
-Syllabus
+Needy Students
 @endsection
 @section('frontcontent')
 <section>

@@ -1,6 +1,6 @@
 @extends('frontend.include')
 @section('fronttitle')
-Syllabus
+Internal Result
 @endsection
 @section('frontcontent')
  <section class="container mt-4">

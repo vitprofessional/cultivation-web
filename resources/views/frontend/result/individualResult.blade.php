@@ -1,6 +1,6 @@
 @extends('frontend.include')
 @section('fronttitle')
-Syllabus
+Individual Result
 @endsection
 @section('frontcontent')
 <section class="container mt-4">
@@ -13,7 +13,7 @@ Syllabus
         <div class="col-10 mx-auto my-4">
             <div class="card">
                 <div class="card-header">
-                    Syllabus 
+                    Individual Result List 
                 </div>
                 <div class="card-body">
                     <!-- On tables -->

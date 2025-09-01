@@ -12,15 +12,19 @@ Enter to learn & Leave to serve
 @endsection
 
 @section('frontcontent')
-<div class="col-3 mx-auto">
+<div class="col-3 mx-auto d-none d-md-block">
     @yield('sideinfo')
 </div>
 
-<div class="col-8 mx-auto">
+<div class="col-11 d-block d-md-none mx-auto">
+    @include('frontend.mobileSidebox')   
+</div>
+
+<div class="col-11 col-md-9 mx-auto">
     <div class="rowalign-items-center">
         <div class="col-12 mx-auto row">
-            <div class="col-1 bg-success np-1 ml-2">Notice</div>
-            <div class="col-11 latest-news np-1">
+            <div class="col-3 col-md-1 bg-success np-1 ml-2">Notice</div>
+            <div class="col-9 col-md-11 latest-news np-1">
                 <marquee>
                     <ul>
                         @if($noticeBoard->count()>0)
@@ -101,35 +105,35 @@ Enter to learn & Leave to serve
             @else
             <div class="bg-success p-2 notice-box my-2">
                 <div class="row align-items-center">
-                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th September</div>
+                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
                     <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
                     <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
                 </div>
             </div>
             <div class="bg-success p-2 notice-box my-2">
                 <div class="row align-items-center">
-                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th September</div>
+                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
                     <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
                     <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
                 </div>
             </div>
             <div class="bg-success p-2 notice-box my-2">
                 <div class="row align-items-center">
-                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th September</div>
+                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
                     <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
                     <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
                 </div>
             </div>
             <div class="bg-success p-2 notice-box my-2">
                 <div class="row align-items-center">
-                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th September</div>
+                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
                     <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
                     <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
                 </div>
             </div>
             <div class="bg-success p-2 notice-box my-2">
                 <div class="row align-items-center">
-                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th September</div>
+                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
                     <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
                     <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
                 </div>
@@ -137,10 +141,10 @@ Enter to learn & Leave to serve
             @endif
             <a href="#" class="btn btn-primary rounded-0">All Notice</a>
         </div>
-        <div class="row g-0">
+        <div class="row g-0 d-none d-md-block">
             <div class="col-12 mx-auto my-4 row">
                 <!-- info box start here -->
-                <div class="col-12 col-md-6 mx-auto my-4 infobox">
+                <div class="col-6 mx-auto my-4 infobox">
                     <div class="card rounded-0">
                         <div class="card-header rounded-0 bg-success text-white h5">
                             Admission Info
@@ -160,7 +164,7 @@ Enter to learn & Leave to serve
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 mx-auto my-4 infobox">
+                <div class="col-6 mx-auto my-4 infobox">
                     <div class="card rounded-0">
                         <div class="card-header rounded-0 bg-success text-white h5">
                             Institute Info
@@ -183,7 +187,7 @@ Enter to learn & Leave to serve
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 mx-auto my-4 infobox">
+                <div class="col-6 mx-auto my-4 infobox">
                     <div class="card rounded-0">
                         <div class="card-header rounded-0 bg-success text-white h5">
                             Academic
@@ -206,7 +210,7 @@ Enter to learn & Leave to serve
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 mx-auto my-4 infobox">
+                <div class="col-6 mx-auto my-4 infobox">
                     <div class="card rounded-0">
                         <div class="card-header rounded-0 bg-success text-white h5">
                             Student Corner
@@ -248,13 +252,20 @@ Enter to learn & Leave to serve
         <div id="demo" class="col-12 mx-auto mt-4">
             <h2>Photo Gallery</h2>
             <div id="owl-demo" class="owl-carousel">
-        @if(!empty($gallery)) 
-        @foreach($gallery as $data)
-                <div class="item">
-                    <img src="{{ asset('/public/upload/image/photogallery/').'/'.$data->avatar}}" alt="campus">
-                </div>
-            @endforeach
-             @endif
+            @if($gallery->count()>0) 
+                @foreach($gallery as $data)
+                        <div class="item">
+                            <img src="{{ asset('/public/upload/image/photogallery/').'/'.$data->avatar}}" alt="campus">
+                        </div>
+                @endforeach
+            @else
+                <div class="item"><img src="{{ asset('/public/') }}/img/campus.jpeg" alt="campus"></div>
+                <div class="item"><img src="{{ asset('/public/') }}/img/mainbuilding.jpg" alt="main building"></div>
+                <div class="item"><img src="{{ asset('/public/') }}/img/office.jpg" alt="office room"></div>
+                <div class="item"><img src="{{ asset('/public/') }}/img/principalroom.jpg" alt="principal room"></div>
+                <div class="item"><img src="{{ asset('/public/') }}/img/hostel.jpg" alt="hostel"></div>
+                <div class="item"><img src="{{ asset('/public/') }}/img/auditoriam.jpg" alt="auditoriam"></div>
+            @endif
             </div>
         </div>
     </div>

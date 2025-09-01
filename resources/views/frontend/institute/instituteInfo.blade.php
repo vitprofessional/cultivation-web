@@ -12,7 +12,7 @@ $config =App\Models\ServerConfig::first()
         margin-bottom:50px;
         
     }
-   .principla img{
+   .principal img{
         width:100%;
         height:400px;
         border-radius:100%;
@@ -39,7 +39,7 @@ $config =App\Models\ServerConfig::first()
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center con-title mt-4">
-                <h1 class="wow fadeInLeft animated my-4" data-wow-delay=".60s">Let's have a look about <span>@if(!empty($config->institueName)){{ $config->institueName }}@else jahanaraayubacademy @endif</span></h1>
+                <h1 class="wow fadeInLeft animated my-4" data-wow-delay=".60s">Let's have a look about <span>@if(!empty($config->institueName)){{ $config->institueName }}@else Jahanara Ayub Academy @endif</span></h1>
            </div>
         </div>
         @if($data)
@@ -59,18 +59,16 @@ $config =App\Models\ServerConfig::first()
                  </p>
                  <h4>Establish Date</h4>
                  <p class="wow fadeIn animated" data-wow-delay="1s" >  
-                 {{$data->establishDate}}
+                 {{$data->establishDate}}</p>
                  <h4>Total Area</h4>
-                 </p><p class="wow fadeIn animated" data-wow-delay="1s" >  
-                 {{$data->landSize}}
+                 <p class="wow fadeIn animated" data-wow-delay="1s" >  
+                 {{$data->landSize}}</p>
                  <h4>Our Mission</h4>
-                 </p><p class="wow fadeIn animated" data-wow-delay="1s" > 
-                 {{$data->mission}}
+                 <p class="wow fadeIn animated" data-wow-delay="1s" > 
+                 {{$data->mission}}</p>
                  <h4>Our Vision</h4>
-                 </p><p class="wow fadeIn animated" data-wow-delay="1s" > 
-                 {{$data->vision}}
-                 
-                 </p>
+                 <p class="wow fadeIn animated" data-wow-delay="1s" > 
+                 {{$data->vision}}</p>
             </div>    
         </div>
         @else

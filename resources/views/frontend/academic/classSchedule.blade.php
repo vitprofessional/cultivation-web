@@ -1,6 +1,6 @@
 @extends('frontend.include')
 @section('fronttitle')
-Syllabus
+Class Schedule
 @endsection
 
 @section('frontcontent')
@@ -14,7 +14,7 @@ Syllabus
         <div class="col-10 mx-auto my-4">
             <div class="card">
                 <div class="card-header">
-                    Syllabus 
+                    Class Schedule List 
                 </div>
                 <div class="card-body">
                     <!-- On tables -->

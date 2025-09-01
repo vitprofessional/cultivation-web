@@ -1,7 +1,10 @@
 @extends('frontend.include')
 @section('fronttitle')
-Student
+Student List
 @endsection
+@php
+$config =App\Models\ServerConfig::first()
+@endphp
 @section('frontcontent')
 <style>
 body {
@@ -17,7 +20,7 @@ body {
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center con-title mt-4">
-                <h2 class="wow fadeInLeft animated my-4" data-wow-delay=".60s"> Student Details of <span>SBC</span></h2>
+                <h2 class="wow fadeInLeft animated my-4" data-wow-delay=".60s"> Student Details of <span>@if(!empty($config->institueName)){{ $config->institueName }}@else Jahanara Ayub Academy @endif</span></h2>
            </div>
         </div>
             <!-- On tables -->

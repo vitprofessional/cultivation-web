@@ -1,6 +1,6 @@
 @extends('frontend.include')
 @section('fronttitle')
-Syllabus
+Former Principal List
 @endsection
 @section('frontcontent')
 <style>

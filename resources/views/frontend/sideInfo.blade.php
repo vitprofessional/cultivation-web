@@ -6,7 +6,7 @@
         <div class="p-2 text-center">
             @if($config)
                 @if(!empty($config->avatar)) 
-                <img class="w-75" height="350px" alt="Principal" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $config->avatar }}" />
+                <img class="w-75 rounded" height="350px" alt="Principal" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $config->avatar }}" />
                 @else
                 <img class="w-75" alt="Principal" src="{{ env('APP_URL') }}/public/avatar.png" />
                 @endif
@@ -26,7 +26,7 @@
         <div class="p-2 bg-success h5"><i class="fa-regular fa-user-crown"></i> Education Minister</div>
         <div class="p-2 text-center">
             @if(!empty($config->eduMinImg)) 
-            <img class="w-75" alt="Edu Minister" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $config->eduMinImg }}" />
+            <img class="w-75 rounded" alt="Edu Minister" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $config->eduMinImg }}" />
             @else
             <img class="w-75" alt="Edu Minister" src="{{ env('APP_URL') }}/public/avatar.png" />
             @endif
@@ -39,7 +39,7 @@
         <div class="p-2 bg-success h5"><i class="fa-regular fa-user-tie"></i> Board Chairman</div>
         <div class="p-2 text-center">
             @if(!empty($config->boardChairmanImg)) 
-            <img class="w-75" alt="Board Chairman" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $config->boardChairmanImg }}" />
+            <img class="w-75 rounded" alt="Board Chairman" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $config->boardChairmanImg }}" />
             @else
             <img class="w-75" alt="Board Chairman" src="{{ env('APP_URL') }}/public/avatar.png" />
             @endif
@@ -71,8 +71,4 @@
         <a href="#" class="list-group-item list-group-item-action"><i class="fa-solid fa-envelopes-bulk"></i> Webmail</a>
         <a href="#" class="list-group-item list-group-item-action"><i class="fa-solid fa-user"></i> Teacher Login</a>
         <a href="#" class="list-group-item list-group-item-action"><i class="fa-solid fa-square-question"></i> Complain/Suggestion</a>
-    </div>
-    <div class="list-group rounded-0 my-4 small">
-        <div class="bg-success p-2 h5 mb-0"><i class="fa-light fa-users"></i> Visitor Corner</div>
-        <x-visitor-corner />
     </div>

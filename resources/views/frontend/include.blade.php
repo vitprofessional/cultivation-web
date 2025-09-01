@@ -98,7 +98,10 @@
         /* Optional: shrink nicely on small screens */
             @media (max-width:480px){ 
                 .call-phone{ font-size:15px; } 
-                .call-label{ font-size:11px; } 
+                .call-label{ font-size:9px; } 
+                .call-text{ 
+                    font-size:0.6rem; 
+                }
             }
 
             .nav-link {
@@ -111,74 +114,253 @@
         <div class="menubar">
             <div class="container">
                 <div class="row align-items-center p-2">
-                    <div class="col-12 col-md-2 mx-auto text-center">
+                    <div class="col-6 col-md-2 mx-auto text-center">
                         @if(!empty($config->logo))
                         <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
                         @else
                         <img class="w-75" src="{{ asset('/public/') }}/logo.png" alt="Jahanar Ayiub Academic" />
                         @endif
                     </div>
+                    <div class="col-10 mx-auto d-block d-md-none">
+                        <!-- CALL BOX -->
+                        <div class="call-box">
+                            <span class="call-icon" aria-hidden="true">
+                                <i class="fa-regular fa-location-crosshairs"></i>
+                            </span>
+
+                            <div class="call-text">
+                                <div class="call-label fw-bold text-uppercase">
+                                    @if(!empty($config->institueName))
+                                    <span>{{ $config->institueName }}</span>
+                                    @else
+                                        <span>Jahanara Ayub Academy</span>
+                                    @endif
+                                </div>
+                                @if(!empty($config->address))
+                                    <span>{{ $config->address }}</span>
+                                @else
+                                    <span>North Shampur, Burichong, Cumilla</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-12 col-md-10">
-                        <div class="row mb-2">
-                            <div class="col-4 mx-auto">
-                                <!-- CALL BOX -->
-                                <div class="call-box">
-                                    <span class="call-icon" aria-hidden="true">
-                                        <i class="fa-regular fa-headset"></i>
-                                    </span>
-
-                                    <div class="call-text">
-                                        <div class="call-label fw-bold text-uppercase">CALL US FOR MORE DETAILS</div>
-                                        @if(!empty($config->officeMobile))
-                                            <span>{{ $config->officeMobile }}</span>
-                                        @else
-                                            <span>+(012) 345 6789</span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 mx-auto">
-                                <!-- CALL BOX -->
-                                <div class="call-box">
-                                    <span class="call-icon" aria-hidden="true">
-                                        <i class="fa-regular fa-envelopes"></i>
-                                    </span>
-
-                                    <div class="call-text">
-                                        <div class="call-label fw-bold text-uppercase">Let's connect with mail</div>
-                                        @if(!empty($config->officeEmail))
-                                            <span>{{ $config->officeEmail }}</span>
-                                        @else
-                                            <span>ja@gmail.com</span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 mx-auto">
-                                <!-- CALL BOX -->
-                                <div class="call-box">
-                                    <span class="call-icon" aria-hidden="true">
-                                        <i class="fa-regular fa-location-crosshairs"></i>
-                                    </span>
-
-                                    <div class="call-text">
-                                        <div class="call-label fw-bold text-uppercase">Office Address</div>
-                                        @if(!empty($config->address))
-                                            <span>{{ $config->address }}</span>
-                                        @else
-                                            <span>North Shampur, Burichong, Cumilla</span>
-                                        @endif
-                                    </div>
+                    <div class="row mb-2 d-none d-md-flex">
+                        <div class="col-md-4">
+                            <!-- CALL BOX -->
+                            <div class="call-box">
+                                <span class="call-icon" aria-hidden="true">
+                                    <i class="fa-solid fa-headset"></i>
+                                </span>
+                                <div class="call-text">
+                                    <div class="call-label fw-bold text-uppercase">CALL US FOR MORE DETAILS</div>
+                                    @if(!empty($config->officeMobile))
+                                        <span>{{ $config->officeMobile }}</span>
+                                    @else
+                                        <span>+(012) 345 6789</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-3">
+                        <div class="col-md-4">
+                            <!-- CALL BOX -->
+                            <div class="call-box">
+                                <span class="call-icon" aria-hidden="true">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </span>
+                                <div class="call-text">
+                                    <div class="call-label fw-bold text-uppercase">Let's connect with mail</div>
+                                    @if(!empty($config->officeEmail))
+                                        <span>{{ $config->officeEmail }}</span>
+                                    @else
+                                        <span>ja@gmail.com</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <!-- CALL BOX -->
+                            <div class="call-box">
+                                <span class="call-icon" aria-hidden="true">
+                                    <i class="fa-solid fa-location-crosshairs"></i>
+                                </span>
+                                <div class="call-text">
+                                    <div class="call-label fw-bold text-uppercase">Office Address</div>
+                                    @if(!empty($config->address))
+                                        <span>{{ $config->address }}</span>
+                                    @else
+                                        <span>North Shampur, Burichong, Cumilla</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- mobile menu will slide in from the left and will hide on desktop -->
+                        <div class="row mt-3 d-block d-md-none bg-success">
+                            <nav class="navbar bg-success navbar-expand-lg navbar-success shadow" data-bs-theme="dark">
+                                <div class="container-fluid">
+                                    <!-- Mobile Menu Button -->
+                                    <button class="btn btn-success d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+                                    <i class="fa fa-bars"></i>
+                                    </button>
+                                    <i class="fa-solid fa-arrow-turn-left"></i>
+                                </div>
+                            </nav>
+                            <!-- Offcanvas Side Menu -->
+                            <div class="offcanvas offcanvas-start w-75 bg-success row" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+                                <div class="col-6 col-md-2 mx-auto text-center">
+                                    @if(!empty($config->logo))
+                                    <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
+                                    @else
+                                    <img class="w-75" src="{{ asset('/public/') }}/logo.png" alt="Jahanar Ayiub Academic" />
+                                    @endif
+                                </div>
+                                <div class="col-12 mx-auto text-small">
+                                    <!-- CALL BOX -->
+                                    <div class="call-box">
+                                        <span class="call-icon" aria-hidden="true">
+                                            <i class="fa-regular fa-location-crosshairs"></i>
+                                        </span>
+
+                                        <div class="call-text">
+                                            <div class="call-label fw-bold text-uppercase">
+                                                @if(!empty($config->institueName))
+                                                <span>{{ $config->institueName }}</span>
+                                                @else
+                                                    <span>Jahanara Ayub Academy</span>
+                                                @endif
+                                            </div>
+                                            @if(!empty($config->address))
+                                                <span>{{ $config->address }}</span>
+                                            @else
+                                                <span>North Shampur, Burichong, Cumilla</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title" id="mobileMenuLabel">Menu</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body">
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{route('homePage')}}">Home</a>
+                                        </li>
+                                        <!-- Institute submenu -->
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="collapse" href="#mobileInstituteMenu" role="button" aria-expanded="false" aria-controls="mobileInstituteMenu">
+                                            Institute <i class="fa fa-chevron-down float-end"></i>
+                                            </a>
+                                            <div class="collapse" id="mobileInstituteMenu">
+                                                <ul class="list-unstyled ps-3">
+                                                    <li><a class="nav-link" href="{{route('institutePage')}}">About Us</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('principalSpeechPage')}}">Principal Speech</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('student')}}">Student List</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('exprincipalPage')}}">EX-Principals</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('teacherPage')}}">Lecturer Corner</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('staffPage')}}">Staff Panel</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('comitteePage')}}">Governing Body</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <!-- Academic submenu -->
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="collapse" href="#mobileAcademicMenu" role="button" aria-expanded="false" aria-controls="mobileAcademicMenu">
+                                            Academic <i class="fa fa-chevron-down float-end"></i>
+                                            </a>
+                                            <div class="collapse" id="mobileAcademicMenu">
+                                                <ul class="list-unstyled ps-3">
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('newSyllabus')}}">Syllabus</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('newClassSchedule')}}">Class Routine</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('newExamSchedule')}}">Exam Routine</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('newSemister')}}">Semister Plans</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <!-- Result Archive submenu -->
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="collapse" href="#mobileResultMenu" role="button" aria-expanded="false" aria-controls="mobileResultMenu">
+                                                Result Archive <i class="fa fa-chevron-down float-end"></i>
+                                            </a>
+                                            <div class="collapse" id="mobileResultMenu">
+                                                <ul class="list-unstyled ps-3">
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('internalResult')}}">Internal Result</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('individualResult')}}">Individual Result</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <!-- Job Placement submenu -->
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="collapse" href="#mobileJobMenu" role="button" aria-expanded="false" aria-controls="mobileJobMenu">
+                                                Job Placement <i class="fa fa-chevron-down float-end"></i>
+                                            </a>
+                                            <div class="collapse" id="mobileJobMenu">
+                                                <ul class="list-unstyled ps-3">
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('placementCellView')}}">Placement Cell</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('jobNeedyStudentView')}}">Job Needy Student</a></li>
+                                                    <li>
+                                                        <a class="nav-link" href="https://bdjobs.com/">Job Circular</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <!-- Gallery submenu -->
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="collapse" href="#mobileGalleryMenu" role="button" aria-expanded="false" aria-controls="mobileGalleryMenu">
+                                            Gallery <i class="fa fa-chevron-down float-end"></i>
+                                            </a>
+                                            <div class="collapse" id="mobileGalleryMenu">
+                                                <ul class="list-unstyled ps-3">
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('imagePage')}}">Photo Gallery</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="nav-link" href="{{route('videoPage')}}">Video Gallery</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <!-- Support -->
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{route('supportPage')}}">Support</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- mobile menu will hide on desktop and close here -->
+                        <div class="row mt-3 d-none d-md-block">
                             <div class="col-12 mx-auto">
                                 <nav class="navbar bg-success navbar-expand-lg navbar-light shadow" data-bs-theme="dark">
                                     <div class="container-fluid">
-                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                                            <span class="navbar-toggler-icon"></span>
-                                        </button>
                                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
                                             <ul class="navbar-nav text-white sbc">
                                                 <li class="nav-item">
@@ -259,8 +441,9 @@
         <footer class="mt-5 container-fluid">
              @if(!empty($config))
             <div class="row g-0">
-                <div class="col-12 col-md-5 mx-auto">
+                <div class="col-12 col-md-3 mx-auto">
                     <h3>Contact Details</h3>
+                    <p><i class="fa-solid fa-link"></i> {{  env('APP_URL') }}</p>
                     <p><i class="fa-solid fa-phone-office"></i>@if(!empty($config->officeMobile)) {{$config->officeMobile}} @else 01836994770 @endif</p>
                     <p><i class="fa-solid fa-buildings"></i> @if(!empty($config->address)) {{$config->address}} @else North Shampur, Burichong, Cumilla. @endif</p>
                     <p><i class="fa-solid fa-envelopes"></i> <a class="text-muted" style="text-decoration:none" href="mailto:@if(!empty($config->officeEmail)) {{ $config->officeEmail }} @else cultivation@virtualitprofessional.com @endif">@if(!empty($config)) {{$config->officeEmail}} @else cultivation@virtualitprofessional.com @endif</a></p>
@@ -268,7 +451,11 @@
                         <i class="fa-brands fa-square-facebook"></i> <a class="text-muted" style="text-decoration:none" target="_blank" href="{{ $config->facebookPage }}">@if(!empty($config->facebookPage)){{$config->facebookPage}} @else <a class="text-muted" style="text-decoration:none" href="https://www.facebook.com/profile.php?id=61572769304729">Cultivation-The Education Manager</a> @endif</a>
                     </p>
                 </div>
-                <div class="col-12 col-md-5 mx-auto">
+                <div class="col-12 col-md-3 mx-auto">
+                    <h3>Visitor Counter</h3>
+                    @include('visitorCounter')
+                </div>
+                <div class="col-12 col-md-4 mx-auto">
                     <h3>Google Map</h3>
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.720943010397!2d91.14681007428437!3d23.50655879809593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3754796e7c90d6e3%3A0x210c98d19ee0bc9c!2z4Ka44KeH4Ka-4Kao4Ka-4KawIOCmrOCmvuCmguCmsuCmviDgppXgprLgp4fgppw!5e0!3m2!1sen!2suk!4v1695524774546!5m2!1sen!2suk"

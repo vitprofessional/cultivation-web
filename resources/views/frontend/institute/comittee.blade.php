@@ -1,7 +1,10 @@
 @extends('frontend.include')
 @section('fronttitle')
-Syllabus
+Governing Body
 @endsection
+@php
+$config =App\Models\ServerConfig::first()
+@endphp
 @section('frontcontent')
 <style>
 #myTable th,td{
@@ -16,7 +19,7 @@ Syllabus
  <section class="container mt-4">
     <div class="row">
         <div class="col-md-12 text-center con-title my-4">
-            <h2 class="hedingAbout wow fadeInLeft animated" data-wow-delay=".60s">SBC <span> Governing Body</span> </h2>
+            <h2 class="hedingAbout wow fadeInLeft animated" data-wow-delay=".60s"><span>Let's have a look the Governing Body of <span>@if(!empty($config->institueName)){{ $config->institueName }}@else Jahanara Ayub Academy @endif</span></span> </h2>
         </div>
     </div>
     <div class="row align-items-center">

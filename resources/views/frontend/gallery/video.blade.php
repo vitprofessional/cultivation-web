@@ -1,6 +1,6 @@
 @extends('frontend.include')
 @section('fronttitle')
-Syllabus
+Memorable Moment(Video)
 @endsection
 @section('frontcontent')
 <style>
