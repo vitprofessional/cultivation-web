@@ -456,7 +456,7 @@
             </div>
             @else
             <div class="row g-0">
-                <div class="col-12 col-md-5 mx-auto">
+                <div class="col-12 col-md-3 mx-auto">
                     <h3>Contact Details</h3>
                     <p><i class="fa-solid fa-link"></i> www.jahanaraayubacademy.edu.bd</p>
                     <p><i class="fa-solid fa-phone-office"></i> 0123 4567 890</p>
@@ -465,10 +465,14 @@
                     <p><i class="fa-brands fa-square-facebook"></i> Jahanara Ayub Academy</p>
                     <p><i class="fa-solid fa-buildings"></i> Northshampur, Pirjatrapur, Burichong, Cumilla</p>
                 </div>
-                <div class="col-12 col-md-5 mx-auto">
+                <div class="col-12 col-md-3 mx-auto">
+                    <h3>Visitor Counter</h3>
+                    @include('visitorCounter')
+                </div>
+                <div class="col-12 col-md-4 mx-auto">
                     <h3>Google Map</h3>
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.720943010397!2d91.14681007428437!3d23.50655879809593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3754796e7c90d6e3%3A0x210c98d19ee0bc9c!2z4Ka44KeH4Ka-4Kao4Ka-4KawIOCmrOCmvuCmguCmsuCmviDgppXgprLgp4fgppw!5e0!3m2!1sen!2suk!4v1695524774546!5m2!1sen!2suk"
+                        src="https://www.google.com/maps/embed?pb=@if(!empty($config->mabEmbed){{$config->mapEmbed}}@else!1m18!1m12!1m3!1d3658.720943010397!2d91.14681007428437!3d23.50655879809593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3754796e7c90d6e3%3A0x210c98d19ee0bc9c!2z4Ka44KeH4Ka-4Kao4Ka-4KawIOCmrOCmvuCmguCmsuCmviDgppXgprLgp4fgppw!5e0!3m2!1sen!2suk!4v1695524774546!5m2!1sen!2suk@endif"
                         width="100%"
                         height="300"
                         class="rounded"
