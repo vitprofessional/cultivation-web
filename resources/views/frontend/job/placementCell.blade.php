@@ -60,7 +60,7 @@
                                             <td>{!!$data->sessionYear!!}</td>
                                             <td>{!!$data->rollNumber!!}</td>
                                             <td>{!!$data->companyName!!}</td>
-                                            <td style="width:10%"><img class="w-100" src="{{ asset('/public/upload/image/placementCell/').'/'.$data->avatar}}" alt="{!! $data->fullName !!}" style="max-height: 120px !important;" /></td>
+                                            <td style="width:10%"><img class="w-100" src="{{ env('APP_URL') }}/public/upload/image/placementCell/{{ $data->attachment }}" alt="{!! $data->fullName !!}" style="max-height: 120px !important;" /></td>
                                             <td>
                                                 <a href="#" class="text-success my-2" data-bs-toggle="modal" data-bs-target="#getData{{ $data->id }}">
                                                     <i class="fa fa-eye" style="color: green;"></i>

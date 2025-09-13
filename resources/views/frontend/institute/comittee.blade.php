@@ -27,9 +27,11 @@ $config =App\Models\ServerConfig::first()
             @if($Datakey->count()>0) 
                 @foreach($Datakey as $data)
                 <table class="table table-bordered">
-                    <td style="width:10%">
-                        <img  class="w-100 img-thumbnail" src="{{ asset('public/upload/image/cultivation').'/'.$data->avatar }}" height="50px">
-                    </td>
+                    @if(!empty($data->avatar))
+                    <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $data->avatar }}"></td>
+                    @else
+                    <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/avatar.png"></td>
+                    @endif
                     <td style="width:90%">
                         <table class="table table-bordered">
                             <tr>

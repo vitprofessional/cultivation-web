@@ -183,7 +183,7 @@ class FrontController extends Controller
 
     //teacher list page
     public function teacherPage(){
-        $syllabus  =   TeacherManagement::all();
+        $syllabus  =   TeacherManagement::orderBy('rank','asc')->get();
         return view('frontend.institute.teachers',['Datakey'=>$syllabus]);
     }
 

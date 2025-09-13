@@ -45,7 +45,11 @@ body {
                             <td>{{$data->fullName}}</td>
                             <td>{{$data->startFrom}}</td>
                             <td>{{$data->endTo}}</td>
-                            <td> <img src="{{ asset('public/upload/image/exPrincipal').'/'.$data->avatar }}" style="width:70px; height:70px;"/></td>
+                            @if(!empty($data->avatar))
+                            <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/exPrincipal/{{ $data->avatar }}"></td>
+                            @else
+                            <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/avatar.png"></td>
+                            @endif
                         </tr>
                         @endforeach
                         @else

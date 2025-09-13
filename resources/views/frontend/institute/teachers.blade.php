@@ -13,9 +13,8 @@ $config =App\Models\ServerConfig::first()
         border-radius:5px;
         text-align:center;
         border:5px solid #a6a6a6;
-       
-        
     }
+
     .imgbox{
         width:270px;
         height:150;
@@ -27,13 +26,16 @@ $config =App\Models\ServerConfig::first()
         padding-top:30px;
         margin:10px;
     }
+
     table th,td{
         text-align:left !important;
         vertical-align:center;
     }
+
     table th{
         font-weight:bold;
     }
+
 </style>
 <div class="container mt-4">
     <div class="row">
@@ -46,7 +48,11 @@ $config =App\Models\ServerConfig::first()
                 @if($Datakey->count()>0) 
                 @foreach($Datakey as $data)
                     <table class="table table-bordered my-4">
-                        <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ asset('public/upload/image/teacher').'/'.$data->avatar }}"></td>
+                        @if(!empty($data->avatar))
+                        <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/teacher/{{ $data->avatar }}"></td>
+                        @else
+                        <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/avatar.png"></td>
+                        @endif
                         <td style="width:90%">
                             <table class="table table-bordered">
                                 <tr>

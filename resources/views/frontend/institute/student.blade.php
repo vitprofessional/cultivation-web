@@ -79,7 +79,11 @@ body {
                             <td>-</td>
                             @endif
                             <td>{{ $std->phone }}</td>
-                             <td> <img src="{{ asset('public/upload/image/student').'/'.$std->avatar }}" style="width:100px; height:100px;"/></td>
+                            @if(!empty($data->avatar))
+                            <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/student/{{ $data->avatar }}"></td>
+                            @else
+                            <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/avatar.png"></td>
+                            @endif
                         </tr>
                         @endforeach
                         @else

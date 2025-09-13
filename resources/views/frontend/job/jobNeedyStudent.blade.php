@@ -72,7 +72,7 @@ Needy Students
                                             <td>{!!$data->fullName!!}</td>
                                             <td>{!!$data->sessionYear!!}</td>
                                             <td>{!!$data->rollNumber!!}</td>
-                                            <td><img class="w-50" src="{{ asset('public/upload/image/neddyStudent/').'/'.$data->avatar}}" alt="{!! $data->fullName !!}" style="max-height:120px !important"></td>
+                                            <td><img class="w-50" src="{{ env('APP_URL') }}/public/upload/image/neddyStudent/{{ $data->attachment }}" alt="{!! $data->fullName !!}" style="max-height:120px !important"></td>
                                             <td>
                                                 <a href="#" class="text-success my-2" data-bs-toggle="modal" data-bs-target="#getData{{ $data->id }}" >
                                                     <i class="fa fa-eye" style="color: green;"></i>
