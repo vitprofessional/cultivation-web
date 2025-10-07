@@ -444,7 +444,7 @@
             <div class="p-2">
                 <div class="row">
                     <div class="col-md-6 col-12">
-                        <p><span class="fw-bold text-center text-md-start">Planning and Implementation:</span> Principal   ({{$config->institueName}})</p>
+                        <p><span class="fw-bold text-center text-md-start">Planning and Implementation:</span> Principal   ({{$config->instituteName}})</p>
                     </div>
                     <div class="col-md-6 col-12 text-center text-md-end">
                         <p><span class="fw-bold">Powered By:</span> Cultivation(Version 0.0.5) by Virtual IT Professional</p>
