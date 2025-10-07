@@ -450,7 +450,7 @@
                         <p><span class="fw-bold">Powered By:</span> Cultivation(Version 0.0.5) by Virtual IT Professional</p>
                     </div>
                     <div class="col-12 text-center">
-                        <p class="fw-bold">Copyright &copy; 2000-@php echo date('Y'); @endphp | All Rights Reserved {{$config->institueName}} </p>
+                        <p class="fw-bold">Copyright &copy; 2000-@php echo date('Y'); @endphp | All Rights Reserved {{$config->instituteName}} </p>
                     </div>
                 </div>
             </div>
