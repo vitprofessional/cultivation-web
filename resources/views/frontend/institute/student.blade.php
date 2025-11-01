@@ -40,7 +40,6 @@ body {
                             <th>Class</th>
                             <th>Department</th>
                             <th>Section</th>
-                            <th>Mobile</th>
                             <th>Photo</th>
                             
                         </tr>
@@ -78,7 +77,6 @@ body {
                             @else
                             <td>-</td>
                             @endif
-                            <td>{{ $std->phone }}</td>
                             @if(!empty($data->avatar))
                             <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/student/{{ $data->avatar }}"></td>
                             @else
