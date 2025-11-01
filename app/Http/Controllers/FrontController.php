@@ -135,14 +135,14 @@ class FrontController extends Controller
     //fontend str gellary part
     public function videoPage(){
         
-        $syllabus  =   VideoGallery::all();
-        return view('frontend.gallery.video',['Datakey'=>$syllabus]);
+        $video  =   VideoGallery::all();
+        return view('frontend.gallery.video',['Datakey'=>$video]);
     }
 
     public function imagePage(){
         
-        $syllabus  =   PhotoGallery::all();
-        return view('frontend.gallery.image',['Datakey'=>$syllabus]);
+        $gallery  =   PhotoGallery::all();
+        return view('frontend.gallery.image',['Datakey'=>$gallery]);
     }
     //fontend end
 
