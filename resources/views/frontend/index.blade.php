@@ -48,7 +48,7 @@ Enter to learn & Leave to serve
         @if($insData)
         <div class="col-12 mx-auto my-2">
             <h2>{{$insData->insHeadline}}</h2>
-            <p class="text-justify">{{ \Illuminate\Support\Str::limit($insData->insDetails, 100, '...') }} <a href="#">Readmore</a></p>
+            <p class="text-justify">{{ \Illuminate\Support\Str::limit($insData->insDetails, 750, '...') }} <a href="#">Readmore</a></p>
         </div>
         <!-- mission & vission -->
         <div class="col-12 mx-auto my-4">
@@ -255,7 +255,7 @@ Enter to learn & Leave to serve
             @if($gallery->count()>0) 
                 @foreach($gallery as $data)
                         <div class="item">
-                            <img src="{{ env('APP_URL') }} /public/upload/image/photogallery/{{$data->avatar}}" alt="campus">
+                            <img src="{{ env('APP_URL') }} /public/upload/image/PhotoGallery/{{$data->avatar}}" alt="campus">
                         </div>
                 @endforeach
             @else

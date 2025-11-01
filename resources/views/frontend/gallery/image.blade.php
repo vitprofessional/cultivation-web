@@ -24,8 +24,8 @@ Memorable Moment
          <div class="col-10 mx-auto my-4">
             @foreach($Datakey as $data)
                 <div class="col-md-4 mb-4  " >
-                    <a class="wow fadeIn animated " data-wow-delay=".60s" href="{{ env('APP_URL') }}/public/upload/image/photogallery/{{ $data->avatar }}" data-lightbox="mygallery" data-toggle="modal" data-target="#">
-                        <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="{ env('APP_URL') }}/public/upload/image/photogallery/{{ $data->avatar }}" alt="" class="w-100 img-rounded"/>
+                    <a class="wow fadeIn animated " data-wow-delay=".60s" href="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}" data-lightbox="mygallery" data-toggle="modal" data-target="#">
+                        <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" src="{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}" alt="" class="w-100 img-rounded"/>
                     </a>
                 </div>
             @endforeach
