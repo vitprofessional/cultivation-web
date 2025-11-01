@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         @php
-        $config =App\Models\ServerConfig::first()
+        $config =App\Models\ServerConfig::first();
         @endphp
         <title>
         @if(!empty($config->instituteName))
@@ -38,6 +38,8 @@
             * {
                 font-family: 'Roboto', sans-serif;
             }
+
+            
             
             /* Header Top Section Styles */
             .header-top {
@@ -73,7 +75,6 @@
                 max-width: 140px;
                 height: auto;
                 background: rgba(255,255,255,0.15);
-                padding: 20px;
                 border-radius: 20px;
                 box-shadow: 0 8px 25px rgba(0,0,0,0.3);
                 border: 2px solid rgba(255,255,255,0.2);
@@ -227,29 +228,7 @@
                 color: #fff !important;
             }
 
-            /* Mobile Menu Styles */
-            .offcanvas-body .nav-link {
-                color: #fff !important;
-                padding: 12px 15px !important;
-                border-radius: 5px !important;
-                margin: 3px 0 !important;
-                text-transform: none !important;
-                font-size: 1rem !important;
-            }
-
-            .offcanvas-body .nav-link:hover {
-                background: rgba(255,255,255,0.2) !important;
-            }
-
-            .btn-success {
-                border: 1px solid rgba(255,255,255,0.3) !important;
-                background: rgba(255,255,255,0.1) !important;
-            }
-
-            .btn-success:hover {
-                background: rgba(255,255,255,0.2) !important;
-                border-color: rgba(255,255,255,0.5) !important;
-            }
+            
 
             /* Professional Carousel Styles */
             .carousel {
@@ -314,11 +293,10 @@
                 
                 .header-logo img {
                     max-width: 120px;
-                    padding: 15px;
                 }
                 
                 .institute-name {
-                    font-size: 2.2rem;
+                    font-size: 2rem;
                 }
                 
                 .institute-location {
@@ -347,7 +325,7 @@
             
             @media (max-width: 576px) {
                 .institute-name {
-                    font-size: 1.8rem;
+                    font-size: 1.3rem;
                 }
                 
                 .institute-location,
@@ -371,7 +349,7 @@
                 }
                 
                 .institute-name {
-                    font-size: 2.8rem;
+                    font-size: 2.5rem;
                 }
             }
 
@@ -472,6 +450,80 @@
                 text-decoration: underline; 
                 color: #ffc107;
             }
+
+
+            /* Mobile Menu Fixes */
+            /* Fix offcanvas full height */
+.offcanvas {
+    height: 100vh !important;
+    max-height: 100vh !important;
+}
+
+.offcanvas-start {
+    background-color: #198754 !important;
+    border: none !important;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5) !important;
+    width: 75% !important;
+    max-width: 320px !important;
+}
+
+.offcanvas-header {
+    background-color: #155724 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.2) !important;
+    padding: 1rem 1.5rem !important;
+    min-height: 70px !important;
+}
+
+.offcanvas-body {
+    background-color: #198754 !important;
+    padding: 1.5rem !important;
+    overflow-y: auto !important;
+    flex: 1 1 auto !important;
+}
+
+/* Fix for mobile viewport */
+.offcanvas-backdrop {
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+/* Ensure proper positioning */
+.offcanvas.show {
+    transform: none !important;
+}
+
+/* Fix nav brand text wrapping */
+.navbar-brand {
+    font-size: 0.9rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 200px !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .offcanvas-start {
+        width: 85% !important;
+    }
+    
+    .navbar-brand {
+        font-size: 0.8rem !important;
+        max-width: 150px !important;
+    }
+}
+            /* Mobile menu button */
+            .btn-success {
+                background-color: rgba(255,255,255,0.1) !important;
+                border: 1px solid rgba(255,255,255,0.3) !important;
+                color: #fff !important;
+            }
+
+            .btn-success:hover,
+            .btn-success:focus {
+                background-color: rgba(255,255,255,0.2) !important;
+                border-color: rgba(255,255,255,0.5) !important;
+                color: #fff !important;
+            }
         </style>
     </head>
     <body>
@@ -553,130 +605,114 @@
                             <button class="btn btn-success me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
                                 <i class="fa fa-bars"></i>
                             </button>
-                            <span class="navbar-brand text-white mb-0">Navigation Menu</span>
+                            <span class="navbar-brand text-white mb-0 h1 text-truncate">
+                                 @if(!empty($config->logo))
+                                    <img class="img-fluid" style="max-width: 50px;" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
+                                @else
+                                    <img class="img-fluid" style="max-width: 50px;" src="{{ asset('/public/') }}/logo.png" alt="Jahanara Ayub Academic" />
+                                @endif
+                            </span>
                         </div>
                     </nav>
-                    
-                    <!-- Offcanvas Side Menu -->
-                    <div class="offcanvas offcanvas-start w-75 bg-success" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
-                        <div class="offcanvas-header">
-                            <h5 class="offcanvas-title text-white" id="mobileMenuLabel">Navigation Menu</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+
+                <!-- Offcanvas Side Menu -->
+                <div class="offcanvas offcanvas-start bg-success" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title text-white" id="mobileMenuLabel">Navigation Menu</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="text-center mb-4">
+                            @if(!empty($config->logo))
+                                <img class="img-fluid" style="max-width: 80px;" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
+                            @else
+                                <img class="img-fluid" style="max-width: 80px;" src="{{ asset('/public/') }}/logo.png" alt="Jahanara Ayub Academic" />
+                            @endif
                         </div>
-                        <div class="offcanvas-body">
-                            <div class="text-center mb-4">
-                                @if(!empty($config->logo))
-                                    <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
-                                @else
-                                    <img class="w-75" src="{{ asset('/public/') }}/logo.png" alt="Jahanara Ayub Academic" />
-                                @endif
-                            </div>
-                            
-                            <div class="call-box mb-4">
-                                <span class="call-icon">
-                                    <i class="fa-solid fa-location-crosshairs"></i>
-                                </span>
-                                <div class="call-text">
-                                    <div class="call-label">Institute</div>
-                                    <div>
-                                        @if(!empty($config->instituteName))
-                                            {{ $config->instituteName }}
-                                        @else
-                                            Jahanara Ayub Academy
-                                        @endif
-                                    </div>
-                                    <div class="mt-1">
-                                        @if(!empty($config->address))
-                                            {{ $config->address }}
-                                        @else
-                                            North Shampur, Burichong, Cumilla
-                                        @endif
-                                    </div>
+                        
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('homePage')}}">
+                                    <i class="fa-solid fa-home me-2"></i>Home
+                                </a>
+                            </li>
+                            <!-- Institute submenu -->
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" href="#mobileInstituteMenu" role="button" aria-expanded="false">
+                                    <i class="fa-solid fa-building me-2"></i>Institute 
+                                    <i class="fa fa-chevron-down ms-auto"></i>
+                                </a>
+                                <div class="collapse" id="mobileInstituteMenu">
+                                    <ul class="list-unstyled ps-4">
+                                        <li><a class="nav-link py-2" href="{{route('institutePage')}}">About Us</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('student')}}">Student List</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('staffPage')}}">Staff Panel</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('comitteePage')}}">Governing Body</a></li>
+                                    </ul>
                                 </div>
-                            </div>
-                            
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{route('homePage')}}">
-                                        <i class="fa-solid fa-home me-2"></i>Home
-                                    </a>
-                                </li>
-                                <!-- Institute submenu -->
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="collapse" href="#mobileInstituteMenu" role="button" aria-expanded="false">
-                                        <i class="fa-solid fa-building me-2"></i>Institute <i class="fa fa-chevron-down float-end"></i>
-                                    </a>
-                                    <div class="collapse" id="mobileInstituteMenu">
-                                        <ul class="list-unstyled ps-4">
-                                            <li><a class="nav-link py-2" href="{{route('institutePage')}}">About Us</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('student')}}">Student List</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('staffPage')}}">Staff Panel</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('comitteePage')}}">Governing Body</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <!-- Academic submenu -->
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="collapse" href="#mobileAcademicMenu" role="button" aria-expanded="false">
-                                        <i class="fa-solid fa-graduation-cap me-2"></i>Academic <i class="fa fa-chevron-down float-end"></i>
-                                    </a>
-                                    <div class="collapse" id="mobileAcademicMenu">
-                                        <ul class="list-unstyled ps-4">
-                                            <li><a class="nav-link py-2" href="{{route('newSyllabus')}}">Syllabus</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('newClassSchedule')}}">Class Routine</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('newExamSchedule')}}">Exam Routine</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('newSemister')}}">Semister Plans</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <!-- Result Archive submenu -->
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="collapse" href="#mobileResultMenu" role="button" aria-expanded="false">
-                                        <i class="fa-solid fa-chart-line me-2"></i>Result Archive <i class="fa fa-chevron-down float-end"></i>
-                                    </a>
-                                    <div class="collapse" id="mobileResultMenu">
-                                        <ul class="list-unstyled ps-4">
-                                            <li><a class="nav-link py-2" href="{{route('internalResult')}}">Internal Result</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('individualResult')}}">Individual Result</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <!-- Job Placement submenu -->
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="collapse" href="#mobileJobMenu" role="button" aria-expanded="false">
-                                        <i class="fa-solid fa-briefcase me-2"></i>Job Placement <i class="fa fa-chevron-down float-end"></i>
-                                    </a>
-                                    <div class="collapse" id="mobileJobMenu">
-                                        <ul class="list-unstyled ps-4">
-                                            <li><a class="nav-link py-2" href="{{route('placementCellView')}}">Placement Cell</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('jobNeedyStudentView')}}">Job Needy Student</a></li>
-                                            <li><a class="nav-link py-2" href="https://bdjobs.com/" target="_blank">Job Circular</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <!-- Gallery submenu -->
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="collapse" href="#mobileGalleryMenu" role="button" aria-expanded="false">
-                                        <i class="fa-solid fa-images me-2"></i>Gallery <i class="fa fa-chevron-down float-end"></i>
-                                    </a>
-                                    <div class="collapse" id="mobileGalleryMenu">
-                                        <ul class="list-unstyled ps-4">
-                                            <li><a class="nav-link py-2" href="{{route('imagePage')}}">Photo Gallery</a></li>
-                                            <li><a class="nav-link py-2" href="{{route('videoPage')}}">Video Gallery</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <!-- Support -->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{route('supportPage')}}">
-                                        <i class="fa-solid fa-headset me-2"></i>Support
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                            </li>
+                            <!-- Add other menu items similarly... -->
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" href="#mobileAcademicMenu" role="button" aria-expanded="false">
+                                    <i class="fa-solid fa-graduation-cap me-2"></i>Academic 
+                                    <i class="fa fa-chevron-down ms-auto"></i>
+                                </a>
+                                <div class="collapse" id="mobileAcademicMenu">
+                                    <ul class="list-unstyled ps-4">
+                                        <li><a class="nav-link py-2" href="{{route('newSyllabus')}}">Syllabus</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('newClassSchedule')}}">Class Routine</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('newExamSchedule')}}">Exam Routine</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('newSemister')}}">Semister Plans</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" href="#mobileResultArchiveMenu" role="button" aria-expanded="false">
+                                    <i class="fa-solid fa-chart-line me-2"></i>Result Archive 
+                                    <i class="fa fa-chevron-down ms-auto"></i>
+                                </a>
+                                <div class="collapse" id="mobileResultArchiveMenu">
+                                    <ul class="list-unstyled ps-4">
+                                        <li><a class="nav-link py-2" href="{{route('internalResult')}}">Internal Result</a></li>
+                                        <li><a class="nav-link py-2" href="#">Individual Result</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" href="#mobileJobPlacementMenu" role="button" aria-expanded="false">
+                                    <i class="fa-solid fa-briefcase me-2"></i>Job Placement
+                                    <i class="fa fa-chevron-down ms-auto"></i>
+                                </a>
+                                <div class="collapse" id="mobileJobPlacementMenu">
+                                    <ul class="list-unstyled ps-4">
+                                        <li><a class="nav-link py-2" href="{{route('placementCellView')}}">Placement Cell</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('jobNeedyStudentView')}}">Job Needy Students</a></li>
+                                        <li><a class="nav-link py-2" target="_blank" href="https://www.bdjobs.com">Job Circulars</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" href="#mobileGalleryMenu" role="button" aria-expanded="false">
+                                    <i class="fa-solid fa-images me-2"></i>Gallery
+                                    <i class="fa fa-chevron-down ms-auto"></i>
+                                </a>
+                                <div class="collapse" id="mobileGalleryMenu">
+                                    <ul class="list-unstyled ps-4">
+                                        <li><a class="nav-link py-2" href="{{route('imagePage')}}">Photo Gallery</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('videoPage')}}">Video Gallery</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('supportPage')}}">
+                                    <i class="fa-solid fa-telephone me-2"></i> Support
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 
@@ -722,7 +758,7 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="{{route('internalResult')}}">Internal Result</a></li>
-                                            <li><a class="dropdown-item" href="{{route('individualResult')}}">Individual Result</a></li>
+                                            <li><a class="dropdown-item" href="#">Individual Result</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item dropdown">
@@ -856,15 +892,8 @@
             @endif
         </footer>
     
-    <!-- jquery-->
-    <script>
-        $(document).ready(function() {
-            $(".alert").fadeTo(2000, 500).slideUp(500, function() {
-                $(".alert").slideUp(500);
-            });
-        });
-    </script>
-        <script src="{{ asset('/public/') }}/assets/js/jquery-1.9.1.min.js"></script>
+        <script src="{{ asset('/public/') }}/assets/js/jquery-1.9.1.min.js"></script>   
+    
         <script src="{{ asset('/public/') }}/owl-carousel/owl.carousel.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="{{asset('/public/')}}/lightbox/js/bootstrap.min.js"></script>
@@ -873,6 +902,11 @@
         <!--Fancybox-->
         <script src="{{ asset('/') }}public/lightbox/fancybox/jquery.fancybox.min.js"></script>
         <script>
+            $(document).ready(function() {
+                $(".alert").fadeTo(2000, 500).slideUp(500, function() {
+                    $(".alert").slideUp(500);
+                });
+            });
             $(document).ready(function () {
                 $("#myTable").DataTable({
                     order: [[0, "asc"]],
