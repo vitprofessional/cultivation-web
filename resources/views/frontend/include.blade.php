@@ -26,382 +26,737 @@
         <script src="https://kit.fontawesome.com/32dcd4a478.js" crossorigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto&family=Skranji&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500;700;900&family=Skranji&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
         <!--Fancy box-->
         <link rel="stylesheet" type="text/css" href="{{ asset('/') }}public/lightbox/fancybox/jquery.fancybox.min.css" />
 
         <link href="{{asset('/public/')}}/lightbox/css/animate.min.css" rel="stylesheet" />
 
-        <!-- Demo -->
-
         <style>
-            #owl-demo .item {
-                margin: 3px;
+            /* Professional Typography */
+            * {
+                font-family: 'Roboto', sans-serif;
             }
-            #owl-demo .item img {
-                display: block;
-                width: 100%;
+            
+            /* Header Top Section Styles */
+            .header-top {
+                background: linear-gradient(135deg, #1e7e34 0%, #155724 50%, #0d4016 100%);
+                color: white;
+                padding: 30px 0;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .header-top::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 0%, transparent 50%);
+                pointer-events: none;
+            }
+            
+            .header-logo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding-right: 25px;
+                position: relative;
+                z-index: 2;
+            }
+            
+            .header-logo img {
+                max-width: 140px;
                 height: auto;
+                background: rgba(255,255,255,0.15);
+                padding: 20px;
+                border-radius: 20px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                border: 2px solid rgba(255,255,255,0.2);
+                transition: transform 0.3s ease;
             }
-            /* Default (desktop/laptop) */
+            
+            .header-logo img:hover {
+                transform: scale(1.05);
+            }
+
+            .institute-info {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                position: relative;
+                z-index: 2;
+            }
+            
+            .institute-name {
+                font-size: 3.2rem;
+                font-weight: 900;
+                margin: 0 0 12px 0;
+                color: #fff;
+                text-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+                line-height: 1.1;
+                letter-spacing: -1px;
+                font-family: 'Roboto', sans-serif;
+            }
+            
+            .institute-location {
+                font-size: 1.3rem;
+                color: #e8f5e8;
+                margin-bottom: 12px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .institute-mobile {
+                font-size: 1.1rem;
+                color: #e8f5e8;
+                margin-bottom: 0;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 25px;
+                flex-wrap: wrap;
+            }
+            
+            .contact-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .contact-icon {
+                color: #ffc107;
+                font-size: 1.1rem;
+                width: 20px;
+                text-align: center;
+            }
+
+            /* Center the entire header content */
+            .header-content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 40px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            /* Professional Navbar Styles */
+            .menubar {
+                background: #f8f9fa;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
+            
+            .navbar-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 15px;
+            }
+            
+            /* Fix navbar centering and layout */
+            .navbar {
+                padding: 0 !important;
+            }
+            
+            .navbar-nav {
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 0 !important;
+                margin: 0 !important;
+            }
+            
+            .nav-item {
+                margin: 0 5px;
+            }
+            
+            .nav-link {
+                font-size: 1rem !important;
+                font-weight: 600 !important;
+                color: #fff !important;
+                padding: 15px 18px !important;
+                border-radius: 8px !important;
+                transition: all 0.3s ease !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.5px !important;
+                white-space: nowrap !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+            
+            .nav-link:hover,
+            .nav-link:focus {
+                background: rgba(255,255,255,0.2) !important;
+                color: #fff !important;
+                transform: translateY(-2px) !important;
+            }
+            
+            .dropdown-menu {
+                background: #198754 !important;
+                border: none !important;
+                border-radius: 10px !important;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+                margin-top: 5px !important;
+                min-width: 220px !important;
+            }
+            
+            .dropdown-item {
+                color: #fff !important;
+                font-weight: 500 !important;
+                padding: 12px 20px !important;
+                transition: all 0.3s ease !important;
+                font-size: 0.95rem !important;
+            }
+            
+            .dropdown-item:hover,
+            .dropdown-item:focus {
+                background: rgba(255,255,255,0.2) !important;
+                color: #fff !important;
+            }
+
+            /* Mobile Menu Styles */
+            .offcanvas-body .nav-link {
+                color: #fff !important;
+                padding: 12px 15px !important;
+                border-radius: 5px !important;
+                margin: 3px 0 !important;
+                text-transform: none !important;
+                font-size: 1rem !important;
+            }
+
+            .offcanvas-body .nav-link:hover {
+                background: rgba(255,255,255,0.2) !important;
+            }
+
+            .btn-success {
+                border: 1px solid rgba(255,255,255,0.3) !important;
+                background: rgba(255,255,255,0.1) !important;
+            }
+
+            .btn-success:hover {
+                background: rgba(255,255,255,0.2) !important;
+                border-color: rgba(255,255,255,0.5) !important;
+            }
+
+            /* Professional Carousel Styles */
+            .carousel {
+                box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+                border-radius: 0 0 15px 15px;
+                overflow: hidden;
+            }
+            
             .carousel-item img {
-                height: 450px !important;
-                object-fit: cover; /* Keeps image from stretching */
+                height: 500px !important;
+                object-fit: cover;
                 width: 100%;
+                filter: brightness(0.9);
+            }
+            
+            .carousel-caption {
+                background: linear-gradient(transparent, rgba(0,0,0,0.7));
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 40px 20px 20px;
+            }
+            
+            .carousel-control-prev,
+            .carousel-control-next {
+                width: 5%;
+            }
+            
+            .carousel-control-prev-icon,
+            .carousel-control-next-icon {
+                background-size: 100%;
+                border-radius: 50%;
+                background-color: rgba(0,0,0,0.5);
+                padding: 20px;
+            }
+            
+            .carousel-indicators {
+                bottom: 20px;
+            }
+            
+            .carousel-indicators [data-bs-target] {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                margin: 0 5px;
             }
 
-            /* Tablet */
-            @media (max-width: 992px) {
-                .carousel-item img {
-                    height: 350px !important;
+            /* Mobile Responsive */
+            @media (max-width: 768px) {
+                .header-top {
+                    padding: 25px 0;
                 }
-            }
-
-            /* Mobile devices */
-            @media (max-width: 576px) {
+                
+                .header-content {
+                    flex-direction: column;
+                    gap: 25px;
+                }
+                
+                .header-logo {
+                    padding-right: 0;
+                }
+                
+                .header-logo img {
+                    max-width: 120px;
+                    padding: 15px;
+                }
+                
+                .institute-name {
+                    font-size: 2.2rem;
+                }
+                
+                .institute-location {
+                    font-size: 1.1rem;
+                }
+                
+                .institute-mobile {
+                    flex-direction: column;
+                    gap: 15px;
+                    font-size: 1rem;
+                }
+                
+                .nav-link {
+                    font-size: 0.9rem !important;
+                    padding: 12px 15px !important;
+                }
+                
                 .carousel-item img {
-                    height: 220px !important;
+                    height: 250px !important;
+                }
+                
+                .carousel-caption {
+                    padding: 20px 15px 15px;
                 }
             }
             
-            .call-box{
-                color: #fff;
-                display:flex; 
-                align-items:center; 
-                gap:10px;
-                font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            @media (max-width: 576px) {
+                .institute-name {
+                    font-size: 1.8rem;
+                }
+                
+                .institute-location,
+                .institute-mobile {
+                    font-size: 0.95rem;
+                }
+                
+                .header-content {
+                    gap: 20px;
+                }
+                
+                .carousel-item img {
+                    height: 200px !important;
+                }
             }
-            .call-icon{
-                display:inline-flex; 
-                align-items:center; 
-                justify-content:center;
-                font-size: 1.8rem;
-                color: #fff;
-            }
-            .call-text{ 
-                font-size:0.8rem; 
-                line-height:1.25; 
-            }
-            .call-label{
-                font-size:0.6rem; 
-                letter-spacing:.04em;;
-            }
-            .call-phone{
-                font-weight:700; 
-                color:#fff; 
-                text-decoration:none;
-            }
-            .call-phone:hover{ 
-                text-decoration:underline; 
-            }
-        /* Optional: shrink nicely on small screens */
-            @media (max-width:480px){ 
-                .call-phone{ font-size:15px; } 
-                .call-label{ font-size:9px; } 
-                .call-text{ 
-                    font-size:0.6rem; 
+            
+            /* Tablet Responsive */
+            @media (min-width: 769px) and (max-width: 992px) {
+                .carousel-item img {
+                    height: 400px !important;
+                }
+                
+                .institute-name {
+                    font-size: 2.8rem;
                 }
             }
 
-            .nav-link {
-                font-size: 1.1rem;
-                font-weight: 550 !important;
+            /* Professional Footer */
+            footer {
+                background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+                color: #fff;
+                padding: 40px 0 20px;
+                margin-top: 50px !important;
+            }
+            
+            footer h3 {
+                color: #ffc107;
+                font-weight: 700;
+                margin-bottom: 20px;
+            }
+            
+            footer p {
+                color: #adb5bd;
+                line-height: 1.6;
+            }
+            
+            footer .text-muted {
+                color: #adb5bd !important;
             }
 
-            .w-90 {
-                width: 90% !important;
+            /* Professional Animation */
+            .header-top {
+                animation: fadeInDown 0.8s ease-out;
+            }
+            
+            .menubar {
+                animation: fadeInUp 0.8s ease-out 0.2s both;
+            }
+            
+            @keyframes fadeInDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Additional Professional Touches */
+            .call-box {
+                color: #fff;
+                display: flex; 
+                align-items: center; 
+                gap: 15px;
+                font-family: 'Roboto', sans-serif;
+                background: rgba(255,255,255,0.1);
+                padding: 15px;
+                border-radius: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .call-icon {
+                display: inline-flex; 
+                align-items: center; 
+                justify-content: center;
+                font-size: 1.8rem;
+                color: #ffc107;
+            }
+            
+            .call-text { 
+                font-size: 0.9rem; 
+                line-height: 1.4; 
+            }
+            
+            .call-label {
+                font-size: 0.7rem; 
+                letter-spacing: 0.05em;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+            
+            .call-phone {
+                font-weight: 700; 
+                color: #fff; 
+                text-decoration: none;
+            }
+            
+            .call-phone:hover { 
+                text-decoration: underline; 
+                color: #ffc107;
             }
         </style>
     </head>
     <body>
-        <div class="menubar">
+        <!-- Header Top Section -->
+        <div class="header-top">
             <div class="container">
-                <div class="row align-items-center p-2">
-                    <div class="col-6 col-md-2 mx-auto text-center">
-                        @if(!empty($config->logo))
-                        <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
-                        @else
-                        <img class="w-75" src="{{ asset('/public/') }}/logo.png" alt="Jahanar Ayiub Academic" />
-                        @endif
-                    </div>
-                    <div class="col-10 mx-auto d-block d-md-none">
-                        <!-- CALL BOX -->
-                        <div class="call-box">
-                            <span class="call-icon" aria-hidden="true">
-                                <i class="fa-regular fa-location-crosshairs"></i>
-                            </span>
-
-                            <div class="call-text">
-                                <div class="call-label fw-bold text-uppercase">
-                                    @if(!empty($config->institueName))
-                                    <span>{{ $config->institueName }}</span>
-                                    @else
-                                        <span>Jahanara Ayub Academy</span>
-                                    @endif
-                                </div>
-                                @if(!empty($config->address))
-                                    <span>{{ $config->address }}</span>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="header-content">
+                            <!-- Logo on the left -->
+                            <div class="header-logo">
+                                @if(!empty($config->logo))
+                                    <img src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
                                 @else
-                                    <span>North Shampur, Burichong, Cumilla</span>
+                                    <img src="{{ asset('/public/') }}/logo.png" alt="Jahanara Ayub Academic" />
                                 @endif
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-10">
-                    <div class="row mb-2 d-none d-md-flex">
-                        <div class="col-md-4">
-                            <!-- CALL BOX -->
-                            <div class="call-box">
-                                <span class="call-icon" aria-hidden="true">
-                                    <i class="fa-solid fa-headset"></i>
-                                </span>
-                                <div class="call-text">
-                                    <div class="call-label fw-bold text-uppercase">CALL US FOR MORE DETAILS</div>
-                                    @if(!empty($config->officeMobile))
-                                        <span>{{ $config->officeMobile }}</span>
+                            
+                            <!-- Institute Information beside logo -->
+                            <div class="institute-info">
+                                <!-- Institute Name (Highlighted) -->
+                                <h1 class="institute-name">
+                                    @if(!empty($config->instituteName))
+                                        {{ $config->instituteName }}
                                     @else
-                                        <span>+(012) 345 6789</span>
+                                        Jahanara Ayub Academy
                                     @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <!-- CALL BOX -->
-                            <div class="call-box">
-                                <span class="call-icon" aria-hidden="true">
-                                    <i class="fa-solid fa-envelope"></i>
-                                </span>
-                                <div class="call-text">
-                                    <div class="call-label fw-bold text-uppercase">Let's connect with mail</div>
-                                    @if(!empty($config->officeEmail))
-                                        <span>{{ $config->officeEmail }}</span>
-                                    @else
-                                        <span>ja@gmail.com</span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <!-- CALL BOX -->
-                            <div class="call-box">
-                                <span class="call-icon" aria-hidden="true">
-                                    <i class="fa-solid fa-location-crosshairs"></i>
-                                </span>
-                                <div class="call-text">
-                                    <div class="call-label fw-bold text-uppercase">Office Address</div>
-                                    @if(!empty($config->address))
-                                        <span>{{ $config->address }}</span>
-                                    @else
-                                        <span>North Shampur, Burichong, Cumilla</span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                        <!-- mobile menu will slide in from the left and will hide on desktop -->
-                        <div class="row mt-3 d-block d-md-none bg-success">
-                            <nav class="navbar bg-success navbar-expand-lg navbar-success shadow" data-bs-theme="dark">
-                                <div class="container-fluid">
-                                    <!-- Mobile Menu Button -->
-                                    <button class="btn btn-success d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
-                                        <i class="fa fa-bars"></i>
-                                    </button>
-                                    <i class="fa-solid fa-arrow-turn-left"></i>
-                                </div>
-                            </nav>
-                            <!-- Offcanvas Side Menu -->
-                            <div class="offcanvas offcanvas-start w-75 bg-success" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
-                                <div class="offcanvas-header">
-                                    <h5 class="offcanvas-title" id="mobileMenuLabel">Menu</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                </div>
-                                <div class="offcanvas-body">
-                                    <div class="text-center mb-3">
-                                        @if(!empty($config->logo))
-                                            <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
+                                </h1>
+                                
+                                <!-- Location under institute name -->
+                                <div class="institute-location">
+                                    <i class="fa-solid fa-location-dot contact-icon"></i>
+                                    <span>
+                                        @if(!empty($config->address))
+                                            {{ $config->address }}
                                         @else
-                                            <img class="w-75" src="{{ asset('/public/') }}/logo.png" alt="Jahanar Ayiub Academic" />
+                                            North Shampur, Burichong, Cumilla
                                         @endif
-                                    </div>
-                                    <div class="text-small mb-3">
-                                        <!-- CALL BOX -->
-                                        <div class="call-box">
-                                            <span class="call-icon" aria-hidden="true">
-                                                <i class="fa-solid fa-location-crosshairs"></i>
-                                            </span>
-                                            <div class="call-text">
-                                                <div class="call-label fw-bold text-uppercase">
-                                                    @if(!empty($config->institueName))
-                                                        <span>{{ $config->institueName }}</span>
-                                                    @else
-                                                        <span>Jahanara Ayub Academy</span>
-                                                    @endif
-                                                </div>
-                                                @if(!empty($config->address))
-                                                    <span>{{ $config->address }}</span>
-                                                @else
-                                                    <span>North Shampur, Burichong, Cumilla</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <ul class="navbar-nav">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{route('homePage')}}">Home</a>
-                                        </li>
-                                        <!-- Institute submenu -->
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="collapse" href="#mobileInstituteMenu" role="button" aria-expanded="false" aria-controls="mobileInstituteMenu">
-                                                Institute <i class="fa fa-chevron-down float-end"></i>
-                                            </a>
-                                            <div class="collapse" id="mobileInstituteMenu">
-                                                <ul class="list-unstyled ps-3">
-                                                    <li><a class="nav-link" href="{{route('institutePage')}}">About Us</a></li>
-                                                    <li><a class="nav-link" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
-                                                    <li><a class="nav-link" href="{{route('student')}}">Student List</a></li>
-                                                    <li><a class="nav-link" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
-                                                    <li><a class="nav-link" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
-                                                    <li><a class="nav-link" href="{{route('staffPage')}}">Staff Panel</a></li>
-                                                    <li><a class="nav-link" href="{{route('comitteePage')}}">Governing Body</a></li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <!-- Academic submenu -->
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="collapse" href="#mobileAcademicMenu" role="button" aria-expanded="false" aria-controls="mobileAcademicMenu">
-                                                Academic <i class="fa fa-chevron-down float-end"></i>
-                                            </a>
-                                            <div class="collapse" id="mobileAcademicMenu">
-                                                <ul class="list-unstyled ps-3">
-                                                    <li><a class="nav-link" href="{{route('newSyllabus')}}">Syllabus</a></li>
-                                                    <li><a class="nav-link" href="{{route('newClassSchedule')}}">Class Routine</a></li>
-                                                    <li><a class="nav-link" href="{{route('newExamSchedule')}}">Exam Routine</a></li>
-                                                    <li><a class="nav-link" href="{{route('newSemister')}}">Semister Plans</a></li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <!-- Result Archive submenu -->
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="collapse" href="#mobileResultMenu" role="button" aria-expanded="false" aria-controls="mobileResultMenu">
-                                                Result Archive <i class="fa fa-chevron-down float-end"></i>
-                                            </a>
-                                            <div class="collapse" id="mobileResultMenu">
-                                                <ul class="list-unstyled ps-3">
-                                                    <li><a class="nav-link" href="{{route('internalResult')}}">Internal Result</a></li>
-                                                    <li><a class="nav-link" href="{{route('individualResult')}}">Individual Result</a></li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <!-- Job Placement submenu -->
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="collapse" href="#mobileJobMenu" role="button" aria-expanded="false" aria-controls="mobileJobMenu">
-                                                Job Placement <i class="fa fa-chevron-down float-end"></i>
-                                            </a>
-                                            <div class="collapse" id="mobileJobMenu">
-                                                <ul class="list-unstyled ps-3">
-                                                    <li><a class="nav-link" href="{{route('placementCellView')}}">Placement Cell</a></li>
-                                                    <li><a class="nav-link" href="{{route('jobNeedyStudentView')}}">Job Needy Student</a></li>
-                                                    <li><a class="nav-link" href="https://bdjobs.com/">Job Circular</a></li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <!-- Gallery submenu -->
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="collapse" href="#mobileGalleryMenu" role="button" aria-expanded="false" aria-controls="mobileGalleryMenu">
-                                                Gallery <i class="fa fa-chevron-down float-end"></i>
-                                            </a>
-                                            <div class="collapse" id="mobileGalleryMenu">
-                                                <ul class="list-unstyled ps-3">
-                                                    <li><a class="nav-link" href="{{route('imagePage')}}">Photo Gallery</a></li>
-                                                    <li><a class="nav-link" href="{{route('videoPage')}}">Video Gallery</a></li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <!-- Support -->
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{route('supportPage')}}">Support</a>
-                                        </li>
-                                    </ul>
+                                    </span>
                                 </div>
-                            </div>
-                        </div>
-                        <!-- mobile menu will hide on desktop and close here -->
-                        <div class="row mt-3 d-none d-md-block">
-                            <div class="col-12 mx-auto">
-                                <nav class="navbar bg-success navbar-expand-lg navbar-light shadow" data-bs-theme="dark">
-                                    <div class="container-fluid">
-                                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                                            <ul class="navbar-nav text-white sbc">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active" aria-current="page" href="{{route('homePage')}}">Home</a>
-                                                </li>
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Institute
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="{{route('institutePage')}}">About Us</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('student')}}">Student List</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('staffPage')}}">Staff Panel</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('comitteePage')}}">Governing Body</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Academic
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="{{route('newSyllabus')}}">Syllabus</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('newClassSchedule')}}">Class Routine</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('newExamSchedule')}}">Exam Routine</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('newSemister')}}">Semister Plans</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Result Archive
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="{{route('internalResult')}}">Internal Result</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('individualResult')}}">Individual Result</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Job Placement
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="{{route('placementCellView')}}">Placement Cell</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('jobNeedyStudentView')}}">Job Needy Student</a></li>
-                                                        <li><a class="dropdown-item" href="https://bdjobs.com/">Job Circular</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Gallery
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="{{route('imagePage')}}">Photo Gallery</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('videoPage')}}">Video Gallery</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="{{route('supportPage')}}">Support</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                
+                                <!-- Mobile and Email in same line -->
+                                <div class="institute-mobile">
+                                    <div class="contact-item">
+                                        <i class="fa-solid fa-phone contact-icon"></i>
+                                        <span>
+                                            @if(!empty($config->officeMobile))
+                                                {{ $config->officeMobile }}
+                                            @else
+                                                +(012) 345 6789
+                                            @endif
+                                        </span>
                                     </div>
-                                </nav>
+                                    <div class="contact-item">
+                                        <i class="fa-solid fa-envelope contact-icon"></i>
+                                        <span>
+                                            @if(!empty($config->officeEmail))
+                                                {{ $config->officeEmail }}
+                                            @else
+                                                ja@gmail.com
+                                            @endif
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Professional Navbar -->
+        <div class="menubar bg-success">
+            <div class="navbar-container">
+                <!-- Mobile Menu -->
+                <div class="d-block d-md-none">
+                    <nav class="navbar bg-success navbar-expand-lg" data-bs-theme="dark">
+                        <div class="container-fluid">
+                            <button class="btn btn-success me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <span class="navbar-brand text-white mb-0">Navigation Menu</span>
+                        </div>
+                    </nav>
+                    
+                    <!-- Offcanvas Side Menu -->
+                    <div class="offcanvas offcanvas-start w-75 bg-success" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title text-white" id="mobileMenuLabel">Navigation Menu</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <div class="text-center mb-4">
+                                @if(!empty($config->logo))
+                                    <img class="w-75" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
+                                @else
+                                    <img class="w-75" src="{{ asset('/public/') }}/logo.png" alt="Jahanara Ayub Academic" />
+                                @endif
+                            </div>
+                            
+                            <div class="call-box mb-4">
+                                <span class="call-icon">
+                                    <i class="fa-solid fa-location-crosshairs"></i>
+                                </span>
+                                <div class="call-text">
+                                    <div class="call-label">Institute</div>
+                                    <div>
+                                        @if(!empty($config->instituteName))
+                                            {{ $config->instituteName }}
+                                        @else
+                                            Jahanara Ayub Academy
+                                        @endif
+                                    </div>
+                                    <div class="mt-1">
+                                        @if(!empty($config->address))
+                                            {{ $config->address }}
+                                        @else
+                                            North Shampur, Burichong, Cumilla
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('homePage')}}">
+                                        <i class="fa-solid fa-home me-2"></i>Home
+                                    </a>
+                                </li>
+                                <!-- Institute submenu -->
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="collapse" href="#mobileInstituteMenu" role="button" aria-expanded="false">
+                                        <i class="fa-solid fa-building me-2"></i>Institute <i class="fa fa-chevron-down float-end"></i>
+                                    </a>
+                                    <div class="collapse" id="mobileInstituteMenu">
+                                        <ul class="list-unstyled ps-4">
+                                            <li><a class="nav-link py-2" href="{{route('institutePage')}}">About Us</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('student')}}">Student List</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('staffPage')}}">Staff Panel</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('comitteePage')}}">Governing Body</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <!-- Academic submenu -->
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="collapse" href="#mobileAcademicMenu" role="button" aria-expanded="false">
+                                        <i class="fa-solid fa-graduation-cap me-2"></i>Academic <i class="fa fa-chevron-down float-end"></i>
+                                    </a>
+                                    <div class="collapse" id="mobileAcademicMenu">
+                                        <ul class="list-unstyled ps-4">
+                                            <li><a class="nav-link py-2" href="{{route('newSyllabus')}}">Syllabus</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('newClassSchedule')}}">Class Routine</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('newExamSchedule')}}">Exam Routine</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('newSemister')}}">Semister Plans</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <!-- Result Archive submenu -->
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="collapse" href="#mobileResultMenu" role="button" aria-expanded="false">
+                                        <i class="fa-solid fa-chart-line me-2"></i>Result Archive <i class="fa fa-chevron-down float-end"></i>
+                                    </a>
+                                    <div class="collapse" id="mobileResultMenu">
+                                        <ul class="list-unstyled ps-4">
+                                            <li><a class="nav-link py-2" href="{{route('internalResult')}}">Internal Result</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('individualResult')}}">Individual Result</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <!-- Job Placement submenu -->
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="collapse" href="#mobileJobMenu" role="button" aria-expanded="false">
+                                        <i class="fa-solid fa-briefcase me-2"></i>Job Placement <i class="fa fa-chevron-down float-end"></i>
+                                    </a>
+                                    <div class="collapse" id="mobileJobMenu">
+                                        <ul class="list-unstyled ps-4">
+                                            <li><a class="nav-link py-2" href="{{route('placementCellView')}}">Placement Cell</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('jobNeedyStudentView')}}">Job Needy Student</a></li>
+                                            <li><a class="nav-link py-2" href="https://bdjobs.com/" target="_blank">Job Circular</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <!-- Gallery submenu -->
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="collapse" href="#mobileGalleryMenu" role="button" aria-expanded="false">
+                                        <i class="fa-solid fa-images me-2"></i>Gallery <i class="fa fa-chevron-down float-end"></i>
+                                    </a>
+                                    <div class="collapse" id="mobileGalleryMenu">
+                                        <ul class="list-unstyled ps-4">
+                                            <li><a class="nav-link py-2" href="{{route('imagePage')}}">Photo Gallery</a></li>
+                                            <li><a class="nav-link py-2" href="{{route('videoPage')}}">Video Gallery</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <!-- Support -->
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('supportPage')}}">
+                                        <i class="fa-solid fa-headset me-2"></i>Support
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="d-none d-md-block">
+                    <nav class="navbar bg-success navbar-expand-lg" data-bs-theme="dark">
+                        <div class="container-fluid">
+                            <div class="navbar-collapse">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route('homePage')}}">
+                                            <i class="fa-solid fa-home me-2"></i>Home
+                                        </a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-building me-2"></i>Institute
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{route('institutePage')}}">About Us</a></li>
+                                            <li><a class="dropdown-item" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
+                                            <li><a class="dropdown-item" href="{{route('student')}}">Student List</a></li>
+                                            <li><a class="dropdown-item" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
+                                            <li><a class="dropdown-item" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
+                                            <li><a class="dropdown-item" href="{{route('staffPage')}}">Staff Panel</a></li>
+                                            <li><a class="dropdown-item" href="{{route('comitteePage')}}">Governing Body</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-graduation-cap me-2"></i>Academic
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{route('newSyllabus')}}">Syllabus</a></li>
+                                            <li><a class="dropdown-item" href="{{route('newClassSchedule')}}">Class Routine</a></li>
+                                            <li><a class="dropdown-item" href="{{route('newExamSchedule')}}">Exam Routine</a></li>
+                                            <li><a class="dropdown-item" href="{{route('newSemister')}}">Semister Plans</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-chart-line me-2"></i>Result Archive
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{route('internalResult')}}">Internal Result</a></li>
+                                            <li><a class="dropdown-item" href="{{route('individualResult')}}">Individual Result</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-briefcase me-2"></i>Job Placement
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{route('placementCellView')}}">Placement Cell</a></li>
+                                            <li><a class="dropdown-item" href="{{route('jobNeedyStudentView')}}">Job Needy Student</a></li>
+                                            <li><a class="dropdown-item" href="https://bdjobs.com/" target="_blank">Job Circular</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-images me-2"></i>Gallery
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{route('imagePage')}}">Photo Gallery</a></li>
+                                            <li><a class="dropdown-item" href="{{route('videoPage')}}">Video Gallery</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{route('supportPage')}}">
+                                            <i class="fa-solid fa-headset me-2"></i>Support
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
         @yield('sliderninfo')
         <div class="container-fluid">
             <div class="row">

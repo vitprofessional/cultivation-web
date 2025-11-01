@@ -24,7 +24,7 @@ Support Staff
  <div class="container mt-4">
     <div class="row">
         <div class="col-md-12 text-center con-title mt-4">
-            <h2 class="hedingAbout wow fadeInLeft animated my-4" data-wow-delay=".60s">Let's have meet our <span> Support Staffs</span> </h2>
+            <h2 class="hedingAbout wow fadeInLeft animated my-4" data-wow-delay=".60s">Let's have meet our  <span> Support Staffs</span> </h2>
         </div>
     </div>
     <div class='row my-4'>
