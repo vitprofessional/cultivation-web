@@ -255,7 +255,7 @@ Enter to learn & Leave to serve
             @if($gallery->count()>0) 
                 @foreach($gallery as $data)
                         <div class="item">
-                            <img src="{{ env('APP_URL') }} /public/upload/image/PhotoGallery/{{$data->avatar}}" alt="campus">
+                            <img src="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{$data->avatar}}" alt="campus">
                         </div>
                 @endforeach
             @else
