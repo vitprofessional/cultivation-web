@@ -39,7 +39,7 @@ $config =App\Models\ServerConfig::first()
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center con-title mt-4">
-                <h1 class="wow fadeInLeft animated my-4" data-wow-delay=".60s">Let's have a look about <span>@if(!empty($config->institueName)){{ $config->institueName }}@else Jahanara Ayub Academy @endif</span></h1>
+                <h1 class="wow fadeInLeft animated my-4" data-wow-delay=".60s">Let's have a look about <span>@if(!empty($config->instituteName)){{ $config->instituteName }}@else Jahanara Ayub Academy @endif</span></h1>
            </div>
         </div>
         @if($data)

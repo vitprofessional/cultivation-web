@@ -52,7 +52,7 @@ Our Staff Panel
                 @endforeach
                 @else
                     <table class="table table-bordered my-4">
-                        <tr class="alert alert-info p-4">
+                        <tr class="p-4">
                             <td colspan="6">Sorry! No data found</td>
                         </tr>
                     </table>

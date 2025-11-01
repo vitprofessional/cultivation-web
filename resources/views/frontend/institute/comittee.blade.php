@@ -54,11 +54,11 @@ $config =App\Models\ServerConfig::first()
 
                 @endforeach
             @else
-            <table class="table table-bordered">
-                <tr class="alert alert-info p-4">
-                    <td colspan="6">Sorry! No data found</td>
-                </tr>
-            </table>
+                <table class="table table-bordered my-4">
+                    <tr class="p-4">
+                        <td colspan="6">Sorry! No data found</td>
+                    </tr>
+                </table>
             @endif  
          </div>
     </div>

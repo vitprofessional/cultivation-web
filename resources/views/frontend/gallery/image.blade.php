@@ -31,7 +31,7 @@ Memorable Moment
             @endforeach
          </div>
         @else
-        <div class="alert alert-info col-8 mx-auto">Sorry! No content available right now</div>
+            <div class="p-2 alert-info col-8 mx-auto">Sorry! No content available right now</div>
         @endif
     </div>
 </section>
