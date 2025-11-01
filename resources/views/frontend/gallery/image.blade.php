@@ -39,26 +39,28 @@ Memorable Moment
     </div>
     
     <div class="row">
-        @if($Datakey->count() > 0) 
-            @foreach($Datakey as $data)
-                <div class="col-lg-4 col-md-6 col-sm-12 gallery-item">
-                    <a class="wow fadeIn animated" 
-                       data-wow-delay=".60s" 
-                       href="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}" 
-                       data-lightbox="mygallery">
-                        <img src="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}" 
-                             alt="Gallery Image" 
-                             class="img-fluid w-100" />
-                    </a>
+        <div class="col-10">
+            @if($Datakey->count() > 0) 
+                @foreach($Datakey as $data)
+                    <div class="col-lg-4 col-md-6 col-sm-12 gallery-item">
+                        <a class="wow fadeIn animated" 
+                        data-wow-delay=".60s" 
+                        href="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}" 
+                        data-lightbox="mygallery">
+                            <img src="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}" 
+                                alt="Gallery Image" 
+                                class="img-fluid w-100" />
+                        </a>
+                    </div>
+                @endforeach
+            @else
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        Sorry! No content available right now
+                    </div>
                 </div>
-            @endforeach
-        @else
-            <div class="col-12">
-                <div class="alert alert-info text-center">
-                    Sorry! No content available right now
-                </div>
-            </div>
-        @endif
+            @endif
+        </div>
     </div>
 </section>
 
