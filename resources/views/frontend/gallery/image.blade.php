@@ -39,7 +39,7 @@ Memorable Moment
     </div>
     
     <div class="row">
-        <div class="col-10">
+        <div class="col-10 mx-auto d-flex flex-wrap justify-content-between">
             @if($Datakey->count() > 0) 
                 @foreach($Datakey as $data)
                     <div class="col-lg-4 col-md-6 col-sm-12 gallery-item">
