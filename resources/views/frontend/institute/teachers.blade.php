@@ -47,7 +47,7 @@ $config =App\Models\ServerConfig::first()
          <div class="col-10 mx-auto table-responsive">
                 @if($Datakey->count()>0) 
                 @foreach($Datakey as $data)
-                    <table class="table table-bordered my-4">
+                    <table class="table table-bordered my-4 d-none d-md-table">
                         @if(!empty($data->avatar))
                         <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/teacher/{{ $data->avatar }}"></td>
                         @else
@@ -72,7 +72,38 @@ $config =App\Models\ServerConfig::first()
                             </table>
                         </td>
                     </table>
-
+                    
+                    <table class="table table-bordered my-4 d-table d-md-none">
+                        <tr>
+                        @if(!empty($data->avatar))
+                        <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/teacher/{{ $data->avatar }}"></td>
+                        @else
+                        <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/avatar.png"></td>
+                        @endif
+                        </tr>
+                        <tr>
+                        <td style="width:90%">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th style="width:15%">Name</th>
+                                    <td colspan="3">: {{$data->firstName}} {{$data->lastName}}</td>
+                                </tr>
+                                <tr>
+                                    <th style="width:15%">Designation</th>
+                                    <td colspan="3">: {{ \App\Models\TeacherManagement::getDesignationName($data->designation) }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="width:15%">Mobile</th>
+                                    <td style="width:35%">: {{$data->mobile}}</td>
+                                </tr>
+                                <tr>
+                                    <th style="width:15%">Email</th>
+                                    <td style="width:35%">: {{$data->email}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                        </tr>
+                    </table>
                 @endforeach
                 @else
                     <table class="table table-bordered my-4">
