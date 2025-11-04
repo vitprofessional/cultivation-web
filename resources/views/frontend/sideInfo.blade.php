@@ -2,7 +2,7 @@
         $config = \App\Models\ServerConfig::first();
     @endphp
     <div class="list-group rounded-0 border border-success">
-        <div class="p-2 bg-success h5"><i class="fa-regular fa-user-graduate"></i> Principal</div>
+        <div class="p-2 bg-success h5"><i class="fa-regular fa-user-graduate"></i> Principal/Head Master</div>
         <div class="p-2 text-center">
             @if($config)
                 @if(!empty($config->avatar)) 
