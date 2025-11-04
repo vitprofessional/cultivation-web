@@ -19,7 +19,7 @@ $config =App\Models\ServerConfig::first()
  <section class="container mt-4">
     <div class="row">
         <div class="col-md-12 text-center con-title my-4">
-            <h2 class="hedingAbout wow fadeInLeft animated" data-wow-delay=".60s"><span>Let's have a look the Governing Body of <span>@if(!empty($config->institueName)){{ $config->institueName }}@else Jahanara Ayub Academy @endif</span></span> </h2>
+            <h2 class="hedingAbout wow fadeInLeft animated" data-wow-delay=".60s"><span>Let's have a look the Governing Body of <span>@if(!empty($config->instituteName)){{ $config->instituteName }}@else Jahanara Ayub Academy @endif</span></span> </h2>
         </div>
     </div>
     <div class="row align-items-center">
