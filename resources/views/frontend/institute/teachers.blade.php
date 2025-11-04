@@ -76,29 +76,29 @@ $config =App\Models\ServerConfig::first()
                     <table class="table table-bordered my-4 d-table d-md-none">
                         <tr>
                         @if(!empty($data->avatar))
-                        <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/teacher/{{ $data->avatar }}"></td>
+                        <td><img  class="w-50 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/teacher/{{ $data->avatar }}"></td>
                         @else
-                        <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/avatar.png"></td>
+                        <td><img  class="w-50 img-thumbnail" src="{{ env('APP_URL') }}/public/avatar.png"></td>
                         @endif
                         </tr>
                         <tr>
-                        <td style="width:90%">
+                        <td>
                             <table class="table table-bordered">
                                 <tr>
                                     <th style="width:15%">Name</th>
-                                    <td colspan="3">: {{$data->firstName}} {{$data->lastName}}</td>
+                                    <td  style="width:85%">: {{$data->firstName}} {{$data->lastName}}</td>
                                 </tr>
                                 <tr>
                                     <th style="width:15%">Designation</th>
-                                    <td colspan="3">: {{ \App\Models\TeacherManagement::getDesignationName($data->designation) }}</td>
+                                    <td style="width:85%">: {{ \App\Models\TeacherManagement::getDesignationName($data->designation) }}</td>
                                 </tr>
                                 <tr>
                                     <th style="width:15%">Mobile</th>
-                                    <td style="width:35%">: {{$data->mobile}}</td>
+                                    <td style="width:85%">: {{$data->mobile}}</td>
                                 </tr>
                                 <tr>
                                     <th style="width:15%">Email</th>
-                                    <td style="width:35%">: {{$data->email}}</td>
+                                    <td style="width:85%">: {{$data->email}}</td>
                                 </tr>
                             </table>
                         </td>
