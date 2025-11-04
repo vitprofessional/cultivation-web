@@ -37,7 +37,7 @@ Our Staff Panel
                             </tr>
                             <tr>
                                 <th style="width:15%">Designation</th>
-                                <td colspan="3">: {{$data->designation}}</td>
+                                <td colspan="3">: {{ \App\Models\StaffManagement::getDesignationName($data->designation) }}</td>
                             </tr>
                             <tr>
                                 <th style="width:15%">Mobile</th>

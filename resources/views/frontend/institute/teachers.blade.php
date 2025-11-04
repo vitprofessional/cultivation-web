@@ -40,7 +40,7 @@ $config =App\Models\ServerConfig::first()
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-12 text-center con-title mt-4">
-            <h2 class="wow fadeInLeft animated my-4" data-wow-delay=".60s"> Let's have a look of <span>@if(!empty($config->institueName)){{ $config->institueName }}@else Jahanara Ayub Academy @endif</span> Teachers</h2>
+            <h2 class="wow fadeInLeft animated my-4" data-wow-delay=".60s"> Let's have a look of <span>@if(!empty($config->instituteName)){{ $config->instituteName }}@else Jahanara Ayub Academy @endif</span> Teachers</h2>
        </div>
     </div>
     <div class="row align-items-center">
@@ -61,7 +61,7 @@ $config =App\Models\ServerConfig::first()
                                 </tr>
                                 <tr>
                                     <th style="width:15%">Designation</th>
-                                    <td colspan="3">: @if($data->designation==1) Principal @elseif($data->designation==2) Principal(Incharge) @elseif($data->designation==3) Vice Principal @else Teacher @endif</td>
+                                    <td colspan="3">: {{ \App\Models\TeacherManagement::getDesignationName($data->designation) }}</td>
                                 </tr>
                                 <tr>
                                     <th style="width:15%">Mobile</th>
