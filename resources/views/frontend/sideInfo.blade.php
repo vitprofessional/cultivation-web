@@ -6,7 +6,7 @@
         <div class="p-2 text-center">
             @if($config)
                 @if(!empty($config->avatar)) 
-                <img class="w-75 rounded" height="350px" alt="Principal" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $config->avatar }}" />
+                <img class="w-75 rounded border border-secondary img-thumbnail shadow" height="350px" alt="Principal" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $config->avatar }}" />
                 @else
                 <img class="w-75" alt="Principal" src="{{ env('APP_URL') }}/public/avatar.png" />
                 @endif
@@ -14,7 +14,7 @@
                 <p class="fw-bold mb-2">{{$config->principalDesignation}}</p>
                 <a class="btn btn-success btn-sm" href="{{ route('principalSpeechPage') }}"> Details </a>
             @else
-                <img class="w-75 img-thumbnail shadow" alt="Principal" src="{{ env('APP_URL') }}/public/avatar.png" />
+                <img class="w-75 rounded border border-secondary img-thumbnail shadow" alt="Principal" src="{{ env('APP_URL') }}/public/avatar.png" />
                 <p class="fw-bold my-2">Engr. Abu Yousuf</p>
                 <p class="fw-bold">Principal</p>
                 <a class="btn btn-success btn-sm mb-4" href="#"> Details </a>
