@@ -709,7 +709,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('supportPage')}}">
-                                    <i class="fa-solid fa-telephone me-2"></i> Support
+                                    <i class="fa-solid fa-headset me-2"></i> Support
                                 </a>
                             </li>
                         </ul>

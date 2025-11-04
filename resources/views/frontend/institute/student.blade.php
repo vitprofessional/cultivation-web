@@ -30,7 +30,7 @@ body {
                     <div class="card-header">
                         Student List
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                 <table id="myTable" class="display border" >
                     <thead>
                         <tr>

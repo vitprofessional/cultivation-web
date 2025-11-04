@@ -44,7 +44,7 @@ $config =App\Models\ServerConfig::first()
        </div>
     </div>
     <div class="row align-items-center">
-         <div class="col-10 mx-auto">
+         <div class="col-10 mx-auto table-responsive">
                 @if($Datakey->count()>0) 
                 @foreach($Datakey as $data)
                     <table class="table table-bordered my-4">
