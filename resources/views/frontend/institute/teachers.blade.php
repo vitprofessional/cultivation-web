@@ -74,7 +74,7 @@ $config =App\Models\ServerConfig::first()
                     </table>
                     
                     <table class="table table-bordered my-4 d-table d-md-none">
-                        <tr>
+                        <tr class="text-center">
                         @if(!empty($data->avatar))
                         <td><img  class="w-50 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/teacher/{{ $data->avatar }}"></td>
                         @else
@@ -86,19 +86,19 @@ $config =App\Models\ServerConfig::first()
                             <table class="table table-bordered">
                                 <tr>
                                     <th style="width:15%">Name</th>
-                                    <td  style="width:85%">: {{$data->firstName}} {{$data->lastName}}</td>
+                                    <td  style="width:85%"> {{$data->firstName}} {{$data->lastName}}</td>
                                 </tr>
                                 <tr>
                                     <th style="width:15%">Designation</th>
-                                    <td style="width:85%">: {{ \App\Models\TeacherManagement::getDesignationName($data->designation) }}</td>
+                                    <td style="width:85%">{{ \App\Models\TeacherManagement::getDesignationName($data->designation) }}</td>
                                 </tr>
                                 <tr>
                                     <th style="width:15%">Mobile</th>
-                                    <td style="width:85%">: {{$data->mobile}}</td>
+                                    <td style="width:85%">{{$data->mobile}}</td>
                                 </tr>
                                 <tr>
                                     <th style="width:15%">Email</th>
-                                    <td style="width:85%">: {{$data->email}}</td>
+                                    <td style="width:85%">{{$data->email}}</td>
                                 </tr>
                             </table>
                         </td>
