@@ -74,11 +74,11 @@ $config =App\Models\ServerConfig::first()
                     </table>
                     
                     <table class="table table-bordered my-4 d-table d-md-none">
-                        <tr class="text-center">
+                        <tr>
                         @if(!empty($data->avatar))
-                        <td><img  class="w-50 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/teacher/{{ $data->avatar }}"></td>
+                        <td class="text-center"><img  class="w-50 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/teacher/{{ $data->avatar }}"></td>
                         @else
-                        <td><img  class="w-50 img-thumbnail" src="{{ env('APP_URL') }}/public/avatar.png"></td>
+                        <td class="text-center"><img  class="w-50 img-thumbnail" src="{{ env('APP_URL') }}/public/avatar.png"></td>
                         @endif
                         </tr>
                         <tr>
