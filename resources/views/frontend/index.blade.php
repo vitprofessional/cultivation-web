@@ -30,7 +30,7 @@ Enter to learn & Leave to serve
                         @if($noticeBoard->count()>0)
                         @foreach($noticeBoard as $notice)
                         <li>
-                            <a href="#"><i class="fa-thin fa-hand-point-right"></i> $notice->headline</a>
+                            <a href="#"><i class="fa-thin fa-hand-point-right"></i>{{ $notice->headline }}</a>
                         </li>
                         @endforeach
                         @else
