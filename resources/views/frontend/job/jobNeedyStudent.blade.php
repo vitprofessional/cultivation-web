@@ -12,6 +12,15 @@ Needy Students
         </div>
         <div class="row">
             <div class="col-md-12">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 
                 @error('attachment')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -22,21 +31,21 @@ Needy Students
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
 
-                @if(Session::get('success'))
+                                @if(session('success'))
                   <div class="alert alert-success">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <i class="material-icons">close</i>
                     </button>
-                    <span>{!! Session::get('success') !!}</span>
+                                        <span>{{ session('success') }}</span>
                   </div>
                 @endif
                 
-                @if(Session::get('error'))
+                                @if(session('error'))
                   <div class="alert alert-warning">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <i class="material-icons">close</i>
                     </button>
-                    <span>{!! Session::get('error') !!}</span>
+                                        <span>{{ session('error') }}</span>
                   </div>
                 @endif 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -66,13 +75,13 @@ Needy Students
                                     </thead>
                                     <tbody>
                                         @if(!empty($Datakey))
-                                        @foreach($Datakey as $data)
+                                                                                @foreach($Datakey as $data)
                                         <tr>
-                                            <td class="d-none">{!!$data->id!!}</td>
-                                            <td>{!!$data->fullName!!}</td>
-                                            <td>{!!$data->sessionYear!!}</td>
-                                            <td>{!!$data->rollNumber!!}</td>
-                                            <td><img class="w-50" src="{{ env('APP_URL') }}/public/upload/image/neddyStudent/{{ $data->attachment }}" alt="{!! $data->fullName !!}" style="max-height:120px !important"></td>
+                                                                                        <td class="d-none">{{ $data->id }}</td>
+                                                                                        <td>{{ $data->fullName }}</td>
+                                                                                        <td>{{ $data->sessionYear }}</td>
+                                                                                        <td>{{ $data->rollNumber }}</td>
+                                                                                        <td><img class="w-50" src="{{ asset('upload/image/neddyStudent/' . rawurlencode(basename($data->attachment))) }}" alt="{{ $data->fullName }}" style="max-height:120px !important"></td>
                                             <td>
                                                 <a href="#" class="text-success my-2" data-bs-toggle="modal" data-bs-target="#getData{{ $data->id }}" >
                                                     <i class="fa fa-eye" style="color: green;"></i>
@@ -82,12 +91,12 @@ Needy Students
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <p class="modal-title fs-5" id="staticBackdropLabel">CV of {{ $data->fullName }}</p>
+                <p class="modal-title fs-5" id="staticBackdropLabel">CV of {{ $data->fullName }}</p>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
             <div class="text-center">
-                <embed class="w-100" height="550px" src="{{ asset('public/upload/image/neddyStudent/').'/'.$data->attachment}}" alt="{!! $data->fullName !!}"></embed>
+                                <embed class="w-100" height="550px" src="{{ asset('upload/image/neddyStudent/' . rawurlencode(basename($data->attachment))) }}" title="CV of {{ $data->fullName }}"></embed>
             </div>
       </div>
       <div class="modal-footer">
@@ -107,8 +116,14 @@ Needy Students
                     </div>
                     <div class="tab-pane fade card rounded-0" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                         <div class="card-body">
-                            <form class="form row" method="POST" action="{{route('saveNeedyStdPanel')}}" enctype="multipart/form-data">
+                            <form class="form row" method="POST" action="{{ route('saveNeedyStdPanel') }}" enctype="multipart/form-data" novalidate>
                                 @csrf
+                                <!-- Honeypot fields to catch bots -->
+                                <div class="d-none" aria-hidden="true">
+                                    <label for="website">Website</label>
+                                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                                </div>
+                                <input type="hidden" name="form_ts" value="{{ time() }}">
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3">
                                         <label for="fullName">Full Name</label>
@@ -116,7 +131,7 @@ Needy Students
                                     </div>
                                     <div class="mb-3">
                                         <label for="rollNumber">Roll Number</label>
-                                        <input type="number" name="rollNumber" class="form-control" placeholder="Enter roll number(*)" minlength="6" maxlength="6" required>
+                                        <input type="text" name="rollNumber" class="form-control" placeholder="Enter roll number(*)" inputmode="numeric" pattern="\d{6}" maxlength="6" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="sessionYear">Session</label>
@@ -136,13 +151,13 @@ Needy Students
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3">
                                         <label for="attachment">CV</label>
-                                        <input type="file" class="form-control" name="attachment" required>
+                                        <input type="file" class="form-control" name="attachment" accept="application/pdf,.pdf" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="mb-3">
                                         <label for="avatar">Photo</label>
-                                        <input type="file" class="form-control" name="avatar" required>
+                                        <input type="file" class="form-control" name="avatar" accept="image/*" required>
                                     </div>
                                 </div>
                                 <div class="mb-3">

@@ -85,7 +85,7 @@
                 transform: scale(1.05);
             }
 
-            .institute-info {
+            .instituvte-info {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;

@@ -266,53 +266,87 @@ class FrontController extends Controller
     }
     
     public function saveNeedyStdPanel(Request $requ){
-        if(empty($requ->itemId)):
+        // Simple honeypot check
+        if($requ->filled('website')){
+            return back()->with('error','Invalid submission detected.');
+        }
+
+        // Time-based submission check (too fast is suspicious)
+        $formTs = (int) $requ->input('form_ts', 0);
+        if($formTs > 0 && (time() - $formTs) < 2){
+            return back()->with('error','Please wait a moment before submitting.');
+        }
+
+        // Basic content check to avoid obvious spam/scam inputs
+        foreach (['fullName','sessionYear'] as $field) {
+            $val = (string) $requ->input($field, '');
+            if (stripos($val, 'http://') !== false || stripos($val, 'https://') !== false) {
+                return back()->with('error','Links are not allowed in this form.');
+            }
+        }
+
+        // Validate inputs strictly
+        $validated = $requ->validate([
+            'fullName'     => ['required','string','min:2','max:100'],
+            'email'        => ['required','email:rfc,dns','max:150'],
+            'mobile'       => ['required','regex:/^\+?[0-9]{10,15}$/'],
+            'sessionYear'  => ['required','string','min:4','max:20'],
+            'rollNumber'   => ['required','digits:6'],
+            'avatar'       => ['required','image','mimes:jpeg,png,jpg,gif,webp,avif','max:5120'],
+            'attachment'   => ['required','mimes:pdf','max:5120'],
+        ],[
+            'mobile.regex'      => 'Mobile must be 10-15 digits, optionally starting with +',
+            'rollNumber.digits' => 'Roll number must be exactly 6 digits',
+            'avatar.image'      => 'Photo must be an image file',
+            'attachment.mimes'  => 'CV must be a PDF file',
+        ]);
+
+        // Prepare model
+        if(empty($requ->itemId)){
             $item   = new needyStudentPanel();
-        else:
+        } else {
             $item   = needyStudentPanel::find($requ->itemId);
-        endif;
+            if(!$item){
+                return back()->with('error','Record not found.');
+            }
+        }
 
-        $item->fullName            = $requ->fullName;
-        $item->mobile              = $requ->mobile;
-        $item->email               = $requ->email;
-        $item->sessionYear         = $requ->sessionYear;
-        $item->rollNumber          = $requ->rollNumber;
-        if(!empty($requ->avatar)):
-            $validated = $requ->validate([
-                    'avatar' => 'required|mimes:pdf,jpeg,png,jpg,gif,webp,avif,|max:5120',
-                     // max 5 MB
-                ],[
-                    'avatar.mimes'  => 'Allowed formats: PDF, JPEG, PNG, JPG, GIF, WEBP, AVIF.',
-                    'avatar.max'    => 'Each file must be less than 5MB.'
-                ]);
+        // Assign sanitized values
+        $item->fullName    = trim(strip_tags($requ->fullName));
+        $item->mobile      = trim($requ->mobile);
+        $item->email       = trim(strtolower($requ->email));
+        $item->sessionYear = trim(strip_tags($requ->sessionYear));
+        $item->rollNumber  = trim($requ->rollNumber);
+
+        // Ensure upload directory exists
+        $uploadDir = public_path('upload/image/neddyStudent/');
+        if(!File::exists($uploadDir)){
+            File::makeDirectory($uploadDir, 0755, true);
+        }
+
+        // Save avatar (photo)
+        if($requ->hasFile('avatar')){
             $stdAvatar = $requ->file('avatar');
-            $newAvatar = rand().date('Ymd').'.'.$stdAvatar->getClientOriginalExtension();
-            $stdAvatar->move(public_path('upload/image/neddyStudent/'),$newAvatar);
-
+            $extA = strtolower($stdAvatar->getClientOriginalExtension());
+            $newAvatar = (string) \Illuminate\Support\Str::uuid().'.'.$extA;
+            $stdAvatar->move($uploadDir, $newAvatar);
             $item->avatar = $newAvatar;
-        endif;
+        }
 
-        if(!empty($requ->attachment)):
-            $validated = $requ->validate([
-                    'attachment' => 'required|mimes:pdf,jpeg,png,jpg,gif,webp,avif,|max:5120',
-                     // max 5 MB
-                ],[
-                    'attachment.mimes'  => 'Allowed formats: PDF, JPEG, PNG, JPG, GIF, WEBP, AVIF.',
-                    'attachment.max'    => 'Each file must be less than 5MB.'
-                ]);
+        // Save CV (PDF)
+        if($requ->hasFile('attachment')){
             $stdAttachment = $requ->file('attachment');
-            $newAttachment = rand().date('Ymd').'.'.$stdAttachment->getClientOriginalExtension();
-            $stdAttachment->move(public_path('upload/image/neddyStudent/'),$newAttachment);
-
+            $extC = strtolower($stdAttachment->getClientOriginalExtension());
+            $newAttachment = (string) \Illuminate\Support\Str::uuid().'.'.$extC;
+            $stdAttachment->move($uploadDir, $newAttachment);
             $item->attachment = $newAttachment;
-        endif;
-        // $item->status        = $requ->status;
+        }
 
-        if($item->save()):
+        if($item->save()){
             return back()->with('success','Item successfully saved');
-        else:
+        } else {
             return back()->with('error','Item failed to save');
-        endif;
+        }
     }
     
 }

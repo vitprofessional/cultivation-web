@@ -127,7 +127,7 @@ Route::post('placementCell/save',[
 Route::post('jobNeedyStudentPanel/save',[
     FrontController::class ,
     'saveNeedyStdPanel'
-])->name('saveNeedyStdPanel');
+])->middleware('throttle:10,1')->name('saveNeedyStdPanel');
 
 
     //web font end
