@@ -891,12 +891,93 @@
             </div>
             @endif
         </footer>
+        
+        <!-- Global Notice View Modal -->
+        <div class="modal fade" id="noticeModal" tabindex="-1" aria-labelledby="noticeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fa-regular fa-bullhorn"></i>
+                            <h5 class="modal-title mb-0" id="noticeModalLabel">Notice</h5>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <button id="noticePrintBtn" type="button" class="btn btn-light btn-sm">
+                                <i class="fa-regular fa-print"></i> Print
+                            </button>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="modal-body p-0">
+                        <!-- A4 styled sheet for notice -->
+                        <div id="noticeSheet" class="notice-sheet bg-white">
+                            <div class="ns-header text-center position-relative">
+                                <div class="ns-logo mx-auto mb-2">
+                                    @if(!empty($config->logo))
+                                        <img src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo">
+                                    @else
+                                        <img src="{{ asset('/public/') }}/logo.png" alt="Logo">
+                                    @endif
+                                </div>
+                                <h3 class="ns-title mb-1">@if(!empty($config->instituteName)) {{ $config->instituteName }} @else Institute Name @endif</h3>
+                                <div class="ns-meta">
+                                    <span><i class="fa-regular fa-location-dot"></i> @if(!empty($config->address)){{ $config->address }}@else Address @endif</span>
+                                    <span class="ms-3"><i class="fa-regular fa-phone"></i> @if(!empty($config->officeMobile)){{ $config->officeMobile }}@endif</span>
+                                    <span class="ms-3"><i class="fa-regular fa-envelope"></i> @if(!empty($config->officeEmail)){{ $config->officeEmail }}@endif</span>
+                                </div>
+                            </div>
+                            <hr class="my-2">
+                            <h4 class="text-center fw-bold my-3">NOTICE</h4>
+                            <h5 id="noticeSheetTitle" class="text-center mb-2"></h5>
+                            <div class="ns-date-abs text-end small">
+                                <div>Date:
+                                <span id="noticeSheetDate">—</span>
+                                </div>
+                            </div>
+                            <div id="noticeModalBody" class="ns-content"></div>
+                            <div id="noticeAttachmentPreview" class="mt-3 d-none"></div>
+                            <div class="ns-sign mt-5">
+                                <div class="text-end">
+                                    <div class="ns-sign-line"></div>
+                                    <div class="fw-semibold">Authorized Signature</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="noticePdfBtn" type="button" class="btn btn-success">
+                            <i class="fa-regular fa-file-pdf me-1"></i> Download PDF
+                        </button>
+                        <a id="noticeAttachmentBtn" href="#" class="btn btn-outline-success d-none" target="_blank" rel="noopener">
+                            <i class="fa-regular fa-file-arrow-down me-1"></i> Attachment
+                        </a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <style>
+            /* Notice sheet (A4-like) */
+            .notice-sheet{width:100%;max-width:850px;margin:0 auto;padding:24px 28px;color:#212529;position:relative}
+            .notice-sheet .ns-header{position:relative}
+            .notice-sheet .ns-header .ns-date-abs{position:absolute;right:0;bottom:-6px;top:auto}
+            .notice-sheet .ns-header img{width:70px;height:70px;object-fit:contain}
+            .notice-sheet .ns-title{font-size:1.25rem}
+            .notice-sheet .ns-meta{font-size:.9rem;color:#6c757d}
+            .notice-sheet .ns-content{font-size:1rem;line-height:1.7}
+            .notice-sheet .ns-sign{page-break-inside: avoid}
+            .notice-sheet .ns-sign-line{width:220px;border-bottom:2px solid #6c757d;height:24px;margin-left:auto}
+            @media print{ body *{visibility:hidden} #noticeSheet, #noticeSheet *{visibility:visible} #noticeSheet{position:absolute;left:0;top:0;margin:0;padding:0;width:100%} }
+        </style>
     
-        <script src="{{ asset('/public/') }}/assets/js/jquery-1.9.1.min.js"></script>   
+    <script src="{{ asset('/public/') }}/assets/js/jquery-1.9.1.min.js"></script>   
     
         <script src="{{ asset('/public/') }}/owl-carousel/owl.carousel.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="{{asset('/public/')}}/lightbox/js/bootstrap.min.js"></script>
+    <!-- html2pdf for Notice PDF download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-YcsIPoQkWjz2pHnqG0d0T8b0Xf7YkIFyvJd0kUXU+q8sSezgs9HhK5qWQkUOybC+I6q4YV2s3Zs1q7QGqKqR3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
         <!--Fancybox-->
@@ -916,6 +997,209 @@
                     items: 4,
                     itemsDesktop: [1199, 3],
                     itemsDesktopSmall: [979, 3],
+                });
+
+                // Notice modal wiring (works for marquee and notice list)
+                $(document).on('click', '.notice-view', function (e) {
+                    e.preventDefault();
+                    const title = $(this).data('title') || 'Notice';
+                    let body = $(this).data('body') || '';
+                    const body64 = $(this).data('body64') || '';
+                    const date = $(this).data('date') || '';
+                    const attachment = $(this).data('attachment') || '';
+                    const attachType = (attachment && attachment.split('.').pop() || '').toLowerCase();
+
+                    // Prefer base64 body to safely carry HTML and decode as UTF-8
+                    function decodeBase64Utf8(b64){
+                        try {
+                            const binary = atob(b64);
+                            const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+                            if (window.TextDecoder) {
+                                return new TextDecoder('utf-8').decode(bytes);
+                            }
+                            // Fallback for very old browsers
+                            return decodeURIComponent(escape(binary));
+                        } catch (e) {
+                            return '';
+                        }
+                    }
+                    if(body64 && typeof body64 === 'string'){
+                        const decoded = decodeBase64Utf8(body64);
+                        if(decoded) body = decoded;
+                    }
+
+                    // If body is plain text (no HTML tags), preserve new lines
+                    if(body && !/<[a-z][\s\S]*>/i.test(body)){
+                        body = String(body).replace(/\r?\n/g, '<br>');
+                    }
+
+                    $('#noticeModalLabel').text(title);
+                    $('#noticeSheetTitle').text(title);
+                    $('#noticeSheetDate').text(date);
+                    if (body && body.length) {
+                        $('#noticeModalBody').html(body);
+                    } else {
+                        $('#noticeModalBody').html('<em>No additional details provided.</em>');
+                    }
+
+                    if (attachment && attachment.length) {
+                        $('#noticeAttachmentBtn').attr('href', attachment).removeClass('d-none');
+                        // inline preview for images/pdf
+                        let previewHtml = '';
+                        if(['jpg','jpeg','png','webp','gif','avif'].includes(attachType)){
+                            previewHtml = `<img src="${attachment}" alt="attachment" class="img-fluid rounded border">`;
+                        } else if(attachType === 'pdf'){
+                            previewHtml = `<iframe src="${attachment}" style="width:100%;height:70vh" frameborder="0"></iframe>`;
+                        }
+                        if(previewHtml){
+                            $('#noticeAttachmentPreview').html(previewHtml).removeClass('d-none');
+                        } else {
+                            $('#noticeAttachmentPreview').addClass('d-none').empty();
+                        }
+                    } else {
+                        $('#noticeAttachmentBtn').addClass('d-none').attr('href', '#');
+                        $('#noticeAttachmentPreview').addClass('d-none').empty();
+                    }
+
+                    const modalEl = document.getElementById('noticeModal');
+                    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                    modal.show();
+                });
+
+                // Print current notice
+                $('#noticePrintBtn').on('click', function(){
+                    printNoticeSheet();
+                });
+
+                $('#noticePdfBtn').on('click', function(){
+                    downloadNoticePdf();
+                });
+
+                function printNoticeSheet(){
+                    const sheetEl = document.getElementById('noticeSheet');
+                    if(!sheetEl) return;
+                    const win = window.open('', '_blank');
+                    const styles = `
+                        <style>
+                        body{margin:0;padding:0;background:#fff;color:#212529;font-family:Roboto,Arial,Helvetica,sans-serif}
+                        .notice-sheet{width:210mm;max-height:297mm;margin:0 auto;padding:18mm 16mm;box-sizing:border-box;overflow:hidden}
+                        .ns-header{text-align:center;position:relative}
+                        .ns-header img{width:70px;height:70px;object-fit:contain}
+                        .ns-date-abs{position:absolute;right:0;bottom:-6px;top:auto;text-align:right;font-size:12px}
+                        .ns-title{font-size:18px;margin:4px 0 0 0;font-weight:700}
+                        .ns-meta{font-size:11px;color:#6c757d;margin-top:2px}
+                        h4{text-transform:uppercase;letter-spacing:1px;margin:10px 0}
+                        .ns-content{font-size:13px;line-height:1.6;white-space:pre-wrap}
+                        #noticeAttachmentPreview{display:none !important}
+                        .ns-sign{margin-top:28px;page-break-inside: avoid}
+                        .ns-sign-line{width:220px;border-bottom:2px solid #6c757d;height:24px;margin-left:auto}
+                        @page{size:A4;margin:0}
+                        </style>`;
+                    // Give the printed sheet a stable id for scaling logic
+                    const printable = sheetEl.cloneNode(true);
+                    printable.id = 'printSheet';
+                    win.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Notice</title>${styles}</head><body></body></html>`);
+                    win.document.body.appendChild(printable);
+                    win.document.close();
+                    win.focus();
+                    // Auto-scale to fit exactly one A4 page
+                    (function(){
+                        try{
+                            const ref = win.document.createElement('div');
+                            ref.style.width = '1mm';
+                            ref.style.height = '0';
+                            win.document.body.appendChild(ref);
+                            const pxPerMm = ref.getBoundingClientRect().width || 3.78; // fallback
+                            ref.remove();
+                            const pageW = 210 * pxPerMm;
+                            const pageH = 297 * pxPerMm;
+                            const el = win.document.getElementById('printSheet');
+                            // Measure after a tick to allow layout
+                            setTimeout(()=>{
+                                const elW = el.scrollWidth;
+                                const elH = el.scrollHeight;
+                                const scale = Math.min(pageW / elW, pageH / elH, 1);
+                                el.style.transformOrigin = 'top left';
+                                el.style.transform = `scale(${scale})`;
+                                // Ensure page size
+                                win.document.body.style.width = '210mm';
+                                win.document.body.style.height = '297mm';
+                                setTimeout(()=>{ win.print(); win.close(); }, 200);
+                            }, 50);
+                        }catch(e){
+                            setTimeout(()=>{ win.print(); win.close(); }, 200);
+                        }
+                    })();
+                }
+
+                function ensureHtml2Pdf(){
+                    return new Promise((resolve,reject)=>{
+                        if(typeof html2pdf !== 'undefined'){ resolve(true); return; }
+                        const s = document.createElement('script');
+                        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+                        s.onload = ()=> resolve(true);
+                        s.onerror = ()=> reject(new Error('Failed to load pdf lib'));
+                        document.head.appendChild(s);
+                    });
+                }
+
+                function downloadNoticePdf(){
+                    const el = document.getElementById('noticeSheet');
+                    if(!el) return;
+                    ensureHtml2Pdf().then(()=>{
+                        // Clone and scale to fit one page
+                        const wrapper = document.createElement('div');
+                        const clone = el.cloneNode(true);
+                        // Remove attachment preview for PDF
+                        const prev = clone.querySelector('#noticeAttachmentPreview');
+                        if(prev){ prev.remove(); }
+                        clone.style.margin = '0';
+                        clone.style.boxSizing = 'border-box';
+                        clone.style.width = '210mm';
+                        clone.style.padding = '18mm 16mm';
+                        clone.id = 'pdfSheet';
+                        wrapper.appendChild(clone);
+                        document.body.appendChild(wrapper);
+
+                        // Compute scale to keep single page (A4)
+                        const mmRef = document.createElement('div');
+                        mmRef.style.width = '1mm';
+                        mmRef.style.height = '0';
+                        document.body.appendChild(mmRef);
+                        const pxPerMm = mmRef.getBoundingClientRect().width || 3.78;
+                        mmRef.remove();
+                        const pageW = 210 * pxPerMm;
+                        const pageH = 297 * pxPerMm;
+                        const elW = clone.scrollWidth;
+                        const elH = clone.scrollHeight;
+                        const scale = Math.min(pageW / elW, pageH / elH, 1);
+                        clone.style.transformOrigin = 'top left';
+                        clone.style.transform = `scale(${scale})`;
+                        // html2pdf: generate from wrapper
+                        const opt = {
+                            margin: 0,
+                            filename: (document.getElementById('noticeModalLabel')?.textContent || 'notice') + '.pdf',
+                            image: { type: 'jpeg', quality: 0.98 },
+                            html2canvas: { scale: 2, useCORS: true },
+                            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                            pagebreak: { mode: ['avoid-all','css','legacy'] }
+                        };
+                        html2pdf().set(opt).from(wrapper).save().then(()=>{
+                            wrapper.remove();
+                        }).catch(()=>{
+                            wrapper.remove();
+                        });
+                    }).catch(()=>{
+                        // fallback: open print dialog (user can save as PDF)
+                        printNoticeSheet();
+                    });
+                }
+
+                // Ensure body scroll restores after modal closed
+                document.getElementById('noticeModal').addEventListener('hidden.bs.modal', function(){
+                    $('#noticeAttachmentPreview').addClass('d-none').empty();
+                    $('body').removeClass('modal-open').css('overflow','');
+                    $('.modal-backdrop').remove();
                 });
             });
         </script>

@@ -30,7 +30,16 @@ Enter to learn & Leave to serve
                         @if($noticeBoard->count()>0)
                         @foreach($noticeBoard as $notice)
                         <li>
-                            <a href="#"><i class="fa-thin fa-hand-point-right"></i>{{ $notice->headline }}</a>
+                            @php($__nb = ($notice->body ?? $notice->details ?? $notice->description ?? ''))
+                            <a href="#"
+                               class="notice-view"
+                               data-title="{{ $notice->headline }}"
+                               data-body64="{{ base64_encode($__nb) }}"
+                               data-date="{{ optional($notice->created_at)->format('d M Y') }}"
+                               data-attachment="{{ !empty($notice->attachment) ? env('APP_URL').'/public/upload/image/notice/'.$notice->attachment : '' }}"
+                               data-attachtype="{{ !empty($notice->attachment) ? strtolower(pathinfo($notice->attachment, PATHINFO_EXTENSION)) : '' }}">
+                                <i class="fa-thin fa-hand-point-right"></i>{{ $notice->headline }}
+                            </a>
                         </li>
                         @endforeach
                         @else
@@ -62,7 +71,7 @@ Enter to learn & Leave to serve
                             <p class="h4">{{$insData->mission}}</p>
                         </blockquote>
                     </figure>
-                    <div class="alert alert-success">{{$insData->vision}}</div>
+                    <div class="p-2 text-success">{{$insData->vision}}</div>
                 </div>
             </div>
         </div>
@@ -83,7 +92,7 @@ Enter to learn & Leave to serve
                             <p class="h4">when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
                         </blockquote>
                     </figure>
-                    <div class="alert alert-success">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+                    <div class="p-2 text-success">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
                 </div>
             </div>
         </div>
@@ -97,8 +106,23 @@ Enter to learn & Leave to serve
             <div class="bg-success p-2 notice-box my-2">
                 <div class="row align-items-center">
                     <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> {{ $ntc->created_at->format('d M Y') }}</div>
-                    <div class="col-8 mx-auto">{{ $ntc->headline }}</div>
-                    <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
+                    <div class="col-7 mx-auto">{{ $ntc->headline }}</div>
+                    <div class="col-3 mx-auto text-end">
+            @php($__nb2 = ($ntc->body ?? $ntc->details ?? $ntc->description ?? ''))
+            <button class="btn btn-light btn-sm notice-view"
+                data-title="{{ $ntc->headline }}"
+                data-body64="{{ base64_encode($__nb2) }}"
+                data-date="{{ optional($ntc->created_at)->format('d M Y') }}"
+                data-attachment="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/upload/image/notice/'.$ntc->attachment : '' }}"
+                data-attachtype="{{ !empty($ntc->attachment) ? strtolower(pathinfo($ntc->attachment, PATHINFO_EXTENSION)) : '' }}">
+                            <i class="fa-regular fa-eye"></i> View
+                        </button>
+                        <a class="btn btn-outline-light btn-sm {{ empty($ntc->attachment) ? 'disabled' : '' }}" target="_blank"
+                           href="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/upload/image/notice/'.$ntc->attachment : '#' }}"
+                           aria-disabled="{{ empty($ntc->attachment) ? 'true' : 'false' }}">
+                            <i class="fa-light fa-down-to-bracket"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             @endforeach
