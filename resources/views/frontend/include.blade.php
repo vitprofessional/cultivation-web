@@ -854,7 +854,7 @@
                                 }
                             }
                         @endphp
-                        <p class="fw-bold">Copyright &copy; @php echo date('Y'); @endphp | All Rights Reserved {{$config->instituteName}} </p>
+                        <p class="fw-bold">Copyright &copy; {{ $estYear }}-@php echo date('Y'); @endphp | All Rights Reserved {{$config->instituteName}} </p>
                     </div>
                 </div>
             </div>
