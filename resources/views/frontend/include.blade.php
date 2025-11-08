@@ -532,7 +532,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <div class="header-content">
+                        <div class="header-content text-center">
                             <!-- Logo on the left -->
                             <div class="header-logo">
                                 @if(!empty($config->logo))
