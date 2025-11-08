@@ -118,6 +118,12 @@ Route::get('/contact-us',[
     'supportPage'
 ])->name('supportPage');
 
+// All Notices page
+Route::get('/notices', [
+    FrontController::class,
+    'allNotices'
+])->name('allNotices');
+
 Route::post('placementCell/save',[
     FrontController::class ,
     'savePlacementCell'

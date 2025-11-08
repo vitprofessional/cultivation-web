@@ -919,27 +919,30 @@
                                         <img src="{{ asset('/public/') }}/logo.png" alt="Logo">
                                     @endif
                                 </div>
-                                <h3 class="ns-title mb-1">@if(!empty($config->instituteName)) {{ $config->instituteName }} @else Institute Name @endif</h3>
+                                <h2 class="ns-title mb-1">@if(!empty($config->instituteName)) {{ $config->instituteName }} @else Institute Name @endif</h2>
                                 <div class="ns-meta">
-                                    <span><i class="fa-regular fa-location-dot"></i> @if(!empty($config->address)){{ $config->address }}@else Address @endif</span>
-                                    <span class="ms-3"><i class="fa-regular fa-phone"></i> @if(!empty($config->officeMobile)){{ $config->officeMobile }}@endif</span>
-                                    <span class="ms-3"><i class="fa-regular fa-envelope"></i> @if(!empty($config->officeEmail)){{ $config->officeEmail }}@endif</span>
+                                    <h3><i class="fa-regular fa-location-dot"></i> @if(!empty($config->address)){{ $config->address }}@else Address @endif</h3>
+                                    <h4 class="ms-3"><i class="fa-regular fa-phone"></i> @if(!empty($config->officeMobile)){{ $config->officeMobile }}@endif</h4>
+                                    <h4 class="ms-3"><i class="fa-regular fa-envelope"></i> @if(!empty($config->officeEmail)){{ $config->officeEmail }}@endif</h4>
+                                </div>
+                                <div class="ns-date-abs text-end small">
+                                    <div>Date: <span id="noticeSheetDate">—</span></div>
                                 </div>
                             </div>
                             <hr class="my-2">
-                            <h4 class="text-center fw-bold my-3">NOTICE</h4>
+                            <h4 id="noticeSheetHeading" class="text-center fw-bold my-3">NOTICE</h4>
                             <h5 id="noticeSheetTitle" class="text-center mb-2"></h5>
-                            <div class="ns-date-abs text-end small">
-                                <div>Date:
-                                <span id="noticeSheetDate">—</span>
-                                </div>
-                            </div>
                             <div id="noticeModalBody" class="ns-content"></div>
                             <div id="noticeAttachmentPreview" class="mt-3 d-none"></div>
-                            <div class="ns-sign mt-5">
+                            <div id="noticeSignWrap" class="ns-sign mt-5">
                                 <div class="text-end">
+                                    @if(!empty($config) && !empty($config->principalSign))
+                                        <div class="mb-1">
+                                            <img src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ rawurlencode(basename($config->principalSign)) }}" alt="Authorized Signature" style="max-height:60px;max-width:220px;object-fit:contain;margin-right: 3rem !important;margin-bottom: -1.5rem;">
+                                        </div>
+                                    @endif
                                     <div class="ns-sign-line"></div>
-                                    <div class="fw-semibold">Authorized Signature</div>
+                                    <div class="fw-semibold" style="margin-right: 2rem !important;">Authorized Signature</div>
                                 </div>
                             </div>
                         </div>
@@ -961,9 +964,11 @@
             /* Notice sheet (A4-like) */
             .notice-sheet{width:100%;max-width:850px;margin:0 auto;padding:24px 28px;color:#212529;position:relative}
             .notice-sheet .ns-header{position:relative}
-            .notice-sheet .ns-header .ns-date-abs{position:absolute;right:0;bottom:-6px;top:auto}
+            .notice-sheet .ns-header .ns-date-abs{position:absolute;right:0;bottom:-6px;top:auto;text-align:right;font-size:.8rem}
             .notice-sheet .ns-header img{width:70px;height:70px;object-fit:contain}
-            .notice-sheet .ns-title{font-size:1.25rem}
+            .notice-sheet .ns-title{font-size:1.75rem;font-family: 'Roboto', sans-serif;}
+            .notice-sheet .ns-meta h3{font-size:1.25rem;font-family: 'Roboto', sans-serif;}
+            .notice-sheet .ns-meta h4{font-size:1rem;font-family: 'Roboto', sans-serif;}
             .notice-sheet .ns-meta{font-size:.9rem;color:#6c757d}
             .notice-sheet .ns-content{font-size:1rem;line-height:1.7}
             .notice-sheet .ns-sign{page-break-inside: avoid}
@@ -983,6 +988,9 @@
         <!--Fancybox-->
         <script src="{{ asset('/') }}public/lightbox/fancybox/jquery.fancybox.min.js"></script>
         <script>
+            // Base URL for building absolute paths (falls back to url('/'))
+            let APP_URL = {!! json_encode(env('APP_URL') ?: url('/')) !!};
+            APP_URL = (APP_URL || '').replace(/\/+$/,'');
             $(document).ready(function() {
                 $(".alert").fadeTo(2000, 500).slideUp(500, function() {
                     $(".alert").slideUp(500);
@@ -1007,7 +1015,36 @@
                     const body64 = $(this).data('body64') || '';
                     const date = $(this).data('date') || '';
                     const attachment = $(this).data('attachment') || '';
-                    const attachType = (attachment && attachment.split('.').pop() || '').toLowerCase();
+
+                    // Safely resolve attachment path under APP_URL/public/upload/notice/
+                    function safeBasename(p){
+                        try{
+                            if(!p) return '';
+                            p = String(p);
+                            // strip query/hash
+                            p = p.split('?')[0].split('#')[0];
+                            // normalize separators
+                            p = p.replace(/\\/g,'/');
+                            const parts = p.split('/');
+                            return parts.pop();
+                        }catch(_){
+                            return '';
+                        }
+                    }
+
+                    let attachmentPath = '';
+                    if (attachment && attachment.length) {
+                        const isAbsolute = /^(?:https?:)?\/\//i.test(attachment) || /^data:/i.test(attachment);
+                        if (isAbsolute) {
+                            attachmentPath = attachment;
+                        } else {
+                            const fname = safeBasename(attachment);
+                            if (fname) {
+                                attachmentPath = APP_URL + '/public/upload/notice/' + encodeURIComponent(fname);
+                            }
+                        }
+                    }
+                    const attachType = (attachmentPath && attachmentPath.split('.').pop() || '').toLowerCase();
 
                     // Prefer base64 body to safely carry HTML and decode as UTF-8
                     function decodeBase64Utf8(b64){
@@ -1042,14 +1079,18 @@
                         $('#noticeModalBody').html('<em>No additional details provided.</em>');
                     }
 
-                    if (attachment && attachment.length) {
-                        $('#noticeAttachmentBtn').attr('href', attachment).removeClass('d-none');
+                    if (attachmentPath && attachmentPath.length) {
+                        // Hide heading and print button when attachment data present
+                        $('#noticeSheetHeading').addClass('d-none');
+                        $('#noticePrintBtn').addClass('d-none');
+                        $('#noticeSignWrap').addClass('d-none');
+                        $('#noticeAttachmentBtn').attr('href', attachmentPath).removeClass('d-none');
                         // inline preview for images/pdf
                         let previewHtml = '';
                         if(['jpg','jpeg','png','webp','gif','avif'].includes(attachType)){
-                            previewHtml = `<img src="${attachment}" alt="attachment" class="img-fluid rounded border">`;
+                            previewHtml = `<img src="${attachmentPath}" alt="attachment" class="img-fluid rounded border">`;
                         } else if(attachType === 'pdf'){
-                            previewHtml = `<iframe src="${attachment}" style="width:100%;height:70vh" frameborder="0"></iframe>`;
+                            previewHtml = `<iframe src="${attachmentPath}" style="width:100%;height:70vh" frameborder="0"></iframe>`;
                         }
                         if(previewHtml){
                             $('#noticeAttachmentPreview').html(previewHtml).removeClass('d-none');
@@ -1057,6 +1098,10 @@
                             $('#noticeAttachmentPreview').addClass('d-none').empty();
                         }
                     } else {
+                        // Restore heading and print button when no attachment
+                        $('#noticeSheetHeading').removeClass('d-none');
+                        $('#noticePrintBtn').removeClass('d-none');
+                        $('#noticeSignWrap').removeClass('d-none');
                         $('#noticeAttachmentBtn').addClass('d-none').attr('href', '#');
                         $('#noticeAttachmentPreview').addClass('d-none').empty();
                     }
@@ -1075,9 +1120,31 @@
                     downloadNoticePdf();
                 });
 
-                function printNoticeSheet(){
+                async function inlineNoticeImages(root){
+                    const imgs = root.querySelectorAll('.ns-header img, .ns-sign img');
+                    const tasks = Array.from(imgs).map(async (img)=>{
+                        try{
+                            const url = img.getAttribute('src');
+                            if(!url || url.startsWith('data:')) return;
+                            const res = await fetch(url, {cache:'no-cache'});
+                            if(!res.ok) return;
+                            const blob = await res.blob();
+                            const reader = new FileReader();
+                            const dataUrl = await new Promise((resolve)=>{
+                                reader.onload = ()=> resolve(reader.result);
+                                reader.readAsDataURL(blob);
+                            });
+                            img.setAttribute('src', dataUrl);
+                        }catch(e){ /* ignore */ }
+                    });
+                    await Promise.all(tasks);
+                }
+
+                async function printNoticeSheet(){
                     const sheetEl = document.getElementById('noticeSheet');
                     if(!sheetEl) return;
+                    const printable = sheetEl.cloneNode(true);
+                    await inlineNoticeImages(printable);
                     const win = window.open('', '_blank');
                     const styles = `
                         <style>
@@ -1086,19 +1153,28 @@
                         .ns-header{text-align:center;position:relative}
                         .ns-header img{width:70px;height:70px;object-fit:contain}
                         .ns-date-abs{position:absolute;right:0;bottom:-6px;top:auto;text-align:right;font-size:12px}
+                        .notice-sheet .ns-title{font-size:1.75rem;font-family: 'Roboto', sans-serif;}
+                        .notice-sheet .ns-meta h3{font-size:1.25rem;font-family: 'Roboto', sans-serif;}
+                        .notice-sheet .ns-meta h4{font-size:1rem;font-family: 'Roboto', sans-serif;}
                         .ns-title{font-size:18px;margin:4px 0 0 0;font-weight:700}
                         .ns-meta{font-size:11px;color:#6c757d;margin-top:2px}
                         h4{text-transform:uppercase;letter-spacing:1px;margin:10px 0}
                         .ns-content{font-size:13px;line-height:1.6;white-space:pre-wrap}
                         #noticeAttachmentPreview{display:none !important}
                         .ns-sign{margin-top:28px;page-break-inside: avoid}
+                        .ns-sign img{max-height:70px;max-width:220px;object-fit:contain}
                         .ns-sign-line{width:220px;border-bottom:2px solid #6c757d;height:24px;margin-left:auto}
                         @page{size:A4;margin:0}
                         </style>`;
                     // Give the printed sheet a stable id for scaling logic
-                    const printable = sheetEl.cloneNode(true);
+                    
                     printable.id = 'printSheet';
-                    win.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Notice</title>${styles}</head><body></body></html>`);
+                    win.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Notice</title>
+                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+                        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500;700;900&family=Skranji&display=swap" rel="stylesheet">
+                        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
+                        ${styles}
+                        </head><body></body></html>`);
                     win.document.body.appendChild(printable);
                     win.document.close();
                     win.focus();
@@ -1143,7 +1219,7 @@
                     });
                 }
 
-                function downloadNoticePdf(){
+                async function downloadNoticePdf(){
                     const el = document.getElementById('noticeSheet');
                     if(!el) return;
                     ensureHtml2Pdf().then(()=>{
@@ -1153,42 +1229,46 @@
                         // Remove attachment preview for PDF
                         const prev = clone.querySelector('#noticeAttachmentPreview');
                         if(prev){ prev.remove(); }
-                        clone.style.margin = '0';
-                        clone.style.boxSizing = 'border-box';
-                        clone.style.width = '210mm';
-                        clone.style.padding = '18mm 16mm';
-                        clone.id = 'pdfSheet';
-                        wrapper.appendChild(clone);
-                        document.body.appendChild(wrapper);
+                        const runPdf = async ()=>{
+                            await inlineNoticeImages(clone);
+                            clone.style.margin = '0';
+                            clone.style.boxSizing = 'border-box';
+                            clone.style.width = '210mm';
+                            clone.style.padding = '18mm 16mm';
+                            clone.id = 'pdfSheet';
+                            wrapper.appendChild(clone);
+                            document.body.appendChild(wrapper);
 
-                        // Compute scale to keep single page (A4)
-                        const mmRef = document.createElement('div');
-                        mmRef.style.width = '1mm';
-                        mmRef.style.height = '0';
-                        document.body.appendChild(mmRef);
-                        const pxPerMm = mmRef.getBoundingClientRect().width || 3.78;
-                        mmRef.remove();
-                        const pageW = 210 * pxPerMm;
-                        const pageH = 297 * pxPerMm;
-                        const elW = clone.scrollWidth;
-                        const elH = clone.scrollHeight;
-                        const scale = Math.min(pageW / elW, pageH / elH, 1);
-                        clone.style.transformOrigin = 'top left';
-                        clone.style.transform = `scale(${scale})`;
-                        // html2pdf: generate from wrapper
-                        const opt = {
-                            margin: 0,
-                            filename: (document.getElementById('noticeModalLabel')?.textContent || 'notice') + '.pdf',
-                            image: { type: 'jpeg', quality: 0.98 },
-                            html2canvas: { scale: 2, useCORS: true },
-                            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                            pagebreak: { mode: ['avoid-all','css','legacy'] }
+                            // Compute scale to keep single page (A4)
+                            const mmRef = document.createElement('div');
+                            mmRef.style.width = '1mm';
+                            mmRef.style.height = '0';
+                            document.body.appendChild(mmRef);
+                            const pxPerMm = mmRef.getBoundingClientRect().width || 3.78;
+                            mmRef.remove();
+                            const pageW = 210 * pxPerMm;
+                            const pageH = 297 * pxPerMm;
+                            const elW = clone.scrollWidth;
+                            const elH = clone.scrollHeight;
+                            const scale = Math.min(pageW / elW, pageH / elH, 1);
+                            clone.style.transformOrigin = 'top left';
+                            clone.style.transform = `scale(${scale})`;
+                            // html2pdf: generate from wrapper
+                            const opt = {
+                                margin: 0,
+                                filename: (document.getElementById('noticeModalLabel')?.textContent || 'notice') + '.pdf',
+                                image: { type: 'jpeg', quality: 0.98 },
+                                html2canvas: { scale: 2, useCORS: true },
+                                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                                pagebreak: { mode: ['avoid-all','css','legacy'] }
+                            };
+                            html2pdf().set(opt).from(wrapper).save().then(()=>{
+                                wrapper.remove();
+                            }).catch(()=>{
+                                wrapper.remove();
+                            });
                         };
-                        html2pdf().set(opt).from(wrapper).save().then(()=>{
-                            wrapper.remove();
-                        }).catch(()=>{
-                            wrapper.remove();
-                        });
+                        runPdf();
                     }).catch(()=>{
                         // fallback: open print dialog (user can save as PDF)
                         printNoticeSheet();
@@ -1198,6 +1278,10 @@
                 // Ensure body scroll restores after modal closed
                 document.getElementById('noticeModal').addEventListener('hidden.bs.modal', function(){
                     $('#noticeAttachmentPreview').addClass('d-none').empty();
+                    // Reset visibility state
+                    $('#noticeSheetHeading').removeClass('d-none');
+                    $('#noticePrintBtn').removeClass('d-none');
+                    $('#noticeSignWrap').removeClass('d-none');
                     $('body').removeClass('modal-open').css('overflow','');
                     $('.modal-backdrop').remove();
                 });

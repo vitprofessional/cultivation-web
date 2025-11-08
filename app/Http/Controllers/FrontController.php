@@ -91,7 +91,12 @@ class FrontController extends Controller
          $insData  =   InstituteDetails::first();
          $notice  =   Notice::orderBy('id','desc')->limit(5)->get();
          $slider = HomeSlider::orderBy('ID','DESC')->limit(5)->get();
-        return view('frontend.index',['insData'=>$insData,'noticeBoard'=>$notice,'sliderData'=>$slider,'gallery'=>$photo,]);
+        return view('frontend.index',[
+            'insData'=>$insData,
+            'noticeBoard'=>$notice,
+            'sliderData'=>$slider,
+            'gallery'=>$photo,
+        ]);
     }
 
     public function visitor(Request $request) {
@@ -102,6 +107,13 @@ class FrontController extends Controller
         $ip = $request->ip();
 
         return view('visitor', compact('todayVisitors', 'totalVisitors', 'ip'));
+    }
+
+    // All notices listing page
+    public function allNotices(){
+        // Paginate for performance if large dataset
+        $notices = Notice::orderBy('id','desc')->paginate(15);
+        return view('frontend.notice.all',[ 'notices' => $notices ]);
     }
 
     

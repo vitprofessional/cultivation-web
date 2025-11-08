@@ -36,7 +36,7 @@ Enter to learn & Leave to serve
                                data-title="{{ $notice->headline }}"
                                data-body64="{{ base64_encode($__nb) }}"
                                data-date="{{ optional($notice->created_at)->format('d M Y') }}"
-                               data-attachment="{{ !empty($notice->attachment) ? env('APP_URL').'/public/upload/image/notice/'.$notice->attachment : '' }}"
+                               data-attachment="{{ !empty($notice->attachment) ? env('APP_URL').'/public/'.$notice->attachment : '' }}"
                                data-attachtype="{{ !empty($notice->attachment) ? strtolower(pathinfo($notice->attachment, PATHINFO_EXTENSION)) : '' }}">
                                 <i class="fa-thin fa-hand-point-right"></i>{{ $notice->headline }}
                             </a>
@@ -113,12 +113,12 @@ Enter to learn & Leave to serve
                 data-title="{{ $ntc->headline }}"
                 data-body64="{{ base64_encode($__nb2) }}"
                 data-date="{{ optional($ntc->created_at)->format('d M Y') }}"
-                data-attachment="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/upload/image/notice/'.$ntc->attachment : '' }}"
+                data-attachment="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '' }}"
                 data-attachtype="{{ !empty($ntc->attachment) ? strtolower(pathinfo($ntc->attachment, PATHINFO_EXTENSION)) : '' }}">
                             <i class="fa-regular fa-eye"></i> View
                         </button>
                         <a class="btn btn-outline-light btn-sm {{ empty($ntc->attachment) ? 'disabled' : '' }}" target="_blank"
-                           href="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/upload/image/notice/'.$ntc->attachment : '#' }}"
+                           href="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '#' }}"
                            aria-disabled="{{ empty($ntc->attachment) ? 'true' : 'false' }}">
                             <i class="fa-light fa-down-to-bracket"></i>
                         </a>
@@ -163,7 +163,7 @@ Enter to learn & Leave to serve
                 </div>
             </div>
             @endif
-            <a href="#" class="btn btn-primary rounded-0">All Notice</a>
+            <a href="{{ route('allNotices') }}" class="btn btn-primary rounded-0">All Notice</a>
         </div>
         <div class="row g-0 d-none d-md-block">
             <div class="col-12 mx-auto my-4 row">
