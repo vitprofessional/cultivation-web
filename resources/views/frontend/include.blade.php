@@ -838,10 +838,10 @@
                         <p><span class="fw-bold text-center text-md-start">Planning and Implementation:</span> Principal   ({{$config->instituteName}})</p>
                     </div>
                     <div class="col-md-6 col-12 text-center text-md-end">
-                        <p><span class="fw-bold">Powered By:</span> Cultivation(Version 0.0.5) by Virtual IT Professional</p>
+                        <p><span class="fw-bold">Powered By:</span> Cultivation(Version 1.0.2) by Virtual IT Professional</p>
                     </div>
                     <div class="col-12 text-center">
-                        <p class="fw-bold">Copyright &copy; 2000-@php echo date('Y'); @endphp | All Rights Reserved {{$config->instituteName}} </p>
+                        <p class="fw-bold">Copyright &copy; {{$config->establishDate}}-@php echo date('Y'); @endphp | All Rights Reserved {{$config->instituteName}} </p>
                     </div>
                 </div>
             </div>
