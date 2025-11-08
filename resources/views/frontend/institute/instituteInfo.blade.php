@@ -59,7 +59,14 @@ $config =App\Models\ServerConfig::first()
                  </p>
                  <h4>Establish Date</h4>
                  <p class="wow fadeIn animated" data-wow-delay="1s" >  
-                 {{$data->establishDate}}</p>
+                 @php
+                    $aboutEstYear='';
+                    if(!empty($data->establishDate)){
+                        try { $aboutEstYear = \Carbon\Carbon::parse($data->establishDate)->format('Y'); }
+                        catch(Exception $e){ if(preg_match('/(19|20)\d{2}/',$data->establishDate,$m)){ $aboutEstYear = $m[0]; } }
+                    }
+                 @endphp
+                 {{$aboutEstYear}}</p>
                  <h4>Total Area</h4>
                  <p class="wow fadeIn animated" data-wow-delay="1s" >  
                  {{$data->landSize}}</p>

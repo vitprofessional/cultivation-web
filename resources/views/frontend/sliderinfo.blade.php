@@ -73,7 +73,14 @@
                             </div>
                             <div class="details-box-content">
                                 <h3>Founded</h3>
-                                <p>{{$insInfo->establishDate}}</p>
+                                @php
+                                    $foundedYear = '';
+                                    if(!empty($insInfo->establishDate)){
+                                        try { $foundedYear = \Carbon\Carbon::parse($insInfo->establishDate)->format('Y'); }
+                                        catch(Exception $e){ if(preg_match('/(19|20)\d{2}/',$insInfo->establishDate,$m)){ $foundedYear = $m[0]; } }
+                                    }
+                                @endphp
+                                <p>{{ $foundedYear }}</p>
                             </div>
                         </div>
                     </div>

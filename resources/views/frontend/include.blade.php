@@ -841,7 +841,20 @@
                         <p><span class="fw-bold">Powered By:</span> Cultivation(Version 1.0.2) by Virtual IT Professional</p>
                     </div>
                     <div class="col-12 text-center">
-                        <p class="fw-bold">Copyright &copy; {{$config->establishDate}}-@php echo date('Y'); @endphp | All Rights Reserved {{$config->instituteName}} </p>
+                        @php
+                            $estYear = '';
+                            if(!empty($config) && !empty($config->establishDate)){
+                                try {
+                                    $estYear = \Carbon\Carbon::parse($config->establishDate)->format('Y');
+                                } catch (Exception $e) {
+                                    // Fallback: extract first 4 consecutive digits as year
+                                    if(preg_match('/(19|20)\d{2}/', $config->establishDate, $m)){
+                                        $estYear = $m[0];
+                                    }
+                                }
+                            }
+                        @endphp
+                        <p class="fw-bold">Copyright &copy; {{ $estYear }}-@php echo date('Y'); @endphp | All Rights Reserved {{$config->instituteName}} </p>
                     </div>
                 </div>
             </div>
