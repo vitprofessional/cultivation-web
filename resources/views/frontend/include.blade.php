@@ -515,15 +515,14 @@
         max-width: 150px !important;
     }
 }
-            /* Mobile menu button */
-            .btn-success {
+            /* Mobile menu button override (scoped only to header toggle) */
+            .header-top .btn.btn-success {
                 background-color: rgba(255,255,255,0.1) !important;
                 border: 1px solid rgba(255,255,255,0.3) !important;
                 color: #fff !important;
             }
-
-            .btn-success:hover,
-            .btn-success:focus {
+            .header-top .btn.btn-success:hover,
+            .header-top .btn.btn-success:focus {
                 background-color: rgba(255,255,255,0.2) !important;
                 border-color: rgba(255,255,255,0.5) !important;
                 color: #fff !important;
