@@ -52,7 +52,7 @@ class StudentController extends Controller
                 ],
                 'sort'   => [
                     'by'  => $request->query('sort', 'classid'),
-                    'dir' => strtolower($request->query('dir','asc'))
+                    'dir' => strtolower($request->query('dir','desc'))
                 ]
             ]
         ]);
@@ -266,9 +266,9 @@ class StudentController extends Controller
      */
     protected function resolveSort(Request $request): array
     {
-        // default to class id ascending if not provided
-        $dir = strtolower($request->query('dir','asc'));
-        $dir = in_array($dir, ['asc','desc'], true) ? $dir : 'asc';
+    // default to class id DESC if not provided
+    $dir = strtolower($request->query('dir','desc'));
+    $dir = in_array($dir, ['asc','desc'], true) ? $dir : 'desc';
 
         $key = strtolower($request->query('sort','classid'));
 
