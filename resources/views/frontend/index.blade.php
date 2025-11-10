@@ -27,7 +27,12 @@ Enter to learn & Leave to serve
 .infobox .card-header{border:0}
 .list-group-item{border:0; padding-left: 0}
 .list-group-item i{color:#198754}
-.section-band{background:#f8f9fa;border-radius:.5rem;padding:1rem 1.25rem}
+.section-band{background:#f8f9fa;border-radius:.6rem;padding:1.25rem 1.5rem;margin-bottom:2rem;box-shadow:0 2px 4px rgba(0,0,0,.04)}
+.section-band:last-of-type{margin-bottom:0}
+.section-band h2.home-section-title{margin-bottom:1rem}
+.home-section-title + .text-muted-intro{margin-top:-.5rem;margin-bottom:1rem;font-size:.9rem;color:#6c757d}
+.section-tight > *:last-child{margin-bottom:0!important}
+.info-cluster.section-band{padding-top:1rem}
 .metric-icon{transform:scale(.9);opacity:.6;transition:transform .6s ease, opacity .6s ease}
 .metric-icon.in{transform:scale(1);opacity:1}
 </style>
@@ -105,54 +110,44 @@ Enter to learn & Leave to serve
         </div>
         
         @if($insData)
-        <div class="col-12 mx-auto my-2">
-            <h2>{{$insData->insHeadline}}</h2>
-            <p class="text-justify">{{ \Illuminate\Support\Str::limit($insData->insDetails, 750, '...') }} <a href="#">Readmore</a></p>
-        </div>
-        <!-- mission & vission -->
-        <div class="col-12 mx-auto my-4">
-            <div class="card rounded-0">
-                <div class="card-header rounded-0 bg-success text-white h5">
-                    Mission & Vission
-                </div>
-                <div class="card-body">
-                    <figure class="text-center">
-                        <blockquote class="blockquote">
-                            <p class="h4">{{$insData->mission}}</p>
+        <div class="col-12 mx-auto section-band section-tight">
+            <h2 class="home-section-title mb-2">{{ $insData->insHeadline }}</h2>
+            <p class="text-justify mb-3">{{ \Illuminate\Support\Str::limit($insData->insDetails, 750, '...') }} <a href="#">Read more</a></p>
+            <div class="card border-0 shadow-sm mb-0">
+                <div class="card-header bg-success text-white py-2 h5 mb-0">Mission & Vision</div>
+                <div class="card-body pb-3 pt-3">
+                    <figure class="text-center mb-3">
+                        <blockquote class="blockquote mb-0">
+                            <p class="h5 fw-semibold mb-0">{{ $insData->mission }}</p>
                         </blockquote>
                     </figure>
-                    <div class="p-2 text-success">{{$insData->vision}}</div>
+                    <div class="text-success small">{{ $insData->vision }}</div>
                 </div>
             </div>
         </div>
         @else
-        <div class="col-12 mx-auto my-2">
-            <h2>Welcome to Jahanara-Ayub Academy</h2>
-            <p class="text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing..... <a href="#">Readmore</a></p>
-        </div>
-        <!-- mission & vission -->
-        <div class="col-12 mx-auto my-4">
-            <div class="card rounded-0">
-                <div class="card-header rounded-0 bg-success text-white h5">
-                    Mission & Vission
-                </div>
-                <div class="card-body">
-                    <figure class="text-center">
-                        <blockquote class="blockquote">
-                            <p class="h4">when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+        <div class="col-12 mx-auto section-band section-tight">
+            <h2 class="home-section-title mb-2">Welcome to Jahanara-Ayub Academy</h2>
+            <p class="text-justify mb-3">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s... <a href="#">Read more</a></p>
+            <div class="card border-0 shadow-sm mb-0">
+                <div class="card-header bg-success text-white py-2 h5 mb-0">Mission & Vision</div>
+                <div class="card-body pb-3 pt-3">
+                    <figure class="text-center mb-3">
+                        <blockquote class="blockquote mb-0">
+                            <p class="h5 fw-semibold mb-0">When an unknown printer took a galley of type and scrambled it to make a type specimen book...</p>
                         </blockquote>
                     </figure>
-                    <div class="p-2 text-success">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+                    <div class="text-success small">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</div>
                 </div>
             </div>
         </div>
         @endif
 
         <!-- Institute metrics block below slider using partial -->
-        <div class="col-12 mx-auto mb-5 section-band">
+        <div class="col-12 mx-auto section-band">
             @include('frontend.partials.instituteStats')
         </div>
-        <div class="row g-0 d-none d-md-block section-band py-3 mb-4">
+        <div class="row g-0 d-none d-md-block section-band info-cluster py-3">
             <div class="col-12 mx-auto my-4 row">
                 <!-- info box start here -->
                 <div class="col-6 mx-auto my-4 infobox">
