@@ -1015,16 +1015,19 @@
                     $(".alert").slideUp(500);
                 });
             });
-            $(document).ready(function () {
+                $(document).ready(function () {
                 $("#myTable").DataTable({
                     order: [[0, "asc"]],
                 });
-                $("#owl-demo").owlCarousel({
-                    autoPlay: 3000,
-                    items: 4,
-                    itemsDesktop: [1199, 3],
-                    itemsDesktopSmall: [979, 3],
-                });
+                    // Default Owl init (skips if page marks it customized)
+                    if($("#owl-demo").length && !$("#owl-demo").data('owlCustomized')){
+                        $("#owl-demo").owlCarousel({
+                            autoPlay: 3000,
+                            items: 4,
+                            itemsDesktop: [1199, 4],
+                            itemsDesktopSmall: [979, 3]
+                        });
+                    }
 
                 // Notice modal wiring (works for marquee and notice list)
                 $(document).on('click', '.notice-view', function (e) {

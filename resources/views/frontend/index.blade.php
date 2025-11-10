@@ -245,7 +245,7 @@ Enter to learn & Leave to serve
                     <a href="{{ route('imagePage') }}" class="btn btn-outline-success btn-sm">View All</a>
                 </div>
                 <div class="card-body pt-3">
-                    <div id="owl-demo" class="owl-carousel owl-theme" aria-label="Campus photo highlights">
+                    <div id="owl-demo" class="owl-carousel owl-theme" aria-label="Campus photo highlights" data-owl-customized="1">
             @if($gallery->count()>0) 
                 @foreach($gallery as $data)
                         <div class="item">
@@ -375,29 +375,25 @@ document.addEventListener('DOMContentLoaded', function(){
             loadBtn.remove();
         });
     }
-    // Enhance Owl Carousel options for homepage gallery
+    // Enhance Owl Carousel options for homepage gallery (Owl v1)
     if(window.jQuery && $('#owl-demo').length){
-        $('#owl-demo').trigger('destroy.owl.carousel'); // ensure clean re-init if already initialized
         $('#owl-demo').owlCarousel({
             items: 4,
-            loop: true,
-            margin: 12,
-            autoplay: true,
-            autoplayTimeout: 3500,
-            autoplayHoverPause: true,
-            smartSpeed: 650,
-            nav: true,
-            dots: true,
-            navText: [
+            autoPlay: 3500,
+            stopOnHover: true,
+            slideSpeed: 650,
+            paginationSpeed: 450,
+            navigation: true,
+            pagination: true,
+            navigationText: [
                 '<span class="fa fa-chevron-left"></span>',
                 '<span class="fa fa-chevron-right"></span>'
             ],
-            responsive: {
-                0: { items: 1 },
-                480: { items: 2 },
-                768: { items: 3 },
-                992: { items: 4 }
-            }
+            itemsDesktop: [1199, 4],
+            itemsDesktopSmall: [979, 3],
+            itemsTablet: [768, 3],
+            itemsTabletSmall: [600, 2],
+            itemsMobile: [479, 1]
         });
     }
 });
