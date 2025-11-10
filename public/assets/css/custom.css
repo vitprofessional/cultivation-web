@@ -430,6 +430,11 @@ NO MORE TABLES!! ;)
 .sidebar-links .sidebar-link i{color:#198754;margin-right:.35rem}
 .sidebar-links .sidebar-link:hover{background:#f1f9f4;color:#0d6535;border-radius:4px}
 .sidebar-audio{outline:none}
+.principal-standalone .plain-heading{display:flex;align-items:center;gap:.4rem;font-weight:700;margin-bottom:.5rem}
+.principal-photo{border-radius:.5rem;box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.principal-caption .fw-semibold{font-size:1rem}
+.sidebar-resource-box .subheading{font-weight:600;color:#198754;border-bottom:1px solid #e9ecef;padding-bottom:.25rem;margin-bottom:.5rem}
+.sidebar-list li + li{margin-top:.25rem}
 /* Hover / active states */
 .sidebar-links .sidebar-link{transition:background-color .18s ease,color .18s ease}
 .sidebar-links .sidebar-link:active{background:#e2f3e7;color:#0b5a2f;border-radius:4px}
