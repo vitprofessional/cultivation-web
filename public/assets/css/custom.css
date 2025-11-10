@@ -420,17 +420,19 @@ NO MORE TABLES!! ;)
 
 
 /* ---- Sidebar components (added) ---- */
-.sidebar-card{border:0;box-shadow:0 6px 16px rgba(0,0,0,.06);border-radius:.5rem;background-color:#fff}
-.sidebar-card .card-header{border:0;font-weight:600}
 .avatar-circle{width:140px;height:140px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 4px 16px rgba(0,0,0,.12)}
 @media (max-width: 767.98px){.avatar-circle{width:110px;height:110px;border:3px solid #fff}}
-.sidebar-links .list-group-item{border:0;padding-left:0;font-size:.85rem}
-.sidebar-links .list-group-item i{color:#198754;margin-right:.35rem}
-.sidebar-card audio{outline:none}
+.sidebar-section{border:1px solid #dbe8e1;border-radius:.5rem;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.06)}
+.sidebar-section + .sidebar-section{margin-top:1rem}
+.section-heading{display:flex;align-items:center;gap:.35rem;background:#198754;color:#fff;border-radius:.5rem .5rem 0 0;padding:.5rem .75rem;font-weight:600}
+.principal-card{background:linear-gradient(180deg,#ffffff 0%,#f8fbf9 70%);border-radius:0 0 .5rem .5rem}
+.sidebar-links .sidebar-link{display:block;padding:.35rem 0;color:#212529;text-decoration:none}
+.sidebar-links .sidebar-link i{color:#198754;margin-right:.35rem}
+.sidebar-links .sidebar-link:hover{background:#f1f9f4;color:#0d6535;border-radius:4px}
+.sidebar-audio{outline:none}
 /* Hover / active states */
-.sidebar-links .list-group-item{transition:background-color .18s ease,color .18s ease;padding:.5rem .25rem;border-radius:4px}
-.sidebar-links .list-group-item:hover{background:#f1f9f4;color:#0d6535}
-.sidebar-links .list-group-item:active{background:#e2f3e7;color:#0b5a2f}
+.sidebar-links .sidebar-link{transition:background-color .18s ease,color .18s ease}
+.sidebar-links .sidebar-link:active{background:#e2f3e7;color:#0b5a2f;border-radius:4px}
 
 
 
