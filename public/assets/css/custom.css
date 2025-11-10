@@ -458,12 +458,21 @@ NO MORE TABLES!! ;)
 
 /* ---- Layout & Homepage gaps (added) ---- */
 :root{--navbar-height:90px;--layout-gap:1.75rem;--notice-green:#198754}
+/* Mobile slider gap variable */
+:root{--mobile-slider-gap:1.25rem}
 @media (min-width: 992px){
 	.sidebar-column{margin-top:var(--layout-gap)}
 	.main-content-column{margin-top:var(--layout-gap)}
 }
 @media (max-width: 991.98px){
 	.main-content-column{margin-top:1.25rem}
+}
+/* Slider wrapper spacing */
+@media (max-width: 991.98px){
+	.homepage-slider-wrap{margin-bottom:var(--mobile-slider-gap)}
+}
+@media (min-width: 992px){
+	.homepage-slider-wrap{margin-bottom:var(--layout-gap)}
 }
 
 /* Latest Notice Board (refined responsive design) */

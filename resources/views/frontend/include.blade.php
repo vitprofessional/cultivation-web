@@ -796,7 +796,9 @@
             </div>
         </div>
 
-    @yield('sliderninfo')
+    <div class="homepage-slider-wrap">
+        @yield('sliderninfo')
+    </div>
         <div class="container-fluid">
             <div class="row">
                 @yield('frontcontent')
