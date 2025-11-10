@@ -7,26 +7,12 @@ $config =App\Models\ServerConfig::first()
 @endphp
 @section('frontcontent')
 <style>
-/* Professional student card layout */
-.stu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.1rem;margin-top:1.25rem}
-.stu-card{position:relative;background:#fff;border:1px solid #e8eef5;border-radius:16px;padding:1rem;display:flex;flex-direction:column;box-shadow:0 6px 18px rgba(0,0,0,.06);transition:.26s ease;overflow:hidden}
-.stu-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#0ea5e9 0%,#2563eb 100%);opacity:0;transition:.35s;pointer-events:none;z-index:0}
-.stu-card>*{position:relative;z-index:1}
-.stu-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px -6px rgba(0,0,0,.16)}
-.stu-card:hover::before{opacity:.06}
-.stu-photo-wrap{width:100%;display:flex;justify-content:center;margin-bottom:.6rem}
-.stu-photo{width:clamp(72px,9vw,104px);height:clamp(72px,9vw,104px);aspect-ratio:1/1;border-radius:50%;object-fit:cover;border:4px solid #f3f6f9;box-shadow:0 0 0 2px #0ea5e9;transition:.35s}
-.stu-card:hover .stu-photo{box-shadow:0 0 0 4px #1d4ed8}
-.stu-name{font-size:clamp(.98rem,1.6vw,1.12rem);font-weight:800;margin:0;color:#0f172a}
-.stu-meta{margin-top:.5rem;display:grid;grid-template-columns:1fr;row-gap:6px}
-.stu-meta .row{display:flex;align-items:center;gap:8px;font-size:clamp(.68rem,1vw,.82rem);color:#334155}
-.stu-meta i{color:#0ea5e9;font-size:.9em}
-@media(max-width:575.98px){
-    .stu-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.85rem}
-    .stu-card{padding:.85rem;border-radius:14px}
-}
+    #studentTable_wrapper .dataTables_length select{min-width:70px}
+    #studentTable_wrapper .dataTables_filter input{min-width:180px}
+    table.dataTable tbody tr:hover{background:#f8fafc}
+    .profile-btn{padding:.35rem .6rem;font-size:.7rem;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;border:1px solid #0ea5e9;color:#0ea5e9;background:#fff;transition:.25s}
+    .profile-btn:hover{background:#0ea5e9;color:#fff}
 </style>
-
 <section class="mt-4">
     <div class="container">
         <div class="row">
@@ -34,48 +20,76 @@ $config =App\Models\ServerConfig::first()
                 <h2 class="wow fadeInLeft animated my-4" data-wow-delay=".60s"> Student Details of <span>@if(!empty($config->instituteName)){{ $config->instituteName }}@else Jahanara Ayub Academy @endif</span></h2>
             </div>
         </div>
-
-        @php
-            // Preload lookup maps to avoid repeated queries in loop
-            $sessions = \App\Models\sessionManage::all()->keyBy('id');
-            $classes = \App\Models\classManage::all()->keyBy('id');
-            $sections = \App\Models\sectionManage::all()->keyBy('id');
-            $departments = \App\Models\Department::all()->keyBy('id');
-        @endphp
-
-        @if(!empty($Datakey) && count($Datakey))
-            <div class="stu-grid">
-                @foreach($Datakey as $std)
-                    @php
-                        $fullName = trim(($std->fullName ?? '').' '.($std->sureName ?? ''));
-                        $fullName = $fullName !== '' ? $fullName : 'Unknown';
-                        $sessionName = optional($sessions[$std->sessName] ?? null)->session ?? '-';
-                        $className = optional($classes[$std->className] ?? null)->className ?? '-';
-                        $sectionName = optional($sections[$std->sectionName] ?? null)->section ?? '-';
-                        $deptName = optional($departments[$std->departmentName] ?? null)->departmentName ?? '-';
-                        $photo = !empty($std->avatar)
-                                ? env('APP_URL').'/public/upload/image/student/'.rawurlencode(basename($std->avatar))
-                                : env('APP_URL').'/public/avatar.png';
-                    @endphp
-                    <div class="stu-card">
-                        <div class="stu-photo-wrap">
-                            <img class="stu-photo" src="{{ $photo }}" alt="{{ e($fullName) }}" loading="lazy">
-                        </div>
-                        <h3 class="stu-name">{{ e($fullName) }}</h3>
-                        <div class="stu-meta">
-                            <div class="row"><i class="fa-solid fa-id-badge"></i><span>{{ e($std->stdId ?? '-') }}</span></div>
-                            <div class="row"><i class="fa-solid fa-calendar"></i><span>{{ e($sessionName) }}</span></div>
-                            <div class="row"><i class="fa-solid fa-graduation-cap"></i><span>{{ e($className) }}</span></div>
-                            <div class="row"><i class="fa-solid fa-diagram-project"></i><span>{{ e($deptName) }}</span></div>
-                            <div class="row"><i class="fa-solid fa-people-group"></i><span>{{ e($sectionName) }}</span></div>
-                        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold">Student List (Ordered by Class)</span>
+                        <small class="text-muted">Total: {{ count($Datakey ?? []) }}</small>
                     </div>
-                @endforeach
+                    <div class="card-body table-responsive">
+                        @php
+                            $sessions = \App\Models\sessionManage::all()->keyBy('id');
+                            $classes = \App\Models\classManage::all()->keyBy('id');
+                            $sections = \App\Models\sectionManage::all()->keyBy('id');
+                            $departments = \App\Models\Department::all()->keyBy('id');
+                        @endphp
+                        <table id="studentTable" class="display table table-striped align-middle" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Class</th>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Session</th>
+                                    <th>Department</th>
+                                    <th>Section</th>
+                                    <th>Photo</th>
+                                    <th>Profile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($Datakey as $std)
+                                    @php
+                                        $fullName = trim(($std->fullName ?? '').' '.($std->sureName ?? '')) ?: 'Unknown';
+                                        $sessionName = optional($sessions[$std->sessName] ?? null)->session ?? '-';
+                                        $className = optional($classes[$std->className] ?? null)->className ?? '-';
+                                        $sectionName = optional($sections[$std->sectionName] ?? null)->section ?? '-';
+                                        $deptName = optional($departments[$std->departmentName] ?? null)->departmentName ?? '-';
+                                        $photo = !empty($std->avatar)
+                                                ? env('APP_URL').'/public/upload/image/student/'.rawurlencode(basename($std->avatar))
+                                                : env('APP_URL').'/public/avatar.png';
+                                    @endphp
+                                    <tr>
+                                        <td>{{ e($className) }}</td>
+                                        <td>{{ e($std->stdId) }}</td>
+                                        <td>{{ e($fullName) }}</td>
+                                        <td>{{ e($sessionName) }}</td>
+                                        <td>{{ e($deptName) }}</td>
+                                        <td>{{ e($sectionName) }}</td>
+                                        <td style="width:60px"><img class="img-fluid rounded-circle" style="width:48px;height:48px;object-fit:cover" src="{{ $photo }}" alt="{{ e($fullName) }}" loading="lazy"></td>
+                                        <td><a href="{{ route('student.show',['id'=>$std->id]) }}" class="profile-btn"><i class="fa-regular fa-eye"></i> View</a></td>
+                                    </tr>
+                                @empty
+                                    <tr><td colspan="8" class="text-center text-muted py-4">No student data found</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        @else
-            <div class="alert alert-info my-4">Sorry! No student data found</div>
-        @endif
+        </div>
     </div>
 </section>
-
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    if(window.jQuery && $('#studentTable').length){
+        $('#studentTable').DataTable({
+            order:[[0,'asc']],
+            pageLength:25,
+            responsive:true,
+            columnDefs:[{targets:[6,7],orderable:false}],
+        });
+    }
+});
+</script>
 @endsection

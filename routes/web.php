@@ -92,6 +92,12 @@ Route::get('/principal-speech',[
     'student'
     ])->name('student');
 
+    // student profile detail
+    Route::get('/student/{id}', [
+        FrontController::class,
+        'studentShow'
+    ])->whereNumber('id')->name('student.show');
+
 Route::get('/exPrincipal',[
     FrontController::class,
     'exprincipalPage'

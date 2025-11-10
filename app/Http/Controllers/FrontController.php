@@ -190,6 +190,23 @@ class FrontController extends Controller
         ]);
     }
 
+    // single student profile view
+    public function studentShow($id){
+        $student = newAdmission::findOrFail($id);
+        // related lookups
+        $session = \App\Models\sessionManage::find($student->sessName);
+        $class   = \App\Models\classManage::find($student->className);
+        $section = \App\Models\sectionManage::find($student->sectionName);
+        $dept    = \App\Models\Department::find($student->departmentName);
+        return view('frontend.institute.student-show',[
+            'student'=>$student,
+            'session'=>$session,
+            'class'=>$class,
+            'section'=>$section,
+            'dept'=>$dept,
+        ]);
+    }
+
     //X-principal
     public function exprincipalPage(){
         $syllabus  =   ExPrincipal::all();
