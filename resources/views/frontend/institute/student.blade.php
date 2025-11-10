@@ -84,7 +84,7 @@ $config =App\Models\ServerConfig::first()
 document.addEventListener('DOMContentLoaded',function(){
     if(window.jQuery && $('#studentTable').length){
         $('#studentTable').DataTable({
-            order:[[0,'asc']],
+            order:[[0,'desc']],
             pageLength:25,
             responsive:true,
             columnDefs:[{targets:[6,7],orderable:false}],
