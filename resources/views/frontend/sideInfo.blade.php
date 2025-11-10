@@ -9,9 +9,9 @@
         <div class="text-center">
             <img class="principal-photo w-100 rounded shadow-sm" src="{{ $principalAvatar }}" alt="Principal portrait" loading="lazy">
             <div class="principal-caption mt-2">
-                <div class="fw-semibold">{{ $config->principalName ?? 'Engr. Abu Yousuf' }}</div>
-                <div class="text-muted small">{{ $config->principalDesignation ?? 'Principal' }}</div>
-                <a class="btn btn-outline-success btn-sm mt-2 px-3" href="{{ route('principalSpeechPage') }}">Profile & Speech</a>
+                    <div class="fw-semibold">{{ $config->principalName ?? 'Engr. Abu Yousuf' }}</div>
+                    <div class="text-muted small">{{ $config->principalDesignation ?? 'Principal' }}</div>
+                    <a class="btn btn-success btn-sm mt-2 px-3" href="{{ route('principalSpeechPage') }}">Details</a>
             </div>
         </div>
     </aside>
@@ -38,8 +38,9 @@
     <div class="sidebar-section sidebar-resource-box mb-3" aria-labelledby="resourcesHeading">
         <div class="section-heading" id="resourcesHeading"><i class="fa-solid fa-toolbox me-1"></i> <span>Resources</span></div>
         <div class="px-3 py-2 small">
-            <div class="resource-sub mb-3 sidebar-links">
-                <div class="subheading"><i class="fa-solid fa-globe me-1"></i> Important Links</div>
+        <div class="sidebar-section mb-3 sidebar-links small" aria-labelledby="linksHeading">
+            <div class="section-heading" id="linksHeading"><i class="fa-solid fa-globe me-1"></i> <span>Important Links</span></div>
+            <div class="px-3 pb-2">
                 <ul class="list-unstyled mb-0 sidebar-list link-list">
                     <li><a href="#" class="sidebar-link"> গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</a></li>
                     <li><a href="#" class="sidebar-link"> শিক্ষা মন্ত্রণালয়</a></li>
@@ -51,19 +52,24 @@
                     <li><a href="#" class="sidebar-link"> মাউশি</a></li>
                 </ul>
             </div>
-            <div class="resource-sub mb-3">
-                <div class="subheading"><i class="fa-solid fa-music me-1"></i> National Song</div>
+        </div>
+        <div class="sidebar-section mb-3" aria-labelledby="songHeading">
+            <div class="section-heading" id="songHeading"><i class="fa-solid fa-music me-1"></i> <span>National Song</span></div>
+            <div class="px-3 pb-2">
                 <audio controls class="w-100 sidebar-audio">
                     <source src="{{ env('APP_URL') }}/public/music/bd_national_anthem.mp3" type="audio/mpeg" />
                 </audio>
             </div>
-            <div class="resource-sub sidebar-links">
-                <div class="subheading"><i class="fa-solid fa-screwdriver-wrench me-1"></i> Internal eService</div>
-                <ul class="list-unstyled mb-0 sidebar-list">
-                    <li><a href="#" class="sidebar-link"><i class="fa-solid fa-envelope"></i> Webmail</a></li>
-                    <li><a href="#" class="sidebar-link"><i class="fa-solid fa-user"></i> Teacher Login</a></li>
-                    <li><a href="#" class="sidebar-link"><i class="fa-solid fa-circle-question"></i> Complain/Suggestion</a></li>
+        </div>
+        <div class="sidebar-section mb-3 sidebar-links small" aria-labelledby="serviceHeading">
+            <div class="section-heading" id="serviceHeading"><i class="fa-solid fa-screwdriver-wrench me-1"></i> <span>Internal eService</span></div>
+            <div class="px-3 pb-2">
+                <ul class="list-unstyled mb-0 sidebar-list link-list">
+                    <li><a href="#" class="sidebar-link"> Webmail</a></li>
+                    <li><a href="#" class="sidebar-link"> Teacher Login</a></li>
+                    <li><a href="#" class="sidebar-link"> Complain/Suggestion</a></li>
                 </ul>
             </div>
+        </div>
         </div>
     </div>
