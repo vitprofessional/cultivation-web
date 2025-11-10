@@ -25,15 +25,15 @@
                 <div class="px-3 py-2 small">
                     <div class="resource-sub mb-3 sidebar-links">
                         <div class="subheading"><i class="fa-solid fa-globe me-1"></i> Important Links</div>
-                        <ul class="list-unstyled mb-0 sidebar-list">
-                            <li><a href="#" class="sidebar-link"><i class="fa-solid fa-angles-right"></i> গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</a></li>
-                            <li><a href="#" class="sidebar-link"><i class="fa-solid fa-angles-right"></i> শিক্ষা মন্ত্রণালয়</a></li>
-                            <li><a href="#" class="sidebar-link"><i class="fa-solid fa-angles-right"></i> মাধ্যমিক ও উচ্চশিক্ষা অধিদপ্তর</a></li>
-                            <li><a href="#" class="sidebar-link"><i class="fa-solid fa-angles-right"></i> মাধ্যমিক ও উচ্চ মাধ্যমিক শিক্ষা বোর্ড</a></li>
-                            <li><a href="#" class="sidebar-link"><i class="fa-solid fa-angles-right"></i> মাধ্যমিক ও উচ্চ শিক্ষা বিভাগ</a></li>
-                            <li><a href="#" class="sidebar-link"><i class="fa-solid fa-angles-right"></i> ই-বুক</a></li>
-                            <li><a href="#" class="sidebar-link"><i class="fa-solid fa-angles-right"></i> আই-বুক</a></li>
-                            <li><a href="#" class="sidebar-link"><i class="fa-solid fa-angles-right"></i> মাউশি</a></li>
+                        <ul class="list-unstyled mb-0 sidebar-list link-list">
+                            <li><a href="#" class="sidebar-link"> গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</a></li>
+                            <li><a href="#" class="sidebar-link"> শিক্ষা মন্ত্রণালয়</a></li>
+                            <li><a href="#" class="sidebar-link"> মাধ্যমিক ও উচ্চশিক্ষা অধিদপ্তর</a></li>
+                            <li><a href="#" class="sidebar-link"> মাধ্যমিক ও উচ্চ মাধ্যমিক শিক্ষা বোর্ড</a></li>
+                            <li><a href="#" class="sidebar-link"> মাধ্যমিক ও উচ্চ শিক্ষা বিভাগ</a></li>
+                            <li><a href="#" class="sidebar-link"> ই-বুক</a></li>
+                            <li><a href="#" class="sidebar-link"> আই-বুক</a></li>
+                            <li><a href="#" class="sidebar-link"> মাউশি</a></li>
                         </ul>
                     </div>
                     <div class="resource-sub mb-3">

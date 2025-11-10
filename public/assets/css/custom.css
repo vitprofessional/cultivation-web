@@ -426,15 +426,18 @@ NO MORE TABLES!! ;)
 .sidebar-section + .sidebar-section{margin-top:1rem}
 .section-heading{display:flex;align-items:center;gap:.35rem;background:#198754;color:#fff;border-radius:.5rem .5rem 0 0;padding:.5rem .75rem;font-weight:600}
 .principal-card{background:linear-gradient(180deg,#ffffff 0%,#f8fbf9 70%);border-radius:0 0 .5rem .5rem}
-.sidebar-links .sidebar-link{display:block;padding:.35rem 0;color:#212529;text-decoration:none}
-.sidebar-links .sidebar-link i{color:#198754;margin-right:.35rem}
-.sidebar-links .sidebar-link:hover{background:#f1f9f4;color:#0d6535;border-radius:4px}
+.sidebar-links .sidebar-link{display:block;padding:.35rem 0;color:#0d6efd;text-decoration:underline}
+.sidebar-links .sidebar-link i{color:currentColor;margin-right:.35rem}
+.sidebar-links .sidebar-link:hover{color:#0a58ca;background:transparent}
 .sidebar-audio{outline:none}
 .principal-standalone .plain-heading{display:flex;align-items:center;gap:.4rem;font-weight:700;margin-bottom:.5rem}
-.principal-photo{border-radius:.5rem;box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.principal-photo{border-radius:.5rem;box-shadow:0 6px 16px rgba(0,0,0,.08);border:1px solid #e9ecef;object-fit:cover;max-height:320px}
 .principal-caption .fw-semibold{font-size:1rem}
 .sidebar-resource-box .subheading{font-weight:600;color:#198754;border-bottom:1px solid #e9ecef;padding-bottom:.25rem;margin-bottom:.5rem}
 .sidebar-list li + li{margin-top:.25rem}
+.sidebar-list.link-list li{position:relative;padding-left:1rem}
+.sidebar-list.link-list li::before{content:'\00BB'; /* » */ position:absolute; left:0; color:#0d6efd}
+.sidebar-resource-box .section-heading{background:transparent;color:#212529;border-bottom:1px solid #e9ecef;padding:.35rem .75rem;border-radius:.5rem .5rem 0 0}
 /* Hover / active states */
 .sidebar-links .sidebar-link{transition:background-color .18s ease,color .18s ease}
 .sidebar-links .sidebar-link:active{background:#e2f3e7;color:#0b5a2f;border-radius:4px}
