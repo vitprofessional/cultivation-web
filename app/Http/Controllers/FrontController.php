@@ -183,8 +183,11 @@ class FrontController extends Controller
     
     //X-principal
     public function student(){
-        $syllabus  =   newAdmission::all();
-        return view('frontend.institute.student',['Datakey'=>$syllabus]);
+        // Order students by class for display; eager load only needed columns
+        $students = newAdmission::orderBy('className','asc')->get();
+        return view('frontend.institute.student',[
+            'Datakey' => $students,
+        ]);
     }
 
     //X-principal
