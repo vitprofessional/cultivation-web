@@ -1,98 +1,118 @@
 @extends('frontend.include')
 @section('fronttitle')
-Speech of Principal
+Principal's Message
 @endsection
 @section('frontcontent')
 <style>
-body {
-  background-image: url("/public/frontend/assets/images/bg/bg.png");
-}
-    .hedingAbout{
-        text-align:center;
-        margin-bottom:50px;
-        
+    /* Page-scoped styles (keep minimal) */
+    .principal-hero {
+        text-align: center;
+        margin-top: 1.5rem;
+        margin-bottom: 1.25rem;
     }
-   .principlaimg{
-        width:100%;
-        height:400px;
-        text-align:center;
-        margin-top:30px; 
-        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    .principal-hero h1 {
+        font-weight: 700;
+        letter-spacing: .3px;
     }
-    .principalspace{
-        width:100%;
-        height:auto;
-        text-align:justify;
-        margin:auto;
-        font-family:Raleway;
-        font-size:15px;
-        padding-top:30px;
-        padding-bottom:30px;
-        line-height:29px;
-        
+    .principal-hero small {
+        color: #6c757d;
     }
-    .principalname{
-        margin:auto;
-        font-size:22px;
-        font-weight:bold;
-        text-align:center;
-        padding-top:20px;
+    .principal-card img.principal-avatar {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid #f8f9fa;
+        box-shadow: 0 6px 20px rgba(0,0,0,.12);
+    }
+    .principal-meta {
+        font-size: .95rem;
+        color: #6c757d;
+        margin-top: .25rem;
+    }
+    .speech-lead {
+        font-size: 1.1rem;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+    .speech-body {
+        font-size: 1rem;
+        line-height: 1.8;
+        text-align: justify;
+    }
+    @media (max-width: 576px) {
+        .principal-card img.principal-avatar { width: 140px; height: 140px; }
+    }
+
+    /* Print only the speech content */
+    @media print {
+        body * { visibility: hidden; }
+        #speechPrintArea, #speechPrintArea * { visibility: visible; }
+        #speechPrintArea { position: absolute; left: 0; top: 0; width: 100%; }
     }
 </style>
 
  <section>
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center con-title mt-4">
-                <h1 class="wow fadeInLeft animated my-4" data-wow-delay=".60s">Valuable Speech of Honorable <span>Principal</span></h1>
-           </div>
-        </div>
-        <div class="row align-items-center my-4">
-            @if($pSpeech)
-            @php
-                if($cultivation):
-                    $insName = $cultivation->institueName;
-                else:
-                    $insName = "Jahanara-Ayub Academy";
-                endif;
-            @endphp
-            <div class="col-8 col-md-3 text-center mx-auto">
-                @if($principal)
-                <div class="card">
-                    <img  class="w-100 wow bounce animated" data-wow-delay="1s" src="{{ env('APP_URL') }}/public/upload/image/teacher/{{ $principal->avatar }}"/>
-                    <div class="card-footer">
-                        <p>{{ $principal->firstName ." ". $principal->lastName  }}</p>
-                        <p>@if($principal->designation==1) Principal @elseif($principal->designation==2) Principal(Incharge) @endif<br> {{ $insName }} </p>
-                    </div>
-                </div>
-                @else
-                <div class="card">
-                    <img  class="w-100 wow bounce animated" data-wow-delay="1s" src="{{ env('APP_URL') }}/public/avatar.png" />
-                    <div class="card-footer">
-                        <p>Engr. Abu Yousuf</p>
-                        <p>Principal<br> Jahanar-Ayub Academy</p>
-                    </div>
-                </div>
-                @endif
-           </div>
-             <div class="col-12 col-md-9">
-                @if($pSpeech)
-                <h5 class="mt-0">{{$pSpeech->importantSpeech}}</h5>
-                <p class="mt-3 wow fadeIn animated" data-wow-delay=".60s">
-                    {{$pSpeech->generalSpeech}}
-                </p>
-                @else
-                <h5 class="mt-0">We want to make good students as well as good people.</h5>
-                <p class="mt-3 wow fadeIn animated" data-wow-delay=".60s">
-                Life is not always smooth sailing; it’s more like a roller coaster with its ups and downs. But remember, it’s the bumps and twists that make the ride exciting and memorable. When you face challenges or setbacks, it’s easy to feel discouraged. However, it’s during these tough times that your true strength shines through. It’s the moments when you refuse to give up that define your character and set the stage for your success.
-                </p>
-                @endif
-            </div> 
-        @else
-            <div class="alert alert-info">Sorry! No data found!</div>
-        @endif            
+        <div class="principal-hero">
+            <h1 class="my-3">Message from the <span class="text-primary">Principal</span></h1>
+            <small>Guidance, values, and inspiration for our students and community</small>
         </div>
 
+        @php
+            if(isset($cultivation) && $cultivation){
+                $insName = $cultivation->institueName;
+            } else {
+                $insName = 'Jahanara-Ayub Academy';
+            }
+        @endphp
+
+        <div id="speechPrintArea" class="row g-4 align-items-start my-2">
+            <div class="col-12 col-md-4">
+                <div class="card principal-card shadow-sm h-100 text-center p-3">
+                    <div class="d-flex flex-column align-items-center">
+                        @php
+                            $avatarPath = isset($principal) && $principal && $principal->avatar ? asset('upload/image/teacher/' . $principal->avatar) : asset('avatar.png');
+                        @endphp
+                        <img class="principal-avatar" src="{{ $avatarPath }}" alt="Principal photo of {{ isset($principal) && $principal ? ($principal->firstName . ' ' . $principal->lastName) : 'Principal' }}">
+                        <div class="mt-3">
+                            <div class="h5 mb-1">{{ isset($principal) && $principal ? ($principal->firstName . ' ' . $principal->lastName) : 'Engr. Abu Yousuf' }}</div>
+                            <div class="principal-meta">
+                                @if(isset($principal) && $principal)
+                                    @if($principal->designation==1) Principal @elseif($principal->designation==2) Principal (In-charge) @else Principal @endif
+                                @else
+                                    Principal
+                                @endif
+                                <br>
+                                {{ $insName }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-8">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body p-4">
+                        @if(isset($pSpeech) && $pSpeech)
+                            @if(!empty($pSpeech->importantSpeech))
+                                <p class="speech-lead mb-3">“{{ $pSpeech->importantSpeech }}”</p>
+                            @endif
+                            <div class="speech-body">{!! nl2br(e($pSpeech->generalSpeech)) !!}</div>
+                        @else
+                            <p class="speech-lead mb-3">“We want to make good students as well as good people.”</p>
+                            <div class="speech-body">
+                                Life is not always smooth sailing; it’s more like a roller coaster with its ups and downs. But remember, it’s the bumps and twists that make the ride exciting and memorable. When you face challenges or setbacks, it’s easy to feel discouraged. However, it’s during these tough times that your true strength shines through. It’s the moments when you refuse to give up that define your character and set the stage for your success.
+                            </div>
+                        @endif
+                    </div>
+                    <div class="card-footer bg-white d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
+                            <i class="fa fa-print me-1"></i> Print
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
