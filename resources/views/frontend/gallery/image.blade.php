@@ -90,26 +90,25 @@ Memorable Moment
         </div>
     </div>
     
-    <div class="row">
-        <div class="col-10 mx-auto d-flex flex-wrap justify-content-between">
-            @if($Datakey->count() > 0) 
-                @foreach($Datakey as $data)
-                    <div class="col-lg-4 col-md-6 col-sm-12 gallery-item">
-                        <img src="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}" 
-                             alt="Gallery Image"
-                             class="img-fluid w-100 wow fadeIn animated" 
-                             data-wow-delay=".60s"
-                             onclick="showImageModal('{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}', '{{ $data->title ?? 'Gallery Image' }}', '{{ $data->description ?? 'Beautiful moment captured' }}')" />
-                    </div>
-                @endforeach
-            @else
-                <div class="col-12">
-                    <div class="alert alert-info text-center">
-                        Sorry! No content available right now
+    <div class="row g-3 gallery-grid">
+        @if($Datakey->count() > 0) 
+            @foreach($Datakey as $data)
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="gallery-card" role="button" tabindex="0" onclick="showImageModal('{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}', '{{ $data->title ?? 'Gallery Image' }}', '{{ $data->description ?? 'Beautiful moment captured' }}')" onkeypress="if(event.key==='Enter'){showImageModal('{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}', '{{ $data->title ?? 'Gallery Image' }}', '{{ $data->description ?? 'Beautiful moment captured' }}')}">
+                        <img loading="lazy" decoding="async" src="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}" 
+                             alt="{{ $data->title ?? 'Gallery image' }}"
+                             class="g-img" />
+                        <div class="g-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
                     </div>
                 </div>
-            @endif
-        </div>
+            @endforeach
+        @else
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    Sorry! No content available right now
+                </div>
+            </div>
+        @endif
     </div>
 </section>
 

@@ -238,26 +238,27 @@ Enter to learn & Leave to serve
 
         <hr class="my-4">
         <!-- Photo Gallery -->
-        <div id="demo" class="col-12 mx-auto mt-2">
+        <div id="demo" class="col-12 mx-auto mt-2 home-gallery">
             <div class="card border-0 shadow-sm">
-                <div class="card-header bg-white border-0 d-flex align-items-center">
+                <div class="card-header bg-white border-0 d-flex align-items-center justify-content-between">
                     <h2 class="home-section-title mb-0">Photo Gallery</h2>
+                    <a href="{{ route('imagePage') }}" class="btn btn-outline-success btn-sm">View All</a>
                 </div>
                 <div class="card-body pt-3">
-                    <div id="owl-demo" class="owl-carousel">
+                    <div id="owl-demo" class="owl-carousel" aria-label="Campus photo highlights">
             @if($gallery->count()>0) 
                 @foreach($gallery as $data)
                         <div class="item">
-                            <img src="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{$data->avatar}}" alt="campus">
+                            <img loading="lazy" src="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{$data->avatar}}" alt="{{ $data->title ?? 'Campus photo' }}">
                         </div>
                 @endforeach
             @else
-                <div class="item"><img src="{{ asset('/public/') }}/img/campus.jpeg" alt="campus"></div>
-                <div class="item"><img src="{{ asset('/public/') }}/img/mainbuilding.jpg" alt="main building"></div>
-                <div class="item"><img src="{{ asset('/public/') }}/img/office.jpg" alt="office room"></div>
-                <div class="item"><img src="{{ asset('/public/') }}/img/principalroom.jpg" alt="principal room"></div>
-                <div class="item"><img src="{{ asset('/public/') }}/img/hostel.jpg" alt="hostel"></div>
-                <div class="item"><img src="{{ asset('/public/') }}/img/auditoriam.jpg" alt="auditoriam"></div>
+                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/campus.jpeg" alt="Campus ground"></div>
+                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/mainbuilding.jpg" alt="Main building"></div>
+                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/office.jpg" alt="Office room"></div>
+                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/principalroom.jpg" alt="Principal room"></div>
+                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/hostel.jpg" alt="Student hostel"></div>
+                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/auditoriam.jpg" alt="Auditorium"></div>
             @endif
                     </div>
                 </div>
