@@ -28,6 +28,59 @@ Enter to learn & Leave to serve
 
 <div class="col-11 col-md-9 mx-auto">
     <div class="rowalign-items-center">
+        <!-- Leatest Notice block placed at top of main content (beside sidebar, under slider) -->
+        <div class="col-12 mx-auto mb-4 scale-on-scroll">
+            <h2>Leatest Notice</h2>
+            @if($noticeBoard->count()>0)
+                @foreach($noticeBoard as $ntc)
+                    <div class="bg-success p-2 notice-box my-2">
+                        <div class="row align-items-center">
+                            <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> {{ optional($ntc->created_at)->format('d M Y') }}</div>
+                            <div class="col-7 mx-auto">{{ $ntc->headline }}</div>
+                            <div class="col-3 mx-auto text-end">
+                                @php($__nb2 = ($ntc->body ?? $ntc->details ?? $ntc->description ?? ''))
+                                <button class="btn btn-light btn-sm notice-view"
+                                    data-title="{{ $ntc->headline }}"
+                                    data-body64="{{ base64_encode($__nb2) }}"
+                                    data-date="{{ optional($ntc->created_at)->format('d M Y') }}"
+                                    data-attachment="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '' }}"
+                                    data-attachtype="{{ !empty($ntc->attachment) ? strtolower(pathinfo($ntc->attachment, PATHINFO_EXTENSION)) : '' }}">
+                                    <i class="fa-regular fa-eye"></i> View
+                                </button>
+                                <a class="btn btn-outline-light btn-sm {{ empty($ntc->attachment) ? 'disabled' : '' }}" target="_blank"
+                                   href="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '#' }}"
+                                   aria-disabled="{{ empty($ntc->attachment) ? 'true' : 'false' }}">
+                                    <i class="fa-light fa-down-to-bracket"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <div class="bg-success p-2 notice-box my-2">
+                    <div class="row align-items-center">
+                        <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
+                        <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
+                        <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
+                    </div>
+                </div>
+                <div class="bg-success p-2 notice-box my-2">
+                    <div class="row align-items-center">
+                        <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
+                        <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
+                        <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
+                    </div>
+                </div>
+                <div class="bg-success p-2 notice-box my-2">
+                    <div class="row align-items-center">
+                        <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
+                        <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
+                        <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
+                    </div>
+                </div>
+            @endif
+            <a href="{{ route('allNotices') }}" class="btn btn-primary rounded-0">All Notice</a>
+        </div>
         
         @if($insData)
         <div class="col-12 mx-auto my-2">
