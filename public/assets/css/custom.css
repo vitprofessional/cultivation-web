@@ -511,6 +511,13 @@ NO MORE TABLES!! ;)
 @media (min-width: 992px){.home-gallery .owl-carousel .item img{height:260px}}
 .home-gallery .owl-carousel .item:hover img{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.12)}
 
+/* Owl Carousel navigation and dots styling */
+.home-gallery .owl-theme .owl-controls .owl-buttons div{position:absolute;top:40%;transform:translateY(-50%);background:rgba(0,0,0,.35);color:#fff;border-radius:50%;width:38px;height:38px;line-height:38px;text-align:center;font-size:16px;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+.home-gallery .owl-theme .owl-controls .owl-buttons .owl-prev{left:10px}
+.home-gallery .owl-theme .owl-controls .owl-buttons .owl-next{right:10px}
+.home-gallery .owl-theme .owl-controls .owl-page span{background:rgba(25,135,84,.4);opacity:1}
+.home-gallery .owl-theme .owl-controls .owl-page.active span{background:#198754}
+
 /* ---- Gallery grid page polish ---- */
 .gallery-grid .gallery-card{position:relative;overflow:hidden;border-radius:.7rem;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.08)}
 .gallery-grid .gallery-card .g-img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .28s ease}
@@ -519,6 +526,14 @@ NO MORE TABLES!! ;)
 .gallery-grid .g-overlay{position:absolute;inset:0;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;color:#fff;opacity:0;transition:opacity .25s ease}
 .gallery-grid .gallery-card:hover .g-overlay{opacity:1}
 .gallery-grid .g-overlay i{font-size:1.25rem}
+
+/* ---- Reuse gallery card overlay for homepage carousel ---- */
+.home-gallery .gallery-card{position:relative;overflow:hidden;border-radius:.7rem;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.home-gallery .gallery-card .g-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .28s ease}
+.home-gallery .gallery-card:hover .g-img{transform:scale(1.03)}
+.home-gallery .g-overlay{position:absolute;inset:0;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;color:#fff;opacity:0;transition:opacity .25s ease}
+.home-gallery .gallery-card:hover .g-overlay{opacity:1}
+.home-gallery .g-overlay i{font-size:1.25rem}
 
 
 

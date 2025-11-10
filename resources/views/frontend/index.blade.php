@@ -245,21 +245,79 @@ Enter to learn & Leave to serve
                     <a href="{{ route('imagePage') }}" class="btn btn-outline-success btn-sm">View All</a>
                 </div>
                 <div class="card-body pt-3">
-                    <div id="owl-demo" class="owl-carousel" aria-label="Campus photo highlights">
+                    <div id="owl-demo" class="owl-carousel owl-theme" aria-label="Campus photo highlights">
             @if($gallery->count()>0) 
                 @foreach($gallery as $data)
                         <div class="item">
-                            <img loading="lazy" src="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{$data->avatar}}" alt="{{ $data->title ?? 'Campus photo' }}">
+                            <div class="gallery-card" role="button" tabindex="0"
+                                 onclick="showImageModal('{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}', '{{ $data->title ?? 'Gallery Image' }}', '{{ $data->description ?? 'Beautiful moment captured' }}')"
+                                 onkeypress="if(event.key==='Enter'){showImageModal('{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}', '{{ $data->title ?? 'Gallery Image' }}', '{{ $data->description ?? 'Beautiful moment captured' }}')}">
+                                <img loading="lazy" decoding="async" src="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{$data->avatar}}" alt="{{ $data->title ?? 'Gallery image' }}" class="g-img">
+                                <div class="g-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                            </div>
                         </div>
                 @endforeach
             @else
-                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/campus.jpeg" alt="Campus ground"></div>
-                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/mainbuilding.jpg" alt="Main building"></div>
-                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/office.jpg" alt="Office room"></div>
-                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/principalroom.jpg" alt="Principal room"></div>
-                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/hostel.jpg" alt="Student hostel"></div>
-                <div class="item"><img loading="lazy" src="{{ asset('/public/') }}/img/auditoriam.jpg" alt="Auditorium"></div>
+                <div class="item">
+                    <div class="gallery-card" role="button" tabindex="0" onclick="showImageModal('{{ asset('/public/') }}/img/campus.jpeg','Campus ground','Default gallery image')" onkeypress="if(event.key==='Enter'){showImageModal('{{ asset('/public/') }}/img/campus.jpeg','Campus ground','Default gallery image')}">
+                        <img loading="lazy" src="{{ asset('/public/') }}/img/campus.jpeg" alt="Campus ground" class="g-img">
+                        <div class="g-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="gallery-card" role="button" tabindex="0" onclick="showImageModal('{{ asset('/public/') }}/img/mainbuilding.jpg','Main building','Default gallery image')" onkeypress="if(event.key==='Enter'){showImageModal('{{ asset('/public/') }}/img/mainbuilding.jpg','Main building','Default gallery image')}">
+                        <img loading="lazy" src="{{ asset('/public/') }}/img/mainbuilding.jpg" alt="Main building" class="g-img">
+                        <div class="g-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="gallery-card" role="button" tabindex="0" onclick="showImageModal('{{ asset('/public/') }}/img/office.jpg','Office room','Default gallery image')" onkeypress="if(event.key==='Enter'){showImageModal('{{ asset('/public/') }}/img/office.jpg','Office room','Default gallery image')}">
+                        <img loading="lazy" src="{{ asset('/public/') }}/img/office.jpg" alt="Office room" class="g-img">
+                        <div class="g-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="gallery-card" role="button" tabindex="0" onclick="showImageModal('{{ asset('/public/') }}/img/principalroom.jpg','Principal room','Default gallery image')" onkeypress="if(event.key==='Enter'){showImageModal('{{ asset('/public/') }}/img/principalroom.jpg','Principal room','Default gallery image')}">
+                        <img loading="lazy" src="{{ asset('/public/') }}/img/principalroom.jpg" alt="Principal room" class="g-img">
+                        <div class="g-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="gallery-card" role="button" tabindex="0" onclick="showImageModal('{{ asset('/public/') }}/img/hostel.jpg','Student hostel','Default gallery image')" onkeypress="if(event.key==='Enter'){showImageModal('{{ asset('/public/') }}/img/hostel.jpg','Student hostel','Default gallery image')}">
+                        <img loading="lazy" src="{{ asset('/public/') }}/img/hostel.jpg" alt="Student hostel" class="g-img">
+                        <div class="g-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="gallery-card" role="button" tabindex="0" onclick="showImageModal('{{ asset('/public/') }}/img/auditoriam.jpg','Auditorium','Default gallery image')" onkeypress="if(event.key==='Enter'){showImageModal('{{ asset('/public/') }}/img/auditoriam.jpg','Auditorium','Default gallery image')}">
+                        <img loading="lazy" src="{{ asset('/public/') }}/img/auditoriam.jpg" alt="Auditorium" class="g-img">
+                        <div class="g-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    </div>
+                </div>
             @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bootstrap Modal for Image Viewer (mirrors gallery page) -->
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: linear-gradient(135deg, #198754, #20c997); color: #fff; border-bottom: none;">
+                        <h5 class="modal-title" id="imageModalLabel">Gallery Image</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <img id="modalImage" src="" alt="Gallery Image" class="modal-image" style="width:100%;height:auto;border-radius:.375rem;">
+                        <div class="image-info" style="padding:15px;background:#fff;border-radius:0 0 .375rem .375rem;">
+                            <div id="imageTitle" class="image-title" style="font-size:1.1rem;font-weight:600;color:#198754;margin-bottom:4px;">Image Title</div>
+                            <div id="imageSubtitle" class="image-subtitle" style="font-size:.95rem;color:#6c757d;">Image subtitle or description</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success" onclick="downloadImage()">Download</button>
                     </div>
                 </div>
             </div>
@@ -316,6 +374,70 @@ document.addEventListener('DOMContentLoaded', function(){
             document.querySelectorAll('.extra-notice.d-none').forEach(el=> el.classList.remove('d-none'));
             loadBtn.remove();
         });
+    }
+    // Enhance Owl Carousel options for homepage gallery
+    if(window.jQuery && $('#owl-demo').length){
+        $('#owl-demo').trigger('destroy.owl.carousel'); // ensure clean re-init if already initialized
+        $('#owl-demo').owlCarousel({
+            items: 4,
+            loop: true,
+            margin: 12,
+            autoplay: true,
+            autoplayTimeout: 3500,
+            autoplayHoverPause: true,
+            smartSpeed: 650,
+            nav: true,
+            dots: true,
+            navText: [
+                '<span class="fa fa-chevron-left"></span>',
+                '<span class="fa fa-chevron-right"></span>'
+            ],
+            responsive: {
+                0: { items: 1 },
+                480: { items: 2 },
+                768: { items: 3 },
+                992: { items: 4 }
+            }
+        });
+    }
+});
+
+// Gallery modal behaviors (align homepage with gallery page)
+function showImageModal(imageSrc, title, subtitle) {
+    document.getElementById('modalImage').src = imageSrc;
+    document.getElementById('imageModalLabel').textContent = title;
+    document.getElementById('imageTitle').textContent = title;
+    document.getElementById('imageSubtitle').textContent = subtitle;
+    document.getElementById('imageModal').setAttribute('data-image-src', imageSrc);
+    var modal = new bootstrap.Modal(document.getElementById('imageModal'));
+    modal.show();
+}
+
+function downloadImage() {
+    const modalEl = document.getElementById('imageModal');
+    const imageSrc = modalEl.getAttribute('data-image-src');
+    if(!imageSrc) return;
+    // Try to preserve original filename
+    let filename = 'gallery-image.jpg';
+    try {
+        const u = new URL(imageSrc, window.location.href);
+        const pathname = decodeURI(u.pathname || '');
+        const base = pathname.substring(pathname.lastIndexOf('/') + 1) || filename;
+        filename = base;
+    } catch(e) { /* fallback keeps default filename */ }
+    const link = document.createElement('a');
+    link.href = imageSrc;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Optional: close modal via Escape key
+document.addEventListener('keydown', function(e) {
+    const m = document.getElementById('imageModal');
+    if (m && m.classList.contains('show') && e.key === 'Escape') {
+        bootstrap.Modal.getInstance(m)?.hide();
     }
 });
 </script>

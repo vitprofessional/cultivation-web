@@ -155,9 +155,17 @@ function showImageModal(imageSrc, title, subtitle) {
 
 function downloadImage() {
     const imageSrc = document.getElementById('imageModal').getAttribute('data-image-src');
+    if(!imageSrc) return;
+    let filename = 'gallery-image.jpg';
+    try {
+        const u = new URL(imageSrc, window.location.href);
+        const pathname = decodeURI(u.pathname || '');
+        const base = pathname.substring(pathname.lastIndexOf('/') + 1) || filename;
+        filename = base;
+    } catch(e) { /* fallback */ }
     const link = document.createElement('a');
     link.href = imageSrc;
-    link.download = 'gallery-image.jpg';
+    link.setAttribute('download', filename);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
