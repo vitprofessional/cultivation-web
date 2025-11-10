@@ -12,6 +12,12 @@ Enter to learn & Leave to serve
 @endsection
 
 @section('frontcontent')
+<style>
+/* Scale-in animation for sections */
+.scale-on-scroll{transform: scale(.98); opacity: 0; transition: transform .6s ease, opacity .6s ease}
+.scale-on-scroll.scale-in{transform: scale(1); opacity: 1}
+.notice-feature:hover{transform: translateY(-2px); transition: transform .2s ease}
+</style>
 <div class="col-3 mx-auto d-none d-md-block">
     @yield('sideinfo')
 </div>
@@ -98,72 +104,68 @@ Enter to learn & Leave to serve
         </div>
         @endif
 
-        <!-- Notice board start here -->
-        <div class="col-12 mx-auto mb-4">
-            <h2>Leatest Notice</h2>
-            @if($noticeBoard->count()>0)
-            @foreach($noticeBoard as $ntc)
-            <div class="bg-success p-2 notice-box my-2">
-                <div class="row align-items-center">
-                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> {{ $ntc->created_at->format('d M Y') }}</div>
-                    <div class="col-7 mx-auto">{{ $ntc->headline }}</div>
-                    <div class="col-3 mx-auto text-end">
-            @php($__nb2 = ($ntc->body ?? $ntc->details ?? $ntc->description ?? ''))
-            <button class="btn btn-light btn-sm notice-view"
-                data-title="{{ $ntc->headline }}"
-                data-body64="{{ base64_encode($__nb2) }}"
-                data-date="{{ optional($ntc->created_at)->format('d M Y') }}"
-                data-attachment="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '' }}"
-                data-attachtype="{{ !empty($ntc->attachment) ? strtolower(pathinfo($ntc->attachment, PATHINFO_EXTENSION)) : '' }}">
-                            <i class="fa-regular fa-eye"></i> View
-                        </button>
-                        <a class="btn btn-outline-light btn-sm {{ empty($ntc->attachment) ? 'disabled' : '' }}" target="_blank"
-                           href="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '#' }}"
-                           aria-disabled="{{ empty($ntc->attachment) ? 'true' : 'false' }}">
-                            <i class="fa-light fa-down-to-bracket"></i>
-                        </a>
+        <!-- Latest Notice relocated after slider with scaling effect -->
+        <div class="col-12 mx-auto mb-5 scale-on-scroll" id="latestNoticeSection">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="mb-0">Latest Notice</h2>
+                <a href="{{ route('allNotices') }}" class="btn btn-outline-primary btn-sm">All Notices</a>
+            </div>
+            @php($latest = $noticeBoard->first())
+            @if($latest)
+                @php($__nbLatest = ($latest->body ?? $latest->details ?? $latest->description ?? ''))
+                <div class="card shadow-sm border-0 overflow-hidden notice-feature">
+                    <div class="card-body p-4 position-relative">
+                        <div class="small text-muted mb-2"><i class="fa-thin fa-calendar"></i> {{ optional($latest->created_at)->format('d M Y') }}</div>
+                        <h5 class="fw-bold mb-3">{{ $latest->headline }}</h5>
+                        <p class="text-truncate" style="max-height:3.2em">{{ \Illuminate\Support\Str::limit(strip_tags($__nbLatest), 220,'...') }}</p>
+                        <div class="mt-3 d-flex gap-2">
+                            <button class="btn btn-success btn-sm notice-view"
+                                data-title="{{ $latest->headline }}"
+                                data-body64="{{ base64_encode($__nbLatest) }}"
+                                data-date="{{ optional($latest->created_at)->format('d M Y') }}"
+                                data-attachment="{{ !empty($latest->attachment) ? env('APP_URL').'/public/'.$latest->attachment : '' }}"
+                                data-attachtype="{{ !empty($latest->attachment) ? strtolower(pathinfo($latest->attachment, PATHINFO_EXTENSION)) : '' }}">
+                                <i class="fa-regular fa-eye"></i> View Notice
+                            </button>
+                            <a class="btn btn-outline-success btn-sm {{ empty($latest->attachment) ? 'disabled' : '' }}" target="_blank"
+                               href="{{ !empty($latest->attachment) ? env('APP_URL').'/public/'.$latest->attachment : '#' }}"
+                               aria-disabled="{{ empty($latest->attachment) ? 'true' : 'false' }}">
+                                <i class="fa-regular fa-file-arrow-down"></i>
+                            </a>
+                        </div>
+                        <div class="notice-bg-badge position-absolute top-0 end-0 opacity-25 p-3" style="font-size:4rem;line-height:1;">
+                            <i class="fa-duotone fa-bullhorn"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-            @endforeach
+                @if($noticeBoard->count() > 1)
+                <div class="row mt-4 g-3">
+                    @foreach($noticeBoard->skip(1)->take(6) as $ntc)
+                        @php($__nb2 = ($ntc->body ?? $ntc->details ?? $ntc->description ?? ''))
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100 small notice-item position-relative">
+                                <div class="text-muted mb-1"><i class="fa-thin fa-calendar"></i> {{ optional($ntc->created_at)->format('d M Y') }}</div>
+                                <div class="fw-semibold mb-2">{{ \Illuminate\Support\Str::limit($ntc->headline, 80) }}</div>
+                                <button class="btn btn-outline-success btn-sm notice-view"
+                                    data-title="{{ $ntc->headline }}"
+                                    data-body64="{{ base64_encode($__nb2) }}"
+                                    data-date="{{ optional($ntc->created_at)->format('d M Y') }}"
+                                    data-attachment="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '' }}"
+                                    data-attachtype="{{ !empty($ntc->attachment) ? strtolower(pathinfo($ntc->attachment, PATHINFO_EXTENSION)) : '' }}">
+                                    <i class="fa-regular fa-eye"></i> Open
+                                </button>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                @endif
             @else
-            <div class="bg-success p-2 notice-box my-2">
-                <div class="row align-items-center">
-                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
-                    <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
-                    <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
-                </div>
-            </div>
-            <div class="bg-success p-2 notice-box my-2">
-                <div class="row align-items-center">
-                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
-                    <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
-                    <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
-                </div>
-            </div>
-            <div class="bg-success p-2 notice-box my-2">
-                <div class="row align-items-center">
-                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
-                    <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
-                    <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
-                </div>
-            </div>
-            <div class="bg-success p-2 notice-box my-2">
-                <div class="row align-items-center">
-                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
-                    <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
-                    <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
-                </div>
-            </div>
-            <div class="bg-success p-2 notice-box my-2">
-                <div class="row align-items-center">
-                    <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
-                    <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
-                    <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
-                </div>
-            </div>
+                <div class="alert alert-info">No notices available right now.</div>
             @endif
-            <a href="{{ route('allNotices') }}" class="btn btn-primary rounded-0">All Notice</a>
+        </div>
+        <!-- Institute metrics relocated below latest notice -->
+        <div class="col-12 mx-auto mb-5">
+            @include('frontend.partials.instituteStats')
         </div>
         <div class="row g-0 d-none d-md-block">
             <div class="col-12 mx-auto my-4 row">
@@ -294,4 +296,18 @@ Enter to learn & Leave to serve
         </div>
     </div>
 </div>
+<script>
+// Animate sections when they come into view
+document.addEventListener('DOMContentLoaded', function(){
+    const els = document.querySelectorAll('.scale-on-scroll');
+    if('IntersectionObserver' in window){
+        const io = new IntersectionObserver((entries)=>{
+            entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('scale-in'); io.unobserve(e.target);} });
+        },{threshold: .15});
+        els.forEach(el=> io.observe(el));
+    } else {
+        els.forEach(el=> el.classList.add('scale-in'));
+    }
+});
+</script>
 @endsection
