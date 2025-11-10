@@ -38,6 +38,17 @@
     <div class="sidebar-section sidebar-resource-box mb-3" aria-labelledby="resourcesHeading">
         <div class="section-heading" id="resourcesHeading"><i class="fa-solid fa-toolbox me-1"></i> <span>Resources</span></div>
         <div class="px-3 py-2 small">
+        <div class="sidebar-section mb-3 sidebar-links small" aria-labelledby="quickAccessHeading">
+            <div class="section-heading" id="quickAccessHeading"><i class="fa-solid fa-bolt me-1"></i> <span>Quick Access</span></div>
+            <div class="px-3 pb-2">
+                <ul class="list-unstyled mb-0 sidebar-list link-list">
+                    <li><a href="{{ route('newSyllabus') }}" class="sidebar-link">Syllabus</a></li>
+                    <li><a href="{{ route('newClassSchedule') }}" class="sidebar-link">Class Routine</a></li>
+                    <li><a href="{{ route('newExamSchedule') }}" class="sidebar-link">Exam Routine</a></li>
+                    <li><a href="{{ route('internalResult') }}" class="sidebar-link">Result Archive</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="sidebar-section mb-3 sidebar-links small" aria-labelledby="linksHeading">
             <div class="section-heading" id="linksHeading"><i class="fa-solid fa-globe me-1"></i> <span>Important Links</span></div>
             <div class="px-3 pb-2">

@@ -24,6 +24,15 @@
                 <div class="section-heading"><i class="fa-solid fa-toolbox me-1"></i> <span>Resources</span></div>
                 <div class="px-3 py-2 small">
                     <div class="resource-sub mb-3 sidebar-links">
+                        <div class="subheading"><i class="fa-solid fa-bolt me-1"></i> Quick Access</div>
+                        <ul class="list-unstyled mb-0 sidebar-list link-list">
+                            <li><a href="{{ route('newSyllabus') }}" class="sidebar-link">Syllabus</a></li>
+                            <li><a href="{{ route('newClassSchedule') }}" class="sidebar-link">Class Routine</a></li>
+                            <li><a href="{{ route('newExamSchedule') }}" class="sidebar-link">Exam Routine</a></li>
+                            <li><a href="{{ route('internalResult') }}" class="sidebar-link">Result Archive</a></li>
+                        </ul>
+                    </div>
+                    <div class="resource-sub mb-3 sidebar-links">
                         <div class="subheading"><i class="fa-solid fa-globe me-1"></i> Important Links</div>
                         <ul class="list-unstyled mb-0 sidebar-list link-list">
                             <li><a href="#" class="sidebar-link"> গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</a></li>
