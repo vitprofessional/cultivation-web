@@ -446,7 +446,7 @@ NO MORE TABLES!! ;)
 .sidebar-list.link-list li::before{content:'\00BB'; /* » */ position:absolute; left:0; color:#0d6efd}
 .sidebar-resource-box .section-heading{background:transparent;color:#212529;border-bottom:1px solid #e9ecef;padding:.35rem .75rem;border-radius:.5rem .5rem 0 0}
 /* Sidebar outer column wrapper for desktop */
-.sidebar-column{background:#f5f7f6;border:1px solid #e1e5e3;border-radius:.6rem;padding:1rem .9rem;box-shadow:0 4px 14px rgba(0,0,0,.04);position:sticky;top:90px}
+.sidebar-column{background:#f5f7f6;border:1px solid #e1e5e3;border-radius:.6rem;padding:1rem .9rem;box-shadow:0 4px 14px rgba(0,0,0,.04);position:sticky;top:var(--navbar-height,90px)}
 @media (max-width: 991.98px){.sidebar-column{background:transparent;border:0;box-shadow:none;padding:0}}
 /* Tighter stacking visuals inside sidebar column */
 .sidebar-column .sidebar-section{box-shadow:none;border:1px solid #e4e8e6}
@@ -455,6 +455,44 @@ NO MORE TABLES!! ;)
 /* Hover / active states */
 .sidebar-links .sidebar-link{transition:background-color .18s ease,color .18s ease}
 .sidebar-links .sidebar-link:active{background:#e2f3e7;color:#0b5a2f;border-radius:4px}
+
+/* ---- Layout & Homepage gaps (added) ---- */
+:root{--navbar-height:90px;--layout-gap:1.75rem;--notice-green:#198754}
+@media (min-width: 992px){
+	.sidebar-column{margin-top:var(--layout-gap)}
+	.main-content-column{margin-top:var(--layout-gap)}
+}
+@media (max-width: 991.98px){
+	.main-content-column{margin-top:1.25rem}
+}
+
+/* Latest Notice Board (refined responsive design) */
+.latest-notice{border:1px solid #dbe8e1;background:#ffffff;border-radius:.75rem;padding:1.1rem 1.25rem;box-shadow:0 4px 16px rgba(0,0,0,.05);position:relative}
+.latest-notice-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.85rem}
+.latest-notice-header .home-section-title{margin-bottom:0;font-size:1.35rem}
+.notice-list{display:flex;flex-direction:column;gap:.65rem}
+.notice-item{display:flex;align-items:center;gap:1rem;padding:.7rem .85rem;border:1px solid #e4ebe8;border-radius:.6rem;background:var(--notice-green);color:#fff;box-shadow:0 3px 8px rgba(0,0,0,.08);position:relative;overflow:hidden}
+.notice-item.extra-notice{display:none}
+.notice-date{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:72px;font-size:.7rem;font-weight:600;line-height:1.1;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:.5rem;padding:.4rem .55rem;text-transform:uppercase;letter-spacing:.5px}
+.notice-date .nd-day{font-size:1.15rem;font-weight:700;line-height:1}
+.notice-date .nd-month{margin-top:.15rem}
+.notice-title{flex:1;font-weight:500;font-size:.95rem;line-height:1.35}
+.notice-actions{display:flex;align-items:center;gap:.45rem}
+.notice-actions .btn{font-size:.65rem;font-weight:600;padding:.35rem .6rem;border-radius:.4rem}
+.notice-actions .btn i{margin-right:.25rem;font-size:.7rem}
+.load-more-wrap{margin-top:.75rem;text-align:center}
+.load-more-wrap .btn{padding:.45rem 1rem;font-size:.75rem;font-weight:600}
+@media (max-width: 575.98px){
+	.notice-item{flex-direction:column;align-items:flex-start}
+	.notice-date{flex-direction:row;min-width:auto;padding:.35rem .65rem;margin-bottom:.35rem}
+	.notice-date .nd-month{margin-top:0;margin-left:.35rem}
+	.notice-title{width:100%}
+	.notice-actions{width:100%;justify-content:flex-end;margin-top:.5rem}
+	.notice-actions .btn{font-size:.7rem}
+}
+/* Empty state for notices */
+.notice-empty{background:#f8faf9;border:2px dashed #cfd9d4;padding:1.25rem;border-radius:.6rem;color:#6c757d;font-size:.9rem;text-align:center}
+
 
 
 

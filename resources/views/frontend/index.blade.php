@@ -19,10 +19,6 @@ Enter to learn & Leave to serve
 
 /* Professional homepage polish */
 .home-section-title{font-weight:700; letter-spacing:.2px; margin-bottom: .75rem}
-.notice-box{border-radius: .25rem; background: #198754; color:#fff}
-.notice-box .date-box{font-weight:600}
-.notice-box a{color:#fff; text-decoration:none}
-.notice-box a:hover{text-decoration:underline}
 .infobox .card{border:0; box-shadow: 0 6px 16px rgba(0,0,0,.06)}
 .infobox .card-header{border:0}
 .list-group-item{border:0; padding-left: 0}
@@ -44,68 +40,54 @@ Enter to learn & Leave to serve
     @include('frontend.mobileSidebox')   
 </div>
 
-<div class="col-11 col-md-9 mx-auto">
+<div class="col-11 col-md-9 mx-auto main-content-column">
     <div class="row align-items-start">
         <!-- Leatest Notice block placed at top of main content (beside sidebar, under slider) -->
-        <div class="col-12 mx-auto mb-4 scale-on-scroll section-band">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <h2 class="home-section-title mb-0">Latest Notice</h2>
+        <div class="col-12 mx-auto mb-4 scale-on-scroll latest-notice">
+            <div class="latest-notice-header">
+                <h2 class="home-section-title">Latest Notice</h2>
                 <a href="{{ route('allNotices') }}" class="btn btn-outline-success btn-sm">All Notice</a>
             </div>
             @if($noticeBoard->count()>0)
-                <div id="noticeList">
+                <div id="noticeList" class="notice-list">
                 @foreach($noticeBoard as $ntc)
-                    <div class="bg-success p-2 notice-box my-2 {{ $loop->iteration > 5 ? 'extra-notice d-none' : '' }}">
-                        <div class="row align-items-center">
-                            <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> {{ optional($ntc->created_at)->format('d M Y') }}</div>
-                            <div class="col-7 mx-auto">{{ $ntc->headline }}</div>
-                            <div class="col-3 mx-auto text-end">
-                                @php($__nb2 = ($ntc->body ?? $ntc->details ?? $ntc->description ?? ''))
-                                <button class="btn btn-light btn-sm notice-view"
-                                    data-title="{{ $ntc->headline }}"
-                                    data-body64="{{ base64_encode($__nb2) }}"
-                                    data-date="{{ optional($ntc->created_at)->format('d M Y') }}"
-                                    data-attachment="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '' }}"
-                                    data-attachtype="{{ !empty($ntc->attachment) ? strtolower(pathinfo($ntc->attachment, PATHINFO_EXTENSION)) : '' }}">
-                                    <i class="fa-regular fa-eye"></i> View
-                                </button>
-                                <a class="btn btn-outline-light btn-sm {{ empty($ntc->attachment) ? 'disabled' : '' }}" target="_blank"
-                                   href="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '#' }}"
-                                   aria-disabled="{{ empty($ntc->attachment) ? 'true' : 'false' }}">
-                                    <i class="fa-light fa-down-to-bracket"></i>
-                                </a>
-                            </div>
+                    @php
+                        $rawDate = optional($ntc->created_at);
+                        $nday = $rawDate ? $rawDate->format('d') : '';
+                        $nmon = $rawDate ? $rawDate->format('M') : '';
+                        $__nb2 = ($ntc->body ?? $ntc->details ?? $ntc->description ?? '');
+                    @endphp
+                    <div class="notice-item {{ $loop->iteration > 5 ? 'extra-notice' : '' }}">
+                        <div class="notice-date" aria-label="Notice date {{ $rawDate ? $rawDate->format('d M Y') : '' }}">
+                            <div class="nd-day">{{ $nday }}</div>
+                            <div class="nd-month">{{ $nmon }}</div>
+                        </div>
+                        <div class="notice-title">{{ $ntc->headline }}</div>
+                        <div class="notice-actions">
+                            <button class="btn btn-light btn-sm notice-view"
+                                data-title="{{ $ntc->headline }}"
+                                data-body64="{{ base64_encode($__nb2) }}"
+                                data-date="{{ $rawDate ? $rawDate->format('d M Y') : '' }}"
+                                data-attachment="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '' }}"
+                                data-attachtype="{{ !empty($ntc->attachment) ? strtolower(pathinfo($ntc->attachment, PATHINFO_EXTENSION)) : '' }}">
+                                <i class="fa-regular fa-eye"></i> View
+                            </button>
+                            <a class="btn btn-outline-light btn-sm {{ empty($ntc->attachment) ? 'disabled' : '' }}" target="_blank"
+                               href="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '#' }}"
+                               aria-disabled="{{ empty($ntc->attachment) ? 'true' : 'false' }}">
+                                <i class="fa-light fa-down-to-bracket"></i> File
+                            </a>
                         </div>
                     </div>
                 @endforeach
                 </div>
                 @if($noticeBoard->count() > 5)
-                <div class="text-center mt-2">
+                <div class="load-more-wrap">
                     <button id="loadMoreNotices" class="btn btn-sm btn-outline-secondary">Load more</button>
                 </div>
                 @endif
             @else
-                <div class="bg-success p-2 notice-box my-2">
-                    <div class="row align-items-center">
-                        <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
-                        <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
-                        <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
-                    </div>
-                </div>
-                <div class="bg-success p-2 notice-box my-2">
-                    <div class="row align-items-center">
-                        <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
-                        <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
-                        <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
-                    </div>
-                </div>
-                <div class="bg-success p-2 notice-box my-2">
-                    <div class="row align-items-center">
-                        <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> 20th Aug</div>
-                        <div class="col-8 mx-auto">Loremp ipsom doller site is a common text for web development industry. Use it free for demo content</div>
-                        <div class="col-1 mx-auto download"><i class="fa-light fa-down-to-bracket"></i></div>
-                    </div>
-                </div>
+                <div class="notice-empty">No notices available right now. Please check back later.</div>
             @endif
         </div>
         
