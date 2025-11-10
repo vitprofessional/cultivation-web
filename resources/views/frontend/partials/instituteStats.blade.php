@@ -9,7 +9,7 @@
                 <div class="col-md-3 col-12 mb-3 mb-md-0">
                     <div class="bg-success text-white details-box p-3 h-100">
                         <div class="details-box-icon">
-                            <i class="fa-duotone fa-school-flag"></i>
+                            <i class="fa-duotone fa-school-flag metric-icon"></i>
                         </div>
                         <div class="details-box-content">
                             <h3>Founded</h3>
@@ -27,7 +27,7 @@
                 <div class="col-md-3 col-12 mb-3 mb-md-0">
                     <div class="bg-success text-white details-box p-3 h-100">
                         <div class="details-box-icon">
-                            <i class="fa-duotone fa-book-open-reader"></i>
+                            <i class="fa-duotone fa-book-open-reader metric-icon"></i>
                         </div>
                         <div class="details-box-content">
                             <h3>Green Campus</h3>
@@ -38,7 +38,7 @@
                 <div class="col-md-3 col-12 mb-3 mb-md-0">
                     <div class="bg-success text-white details-box p-3 h-100">
                         <div class="details-box-icon">
-                            <i class="fa-duotone fa-screen-users"></i>
+                            <i class="fa-duotone fa-screen-users metric-icon"></i>
                         </div>
                         <div class="details-box-content">
                             <h3>Teacher & Staff</h3>
@@ -49,7 +49,7 @@
                 <div class="col-md-3 col-12">
                     <div class="bg-success text-white details-box p-3 h-100">
                         <div class="details-box-icon">
-                            <i class="fa-light fa-users-viewfinder"></i>
+                            <i class="fa-light fa-users-viewfinder metric-icon"></i>
                         </div>
                         <div class="details-box-content">
                             <h3>Students</h3>

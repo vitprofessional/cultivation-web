@@ -27,6 +27,9 @@ Enter to learn & Leave to serve
 .infobox .card-header{border:0}
 .list-group-item{border:0; padding-left: 0}
 .list-group-item i{color:#198754}
+.section-band{background:#f8f9fa;border-radius:.5rem;padding:1rem 1.25rem}
+.metric-icon{transform:scale(.9);opacity:.6;transition:transform .6s ease, opacity .6s ease}
+.metric-icon.in{transform:scale(1);opacity:1}
 </style>
 <div class="col-3 mx-auto d-none d-md-block">
     @yield('sideinfo')
@@ -39,14 +42,15 @@ Enter to learn & Leave to serve
 <div class="col-11 col-md-9 mx-auto">
     <div class="row align-items-start">
         <!-- Leatest Notice block placed at top of main content (beside sidebar, under slider) -->
-        <div class="col-12 mx-auto mb-4 scale-on-scroll">
+        <div class="col-12 mx-auto mb-4 scale-on-scroll section-band">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <h2 class="home-section-title mb-0">Latest Notice</h2>
                 <a href="{{ route('allNotices') }}" class="btn btn-outline-success btn-sm">All Notice</a>
             </div>
             @if($noticeBoard->count()>0)
+                <div id="noticeList">
                 @foreach($noticeBoard as $ntc)
-                    <div class="bg-success p-2 notice-box my-2">
+                    <div class="bg-success p-2 notice-box my-2 {{ $loop->iteration > 5 ? 'extra-notice d-none' : '' }}">
                         <div class="row align-items-center">
                             <div class="col-2 mx-auto date-box"><span><i class="fa-thin fa-calendar"></i></span> {{ optional($ntc->created_at)->format('d M Y') }}</div>
                             <div class="col-7 mx-auto">{{ $ntc->headline }}</div>
@@ -69,6 +73,12 @@ Enter to learn & Leave to serve
                         </div>
                     </div>
                 @endforeach
+                </div>
+                @if($noticeBoard->count() > 5)
+                <div class="text-center mt-2">
+                    <button id="loadMoreNotices" class="btn btn-sm btn-outline-secondary">Load more</button>
+                </div>
+                @endif
             @else
                 <div class="bg-success p-2 notice-box my-2">
                     <div class="row align-items-center">
@@ -92,7 +102,6 @@ Enter to learn & Leave to serve
                     </div>
                 </div>
             @endif
-            <a href="{{ route('allNotices') }}" class="btn btn-primary rounded-0">All Notice</a>
         </div>
         
         @if($insData)
@@ -140,10 +149,10 @@ Enter to learn & Leave to serve
         @endif
 
         <!-- Institute metrics block below slider using partial -->
-        <div class="col-12 mx-auto mb-5">
+        <div class="col-12 mx-auto mb-5 section-band">
             @include('frontend.partials.instituteStats')
         </div>
-        <div class="row g-0 d-none d-md-block">
+        <div class="row g-0 d-none d-md-block section-band py-3 mb-4">
             <div class="col-12 mx-auto my-4 row">
                 <!-- info box start here -->
                 <div class="col-6 mx-auto my-4 infobox">
@@ -294,6 +303,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Count-up for metrics
     const metricEls = document.querySelectorAll('.metric[data-target]');
+    const metricIcons = document.querySelectorAll('.metric-icon');
     if(metricEls.length){
         const animateCount = (el)=>{
             const target = parseInt(el.getAttribute('data-target'),10); if(!target || isNaN(target)) return;
@@ -311,9 +321,23 @@ document.addEventListener('DOMContentLoaded', function(){
                 ents.forEach(en=>{ if(en.isIntersecting){ animateCount(en.target); mIO.unobserve(en.target);} });
             },{threshold:.4});
             metricEls.forEach(m=> mIO.observe(m));
+            const iconIO = new IntersectionObserver((ents)=>{
+                ents.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); iconIO.unobserve(en.target);} });
+            },{threshold:.2});
+            metricIcons.forEach(ic=> iconIO.observe(ic));
         } else {
             metricEls.forEach(animateCount);
+            metricIcons.forEach(ic=> ic.classList.add('in'));
         }
+    }
+
+    // Load more notices
+    const loadBtn = document.getElementById('loadMoreNotices');
+    if(loadBtn){
+        loadBtn.addEventListener('click',()=>{
+            document.querySelectorAll('.extra-notice.d-none').forEach(el=> el.classList.remove('d-none'));
+            loadBtn.remove();
+        });
     }
 });
 </script>
