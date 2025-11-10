@@ -34,7 +34,7 @@ $config =App\Models\ServerConfig::first()
                             $sections = \App\Models\sectionManage::all()->keyBy('id');
                             $departments = \App\Models\Department::all()->keyBy('id');
                         @endphp
-                        <table id="studentTable" class="display table table-striped align-middle" style="width:100%">
+                        <table id="studentTable" data-order='[[0,"asc"]]' class="display table table-striped align-middle" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Class</th>
@@ -60,7 +60,7 @@ $config =App\Models\ServerConfig::first()
                                                 : env('APP_URL').'/public/avatar.png';
                                     @endphp
                                     <tr>
-                                        <td>{{ e($className) }}</td>
+                                        <td data-order="{{ (int)($std->className ?? 0) }}">{{ e($className) }}</td>
                                         <td>{{ e($std->stdId) }}</td>
                                         <td>{{ e($fullName) }}</td>
                                         <td>{{ e($sessionName) }}</td>
@@ -83,7 +83,9 @@ $config =App\Models\ServerConfig::first()
 <script>
 document.addEventListener('DOMContentLoaded',function(){
     if(window.jQuery && $('#studentTable').length){
+        let orderData = $('#studentTable').data('order');
         $('#studentTable').DataTable({
+            order: orderData || [[0,'asc']],
             pageLength:25,
             responsive:true,
             columnDefs:[{targets:[6,7],orderable:false}],
