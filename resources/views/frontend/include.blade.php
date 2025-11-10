@@ -793,7 +793,7 @@
             </div>
         </div>
 
-        @yield('sliderninfo')
+    @yield('sliderninfo')
         <div class="container-fluid">
             <div class="row">
                 @yield('frontcontent')

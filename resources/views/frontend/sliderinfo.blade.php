@@ -64,7 +64,7 @@
         <!-- Original Leatest Notice block moved under slider -->
         <div class="container-fluid mt-4">
             <div class="row">
-                <div class="col-12 mx-auto mb-4">
+                <div class="col-12 mx-auto mb-4 scale-on-scroll">
                     <h2>Leatest Notice</h2>
                     @if(isset($noticeBoard) && $noticeBoard->count()>0)
                         @foreach($noticeBoard as $ntc)

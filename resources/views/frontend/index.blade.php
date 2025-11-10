@@ -28,38 +28,7 @@ Enter to learn & Leave to serve
 
 <div class="col-11 col-md-9 mx-auto">
     <div class="rowalign-items-center">
-        <div class="col-12 mx-auto row">
-            <div class="col-3 col-md-1 bg-success np-1 ml-2">Notice</div>
-            <div class="col-9 col-md-11 latest-news np-1">
-                <marquee>
-                    <ul>
-                        @if($noticeBoard->count()>0)
-                        @foreach($noticeBoard as $notice)
-                        <li>
-                            @php($__nb = ($notice->body ?? $notice->details ?? $notice->description ?? ''))
-                            <a href="#"
-                               class="notice-view"
-                               data-title="{{ $notice->headline }}"
-                               data-body64="{{ base64_encode($__nb) }}"
-                               data-date="{{ optional($notice->created_at)->format('d M Y') }}"
-                               data-attachment="{{ !empty($notice->attachment) ? env('APP_URL').'/public/'.$notice->attachment : '' }}"
-                               data-attachtype="{{ !empty($notice->attachment) ? strtolower(pathinfo($notice->attachment, PATHINFO_EXTENSION)) : '' }}">
-                                <i class="fa-thin fa-hand-point-right"></i>{{ $notice->headline }}
-                            </a>
-                        </li>
-                        @endforeach
-                        @else
-                        <li>
-                            <a href="#"><i class="fa-thin fa-hand-point-right"></i> Lorem ipsom text notice here. </a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa-thin fa-hand-point-right"></i> Another lorem ipsom text notice here. </a>
-                        </li>
-                        @endif
-                    </ul>
-                </marquee>
-            </div>
-        </div>
+        
         @if($insData)
         <div class="col-12 mx-auto my-2">
             <h2>{{$insData->insHeadline}}</h2>
