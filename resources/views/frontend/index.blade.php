@@ -36,7 +36,7 @@ Enter to learn & Leave to serve
 .metric-icon{transform:scale(.9);opacity:.6;transition:transform .6s ease, opacity .6s ease}
 .metric-icon.in{transform:scale(1);opacity:1}
 </style>
-<div class="col-3 mx-auto d-none d-md-block">
+<div class="col-3 mx-auto d-none d-md-block sidebar-column">
     @yield('sideinfo')
 </div>
 

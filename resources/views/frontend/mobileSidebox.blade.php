@@ -7,13 +7,13 @@
     <div class="row mb-3 sidebar-stack-mobile">
         <div class="col-10 mx-auto">
             <div class="principal-standalone mb-3">
-                <div class="plain-heading"><i class="fa-solid fa-user-graduate me-1"></i> <span>Principal</span></div>
+                <div class="plain-heading"><i class="fa-solid fa-user-graduate me-1"></i> <span>Principal (প্রধান শিক্ষক)</span></div>
                 <div class="text-center">
-                    <img class="principal-photo w-100 rounded shadow-sm" src="{{ $principalAvatar }}" alt="Principal portrait" loading="lazy">
-                    <div class="principal-caption mt-2">
+                    <img class="principal-photo" src="{{ $principalAvatar }}" alt="Principal portrait" loading="lazy">
+                    <div class="principal-caption">
                         <div class="fw-semibold" style="font-size:12px">{{ $config->principalName ?? 'Engr. Abu Yousuf' }}</div>
                         <div class="text-muted small" style="font-size:11px">{{ $config->principalDesignation ?? 'Principal' }}</div>
-                        <a class="btn btn-outline-success btn-sm mt-2 px-3" href="{{ route('principalSpeechPage') }}">Profile & Speech</a>
+                        <a class="btn btn-success btn-sm px-3" href="{{ route('principalSpeechPage') }}">Details</a>
                     </div>
                 </div>
             </div>
