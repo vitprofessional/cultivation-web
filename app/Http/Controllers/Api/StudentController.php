@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\StudentManagement;
 use App\Http\Resources\StudentResource;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Schema;
 
 class StudentController extends Controller
 {
@@ -50,8 +51,8 @@ class StudentController extends Controller
                     'name'       => $request->query('name')
                 ],
                 'sort'   => [
-                    'by'  => $request->query('sort', 'id'),
-                    'dir' => strtolower($request->query('dir','desc'))
+                    'by'  => $request->query('sort', 'classid'),
+                    'dir' => strtolower($request->query('dir','asc'))
                 ]
             ]
         ]);
@@ -265,22 +266,36 @@ class StudentController extends Controller
      */
     protected function resolveSort(Request $request): array
     {
-        $dir = strtolower($request->query('dir','desc'));
-        $dir = in_array($dir, ['asc','desc'], true) ? $dir : 'desc';
+        // default to class id ascending if not provided
+        $dir = strtolower($request->query('dir','asc'));
+        $dir = in_array($dir, ['asc','desc'], true) ? $dir : 'asc';
 
+        $key = strtolower($request->query('sort','classid'));
+
+        // Select best-fit column for class id/name based on existing columns
+        $table = (new \App\Models\StudentManagement())->getTable();
+        $firstExisting = function(array $candidates) use ($table){
+            foreach($candidates as $c){
+                if(Schema::hasColumn($table, $c)) return $c;
+            }
+            return null;
+        };
+
+        // Map sort keys to underlying columns (with fallbacks)
         $map = [
-            'id'          => 'id',
-            'name'        => 'fullName',
-            'roll'        => 'rollNumber',
-            'email'       => 'email',
-            'mobile'      => 'mobile',
-            'session'     => 'sessionYear',
-            'department'  => 'department',
-            'class'       => 'className', // may not exist; caller wraps in try/catch
+            'id'          => ['id'],
+            'name'        => ['fullName','name'],
+            'roll'        => ['rollNumber','roll','roll_no'],
+            'email'       => ['email'],
+            'mobile'      => ['mobile','phone'],
+            'session'     => ['sessionYear','session'],
+            'department'  => ['department','department_id'],
+            'class'       => ['className','class_id','classId'],
+            'classid'     => ['class_id','classId','className'],
         ];
 
-        $key = strtolower($request->query('sort','id'));
-        $col = $map[$key] ?? 'id';
+        $candidates = $map[$key] ?? ['id'];
+        $col = $firstExisting($candidates) ?? 'id';
         return [$col, $dir];
     }
 }
