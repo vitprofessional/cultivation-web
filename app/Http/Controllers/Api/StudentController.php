@@ -25,7 +25,16 @@ class StudentController extends Controller
         $limit = (int) $request->query('limit', 15);
         $limit = $limit > 0 && $limit <= 100 ? $limit : 15;
 
-        $students = $query->orderByDesc('id')->paginate($limit);
+        // Sorting: allow ?sort=class|name|roll|email|mobile|session|department&dir=asc|desc
+        [$sortCol, $sortDir] = $this->resolveSort($request);
+        try {
+            $query->orderBy($sortCol, $sortDir);
+        } catch (\Throwable $e) {
+            // Fallback if invalid column
+            $query->orderBy('id', 'desc');
+        }
+
+        $students = $query->paginate($limit);
         return StudentResource::collection($students)->additional([
             'meta' => [
                 'search' => trim($request->query('search','')),
@@ -39,6 +48,10 @@ class StudentController extends Controller
                     'session'    => $request->query('session'),
                     'department' => $request->query('department'),
                     'name'       => $request->query('name')
+                ],
+                'sort'   => [
+                    'by'  => $request->query('sort', 'id'),
+                    'dir' => strtolower($request->query('dir','desc'))
                 ]
             ]
         ]);
@@ -207,7 +220,12 @@ class StudentController extends Controller
 
         $query = StudentManagement::query();
         $this->applyFilters($request, $query);
-        $query->orderBy('id');
+        [$sortCol, $sortDir] = $this->resolveSort($request);
+        try {
+            $query->orderBy($sortCol, $sortDir);
+        } catch (\Throwable $e) {
+            $query->orderBy('id', 'asc');
+        }
 
         $headers = [
             'Content-Type'        => 'text/csv',
@@ -238,5 +256,31 @@ class StudentController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    /**
+     * Resolve sorting column and direction from request with safe mapping.
+     * Supports sort values: id,name,roll,email,mobile,session,department,class
+     * 'class' maps to 'className' if present, else falls back to 'id'.
+     */
+    protected function resolveSort(Request $request): array
+    {
+        $dir = strtolower($request->query('dir','desc'));
+        $dir = in_array($dir, ['asc','desc'], true) ? $dir : 'desc';
+
+        $map = [
+            'id'          => 'id',
+            'name'        => 'fullName',
+            'roll'        => 'rollNumber',
+            'email'       => 'email',
+            'mobile'      => 'mobile',
+            'session'     => 'sessionYear',
+            'department'  => 'department',
+            'class'       => 'className', // may not exist; caller wraps in try/catch
+        ];
+
+        $key = strtolower($request->query('sort','id'));
+        $col = $map[$key] ?? 'id';
+        return [$col, $dir];
     }
 }
