@@ -102,6 +102,12 @@ Route::get('/our-teacher',[
     'teacherPage'
     ])->name('teacherPage');
 
+// Teacher profile detail
+Route::get('/our-teacher/{id}', [
+    FrontController::class,
+    'teacherShow'
+])->whereNumber('id')->name('teacher.show');
+
 Route::get('/our-staff',[
     FrontController::class,
     'staffPage'

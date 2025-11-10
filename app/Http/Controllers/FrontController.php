@@ -199,6 +199,14 @@ class FrontController extends Controller
         return view('frontend.institute.teachers',['Datakey'=>$syllabus]);
     }
 
+    // teacher detail page
+    public function teacherShow($id){
+        $teacher = TeacherManagement::findOrFail($id);
+        return view('frontend.institute.teacher-show', [
+            'teacher' => $teacher,
+        ]);
+    }
+
     //staff list page
     public function staffPage(){
         $syllabus  =   StaffManagement::all();
