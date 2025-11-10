@@ -16,7 +16,17 @@ Enter to learn & Leave to serve
 /* Scale-in animation for sections */
 .scale-on-scroll{transform: scale(.98); opacity: 0; transition: transform .6s ease, opacity .6s ease}
 .scale-on-scroll.scale-in{transform: scale(1); opacity: 1}
-.notice-feature:hover{transform: translateY(-2px); transition: transform .2s ease}
+
+/* Professional homepage polish */
+.home-section-title{font-weight:700; letter-spacing:.2px; margin-bottom: .75rem}
+.notice-box{border-radius: .25rem; background: #198754; color:#fff}
+.notice-box .date-box{font-weight:600}
+.notice-box a{color:#fff; text-decoration:none}
+.notice-box a:hover{text-decoration:underline}
+.infobox .card{border:0; box-shadow: 0 6px 16px rgba(0,0,0,.06)}
+.infobox .card-header{border:0}
+.list-group-item{border:0; padding-left: 0}
+.list-group-item i{color:#198754}
 </style>
 <div class="col-3 mx-auto d-none d-md-block">
     @yield('sideinfo')
@@ -27,10 +37,13 @@ Enter to learn & Leave to serve
 </div>
 
 <div class="col-11 col-md-9 mx-auto">
-    <div class="rowalign-items-center">
+    <div class="row align-items-start">
         <!-- Leatest Notice block placed at top of main content (beside sidebar, under slider) -->
         <div class="col-12 mx-auto mb-4 scale-on-scroll">
-            <h2>Leatest Notice</h2>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h2 class="home-section-title mb-0">Latest Notice</h2>
+                <a href="{{ route('allNotices') }}" class="btn btn-outline-success btn-sm">All Notice</a>
+            </div>
             @if($noticeBoard->count()>0)
                 @foreach($noticeBoard as $ntc)
                     <div class="bg-success p-2 notice-box my-2">
@@ -237,10 +250,15 @@ Enter to learn & Leave to serve
             </div>
         </div>
 
-        <!-- carusel slider start -->
-        <div id="demo" class="col-12 mx-auto mt-4">
-            <h2>Photo Gallery</h2>
-            <div id="owl-demo" class="owl-carousel">
+        <hr class="my-4">
+        <!-- Photo Gallery -->
+        <div id="demo" class="col-12 mx-auto mt-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 d-flex align-items-center">
+                    <h2 class="home-section-title mb-0">Photo Gallery</h2>
+                </div>
+                <div class="card-body pt-3">
+                    <div id="owl-demo" class="owl-carousel">
             @if($gallery->count()>0) 
                 @foreach($gallery as $data)
                         <div class="item">
@@ -255,6 +273,8 @@ Enter to learn & Leave to serve
                 <div class="item"><img src="{{ asset('/public/') }}/img/hostel.jpg" alt="hostel"></div>
                 <div class="item"><img src="{{ asset('/public/') }}/img/auditoriam.jpg" alt="auditoriam"></div>
             @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -270,6 +290,30 @@ document.addEventListener('DOMContentLoaded', function(){
         els.forEach(el=> io.observe(el));
     } else {
         els.forEach(el=> el.classList.add('scale-in'));
+    }
+
+    // Count-up for metrics
+    const metricEls = document.querySelectorAll('.metric[data-target]');
+    if(metricEls.length){
+        const animateCount = (el)=>{
+            const target = parseInt(el.getAttribute('data-target'),10); if(!target || isNaN(target)) return;
+            const duration = 1200; const start = performance.now();
+            const step = (ts)=>{
+                const progress = Math.min((ts - start)/duration,1);
+                const value = Math.floor(progress * target);
+                el.textContent = value.toLocaleString();
+                if(progress < 1) requestAnimationFrame(step); else el.textContent = target.toLocaleString();
+            };
+            requestAnimationFrame(step);
+        };
+        if('IntersectionObserver' in window){
+            const mIO = new IntersectionObserver((ents)=>{
+                ents.forEach(en=>{ if(en.isIntersecting){ animateCount(en.target); mIO.unobserve(en.target);} });
+            },{threshold:.4});
+            metricEls.forEach(m=> mIO.observe(m));
+        } else {
+            metricEls.forEach(animateCount);
+        }
     }
 });
 </script>

@@ -42,7 +42,7 @@
                         </div>
                         <div class="details-box-content">
                             <h3>Teacher & Staff</h3>
-                            <p>{{ $insInfo->totalTeacher }}</p>
+                            <p class="metric" data-target="{{ (int) $insInfo->totalTeacher }}">0</p>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="details-box-content">
                             <h3>Students</h3>
-                            <p>{{ $insInfo->totalStudent }}</p>
+                            <p class="metric" data-target="{{ (int) $insInfo->totalStudent }}">0</p>
                         </div>
                     </div>
                 </div>
