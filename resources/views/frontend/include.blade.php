@@ -27,7 +27,8 @@
         <!-- Prettify -->
         <link href="{{ asset('/public/') }}/assets/js/google-code-prettify/prettify.css" rel="stylesheet" />
         <!-- font awesome kit setup -->
-        <script src="https://kit.fontawesome.com/32dcd4a478.js" crossorigin="anonymous"></script>
+    <!-- Updated Font Awesome Kit -->
+    <script src="https://kit.fontawesome.com/163dbb3d41.js" crossorigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300;400;500;700;900&family=Skranji&display=swap" rel="stylesheet" />

@@ -75,7 +75,7 @@ Enter to learn & Leave to serve
                             <a class="btn btn-outline-light btn-sm {{ empty($ntc->attachment) ? 'disabled' : '' }}" target="_blank"
                                href="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '#' }}"
                                aria-disabled="{{ empty($ntc->attachment) ? 'true' : 'false' }}">
-                                <i class="fa-light fa-down-to-bracket"></i> File
+                                <i class="fa-solid fa-download"></i> File
                             </a>
                         </div>
                     </div>
