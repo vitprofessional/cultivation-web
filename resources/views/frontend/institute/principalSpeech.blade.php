@@ -60,7 +60,11 @@ Principal's Message
         </div>
 
         @php
-            if(isset($cultivation) && $cultivation){
+            // Prefer ServerConfig for institute and principal details
+            $configLocal = isset($config) ? $config : \App\Models\ServerConfig::first();
+            if(isset($configLocal) && !empty($configLocal->instituteName)){
+                $insName = $configLocal->instituteName;
+            } elseif(isset($cultivation) && $cultivation && !empty($cultivation->institueName)) {
                 $insName = $cultivation->institueName;
             } else {
                 $insName = 'Jahanara-Ayub Academy';
@@ -72,20 +76,27 @@ Principal's Message
                 <div class="card principal-card shadow-sm h-100 text-center p-3">
                     <div class="d-flex flex-column align-items-center">
                         @php
-                            $avatarPath = isset($principal) && $principal && $principal->avatar ? asset('upload/image/teacher/' . $principal->avatar) : asset('avatar.png');
+                            $avatarPath = null;
+                            if(isset($configLocal) && !empty($configLocal->avatar)){
+                                $avatarPath = asset('upload/image/cultivation/' . basename($configLocal->avatar));
+                            } elseif(isset($principal) && $principal && !empty($principal->avatar)) {
+                                $avatarPath = asset('upload/image/teacher/' . $principal->avatar);
+                            } else {
+                                $avatarPath = asset('avatar.png');
+                            }
+                            $displayName = isset($configLocal) && !empty($configLocal->principalName)
+                                ? $configLocal->principalName
+                                : (isset($principal) && $principal ? ($principal->firstName . ' ' . $principal->lastName) : 'Engr. Abu Yousuf');
+                            $displayDesignation = isset($configLocal) && !empty($configLocal->principalDesignation)
+                                ? $configLocal->principalDesignation
+                                : ((isset($principal) && $principal)
+                                    ? (($principal->designation==1) ? 'Principal' : (($principal->designation==2) ? 'Principal (In-charge)' : 'Principal'))
+                                    : 'Principal');
                         @endphp
-                        <img class="principal-avatar" src="{{ $avatarPath }}" alt="Principal photo of {{ isset($principal) && $principal ? ($principal->firstName . ' ' . $principal->lastName) : 'Principal' }}">
+                        <img class="principal-avatar" src="{{ $avatarPath }}" alt="Principal photo of {{ $displayName }}">
                         <div class="mt-3">
-                            <div class="h5 mb-1">{{ isset($principal) && $principal ? ($principal->firstName . ' ' . $principal->lastName) : 'Engr. Abu Yousuf' }}</div>
-                            <div class="principal-meta">
-                                @if(isset($principal) && $principal)
-                                    @if($principal->designation==1) Principal @elseif($principal->designation==2) Principal (In-charge) @else Principal @endif
-                                @else
-                                    Principal
-                                @endif
-                                <br>
-                                {{ $insName }}
-                            </div>
+                            <div class="h5 mb-1">{{ $displayName }}</div>
+                            <div class="principal-meta">{{ $displayDesignation }}<br>{{ $insName }}</div>
                         </div>
                     </div>
                 </div>
@@ -93,17 +104,26 @@ Principal's Message
             <div class="col-12 col-md-8">
                 <div class="card shadow-sm h-100">
                     <div class="card-body p-4">
-                        @if(isset($pSpeech) && $pSpeech)
-                            @if(!empty($pSpeech->importantSpeech))
-                                <p class="speech-lead mb-3">“{{ $pSpeech->importantSpeech }}”</p>
-                            @endif
-                            <div class="speech-body">{!! nl2br(e($pSpeech->generalSpeech)) !!}</div>
-                        @else
-                            <p class="speech-lead mb-3">“We want to make good students as well as good people.”</p>
-                            <div class="speech-body">
-                                Life is not always smooth sailing; it’s more like a roller coaster with its ups and downs. But remember, it’s the bumps and twists that make the ride exciting and memorable. When you face challenges or setbacks, it’s easy to feel discouraged. However, it’s during these tough times that your true strength shines through. It’s the moments when you refuse to give up that define your character and set the stage for your success.
-                            </div>
-                        @endif
+                        @php
+                            $importantSpeech = null;
+                            $generalSpeech = null;
+                            // Priority: ServerConfig fields if exist
+                            if(isset($configLocal) && (!empty($configLocal->principalImportantSpeech) || !empty($configLocal->principalGeneralSpeech))){
+                                $importantSpeech = $configLocal->principalImportantSpeech ?? null;
+                                $generalSpeech = $configLocal->principalGeneralSpeech ?? null;
+                            } elseif(isset($pSpeech) && $pSpeech) { // fallback to legacy model
+                                $importantSpeech = $pSpeech->importantSpeech ?? null;
+                                $generalSpeech = $pSpeech->generalSpeech ?? null;
+                            }
+                            if(empty($importantSpeech)){
+                                $importantSpeech = 'We want to make good students as well as good people.';
+                            }
+                            if(empty($generalSpeech)){
+                                $generalSpeech = "Life is not always smooth sailing; it’s more like a roller coaster with its ups and downs. But remember, it’s the bumps and twists that make the ride exciting and memorable. When you face challenges or setbacks, it’s easy to feel discouraged. However, it’s during these tough times that your true strength shines through. It’s the moments when you refuse to give up that define your character and set the stage for your success.";
+                            }
+                        @endphp
+                        <p class="speech-lead mb-3">“{{ $importantSpeech }}”</p>
+                        <div class="speech-body">{!! nl2br(e($generalSpeech)) !!}</div>
                     </div>
                     <div class="card-footer bg-white d-flex justify-content-end gap-2">
                         <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
