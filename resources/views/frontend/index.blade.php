@@ -104,66 +104,7 @@ Enter to learn & Leave to serve
         </div>
         @endif
 
-        <!-- Latest Notice relocated after slider with scaling effect -->
-        <div class="col-12 mx-auto mb-5 scale-on-scroll" id="latestNoticeSection">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2 class="mb-0">Latest Notice</h2>
-                <a href="{{ route('allNotices') }}" class="btn btn-outline-primary btn-sm">All Notices</a>
-            </div>
-            @php($latest = $noticeBoard->first())
-            @if($latest)
-                @php($__nbLatest = ($latest->body ?? $latest->details ?? $latest->description ?? ''))
-                <div class="card shadow-sm border-0 overflow-hidden notice-feature">
-                    <div class="card-body p-4 position-relative">
-                        <div class="small text-muted mb-2"><i class="fa-thin fa-calendar"></i> {{ optional($latest->created_at)->format('d M Y') }}</div>
-                        <h5 class="fw-bold mb-3">{{ $latest->headline }}</h5>
-                        <p class="text-truncate" style="max-height:3.2em">{{ \Illuminate\Support\Str::limit(strip_tags($__nbLatest), 220,'...') }}</p>
-                        <div class="mt-3 d-flex gap-2">
-                            <button class="btn btn-success btn-sm notice-view"
-                                data-title="{{ $latest->headline }}"
-                                data-body64="{{ base64_encode($__nbLatest) }}"
-                                data-date="{{ optional($latest->created_at)->format('d M Y') }}"
-                                data-attachment="{{ !empty($latest->attachment) ? env('APP_URL').'/public/'.$latest->attachment : '' }}"
-                                data-attachtype="{{ !empty($latest->attachment) ? strtolower(pathinfo($latest->attachment, PATHINFO_EXTENSION)) : '' }}">
-                                <i class="fa-regular fa-eye"></i> View Notice
-                            </button>
-                            <a class="btn btn-outline-success btn-sm {{ empty($latest->attachment) ? 'disabled' : '' }}" target="_blank"
-                               href="{{ !empty($latest->attachment) ? env('APP_URL').'/public/'.$latest->attachment : '#' }}"
-                               aria-disabled="{{ empty($latest->attachment) ? 'true' : 'false' }}">
-                                <i class="fa-regular fa-file-arrow-down"></i>
-                            </a>
-                        </div>
-                        <div class="notice-bg-badge position-absolute top-0 end-0 opacity-25 p-3" style="font-size:4rem;line-height:1;">
-                            <i class="fa-duotone fa-bullhorn"></i>
-                        </div>
-                    </div>
-                </div>
-                @if($noticeBoard->count() > 1)
-                <div class="row mt-4 g-3">
-                    @foreach($noticeBoard->skip(1)->take(6) as $ntc)
-                        @php($__nb2 = ($ntc->body ?? $ntc->details ?? $ntc->description ?? ''))
-                        <div class="col-md-6">
-                            <div class="border rounded p-3 h-100 small notice-item position-relative">
-                                <div class="text-muted mb-1"><i class="fa-thin fa-calendar"></i> {{ optional($ntc->created_at)->format('d M Y') }}</div>
-                                <div class="fw-semibold mb-2">{{ \Illuminate\Support\Str::limit($ntc->headline, 80) }}</div>
-                                <button class="btn btn-outline-success btn-sm notice-view"
-                                    data-title="{{ $ntc->headline }}"
-                                    data-body64="{{ base64_encode($__nb2) }}"
-                                    data-date="{{ optional($ntc->created_at)->format('d M Y') }}"
-                                    data-attachment="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '' }}"
-                                    data-attachtype="{{ !empty($ntc->attachment) ? strtolower(pathinfo($ntc->attachment, PATHINFO_EXTENSION)) : '' }}">
-                                    <i class="fa-regular fa-eye"></i> Open
-                                </button>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                @endif
-            @else
-                <div class="alert alert-info">No notices available right now.</div>
-            @endif
-        </div>
-        <!-- Institute metrics relocated below latest notice -->
+        <!-- Institute metrics block below slider using partial -->
         <div class="col-12 mx-auto mb-5">
             @include('frontend.partials.instituteStats')
         </div>
