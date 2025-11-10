@@ -72,8 +72,13 @@ Enter to learn & Leave to serve
                                 data-attachtype="{{ !empty($ntc->attachment) ? strtolower(pathinfo($ntc->attachment, PATHINFO_EXTENSION)) : '' }}">
                                 <i class="fa-regular fa-eye"></i> View
                             </button>
-                            <a class="btn btn-outline-light btn-sm {{ empty($ntc->attachment) ? 'disabled' : '' }}" target="_blank"
-                               href="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '#' }}"
+                            @php
+                                $fileHref = !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '#';
+                                $fileName = !empty($ntc->attachment) ? basename($ntc->attachment) : '';
+                            @endphp
+                            <a class="btn btn-outline-light btn-sm {{ empty($ntc->attachment) ? 'disabled' : '' }}"
+                               href="{{ $fileHref }}"
+                               @if(!empty($fileName)) download="{{ $fileName }}" @endif
                                aria-disabled="{{ empty($ntc->attachment) ? 'true' : 'false' }}">
                                 <i class="fa-solid fa-download"></i> File
                             </a>

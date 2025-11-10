@@ -970,7 +970,7 @@
                         <button id="noticePdfBtn" type="button" class="btn btn-success">
                             <i class="fa-regular fa-file-pdf me-1"></i> Download PDF
                         </button>
-                        <a id="noticeAttachmentBtn" href="#" class="btn btn-outline-success d-none" target="_blank" rel="noopener">
+                        <a id="noticeAttachmentBtn" href="#" class="btn btn-outline-success d-none" download>
                             <i class="fa-regular fa-file-arrow-down me-1"></i> Attachment
                         </a>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -1106,7 +1106,12 @@
                         $('#noticeSheetHeading').addClass('d-none');
                         $('#noticePrintBtn').addClass('d-none');
                         $('#noticeSignWrap').addClass('d-none');
-                        $('#noticeAttachmentBtn').attr('href', attachmentPath).removeClass('d-none');
+                        // Set attachment href and download filename
+                        const dlName = safeBasename(attachmentPath) || 'attachment';
+                        $('#noticeAttachmentBtn')
+                            .attr('href', attachmentPath)
+                            .attr('download', dlName)
+                            .removeClass('d-none');
                         // inline preview for images/pdf
                         let previewHtml = '';
                         if(['jpg','jpeg','png','webp','gif','avif'].includes(attachType)){
@@ -1124,7 +1129,7 @@
                         $('#noticeSheetHeading').removeClass('d-none');
                         $('#noticePrintBtn').removeClass('d-none');
                         $('#noticeSignWrap').removeClass('d-none');
-                        $('#noticeAttachmentBtn').addClass('d-none').attr('href', '#');
+                        $('#noticeAttachmentBtn').addClass('d-none').attr('href', '#').removeAttr('download');
                         $('#noticeAttachmentPreview').addClass('d-none').empty();
                     }
 
