@@ -1075,6 +1075,12 @@
                             return '';
                         }
                     }
+                    function encodeRelPath(p){
+                        try{
+                            if(!p) return '';
+                            return p.split('/').map(seg => encodeURIComponent(seg)).join('/');
+                        }catch(_){ return p; }
+                    }
 
                     function getUrlOrigin(u){
                         try{
@@ -1103,8 +1109,9 @@
                             const fname = safeBasename(rel);
                             if (rel && rel.includes('/')) {
                                 // Relative path provided
-                                candidateUrls.push(APP_URL + '/public/' + rel);
-                                candidateUrls.push(APP_URL + '/' + rel);
+                                const encRel = encodeRelPath(rel);
+                                candidateUrls.push(APP_URL + '/public/' + encRel);
+                                candidateUrls.push(APP_URL + '/' + encRel);
                             } else if (fname) {
                                 // Bare filename: try common buckets
                                 candidateUrls.push(APP_URL + '/public/upload/notice/' + encodeURIComponent(fname));
@@ -1187,7 +1194,7 @@
                                                 window.__noticeBlobUrl = blobUrl;
                                                 const html = `<object data=\"${blobUrl}\" type=\"application/pdf\" style=\"width:100%;height:70vh\"><embed src=\"${blobUrl}\" type=\"application/pdf\" /></object>`;
                                                 $('#noticeAttachmentPreview').html(html).removeClass('d-none');
-                                                $('#noticeAttachmentPreview').append(`<div id=\"noticeDebugInfo\" class=\"text-muted small mt-2\">Loaded ${status} ${ctype ? '('+ctype+')' : ''} from ${u}</div>`);
+                                                $('#noticeAttachmentPreview').append(`<div id="noticeDebugInfo" class="text-muted small mt-2">Loaded ${status} ${ctype ? '('+ctype+')' : ''}<br><span class="small">Tried: ${urls.map(x=>`<a href='${x}' target='_blank' rel='noopener'>${x}</a>`).join(' , ')}</span></div>`);
                                                 return;
                                             }catch(e){ lastErr = e; }
                                         }
@@ -1199,7 +1206,7 @@
                                         for(const u of candidateUrls){
                                             html = `<object data=\"${u}\" type=\"application/pdf\" style=\"width:100%;height:70vh\"><embed src=\"${u}\" type=\"application/pdf\" /></object>`;
                                             $('#noticeAttachmentPreview').html(html).removeClass('d-none');
-                                            $('#noticeAttachmentPreview').append(`<div id=\"noticeDebugInfo\" class=\"text-muted small mt-2\">Preview via direct URL; if blank, <a href=\"${u}\" target=\"_blank\" rel=\"noopener\">open in new tab</a>.</div>`);
+                                            $('#noticeAttachmentPreview').append(`<div id="noticeDebugInfo" class="text-muted small mt-2">Preview via direct URL; if blank, <a href="${u}" target="_blank" rel="noopener">open in new tab</a>.<br><span class="small">Tried: ${candidateUrls.map(x=>`<a href='${x}' target='_blank' rel='noopener'>${x}</a>`).join(' , ')}</span></div>`);
                                             break;
                                         }
                                     }
