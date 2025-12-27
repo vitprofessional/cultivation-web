@@ -12,8 +12,8 @@
         @else 
         Jahanara Ayiub Acadimic | @yield('fronttitle')
         @endif  </title>
-        {{-- Load Vite assets in local only to avoid production regressions; place before Bootstrap so site CSS wins --}}
-        @if (app()->environment('local'))
+        {{-- Load Vite assets only when available (hot or manifest) --}}
+        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @vite(['resources/css/app.css', 'resources/js/app.js'])
         @endif
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
