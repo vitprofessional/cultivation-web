@@ -1038,7 +1038,7 @@
                     const date = $(this).data('date') || '';
                     const attachment = $(this).data('attachment') || '';
 
-                    // Safely resolve attachment path under APP_URL/public/upload/notice/
+                    // Safely resolve attachment path under APP_URL/public/... (default to upload/notice for bare filenames)
                     function safeBasename(p){
                         try{
                             if(!p) return '';
@@ -1054,19 +1054,41 @@
                         }
                     }
 
+                    function sanitizeRelativePath(p){
+                        try{
+                            if(!p) return '';
+                            p = String(p);
+                            p = p.split('?')[0].split('#')[0];
+                            p = p.replace(/\\/g,'/');
+                            // remove leading slashes
+                            p = p.replace(/^\/+/, '');
+                            // prevent path traversal
+                            p = p.replace(/\.\./g,'');
+                            // collapse multiple slashes
+                            p = p.replace(/\/+/g,'/');
+                            return p;
+                        }catch(_){
+                            return '';
+                        }
+                    }
+
                     let attachmentPath = '';
                     if (attachment && attachment.length) {
                         const isAbsolute = /^(?:https?:)?\/\//i.test(attachment) || /^data:/i.test(attachment);
                         if (isAbsolute) {
                             attachmentPath = attachment;
                         } else {
-                            const fname = safeBasename(attachment);
-                            if (fname) {
-                                attachmentPath = APP_URL + '/public/upload/notice/' + encodeURIComponent(fname);
+                            const rel = sanitizeRelativePath(attachment);
+                            if (rel.includes('/')) {
+                                // assume attachment already contains a relative path like upload/notice/xyz.pdf
+                                attachmentPath = APP_URL + '/public/' + rel;
+                            } else if (rel) {
+                                // bare filename: default bucket
+                                attachmentPath = APP_URL + '/public/upload/notice/' + encodeURIComponent(rel);
                             }
                         }
                     }
-                    const attachType = (attachmentPath && attachmentPath.split('.').pop() || '').toLowerCase();
+                    const attachExt = (safeBasename(attachmentPath).split('.').pop() || '').toLowerCase();
 
                     // Prefer base64 body to safely carry HTML and decode as UTF-8
                     function decodeBase64Utf8(b64){
@@ -1114,10 +1136,11 @@
                             .removeClass('d-none');
                         // inline preview for images/pdf
                         let previewHtml = '';
-                        if(['jpg','jpeg','png','webp','gif','avif'].includes(attachType)){
+                        if(['jpg','jpeg','png','webp','gif','avif'].includes(attachExt)){
                             previewHtml = `<img src="${attachmentPath}" alt="attachment" class="img-fluid rounded border">`;
-                        } else if(attachType === 'pdf'){
-                            previewHtml = `<iframe src="${attachmentPath}" style="width:100%;height:70vh" frameborder="0"></iframe>`;
+                        } else if(attachExt === 'pdf'){
+                            // Use object/embed for broader PDF compatibility
+                            previewHtml = `<object data="${attachmentPath}" type="application/pdf" style="width:100%;height:70vh"><embed src="${attachmentPath}" type="application/pdf" /></object>`;
                         }
                         if(previewHtml){
                             $('#noticeAttachmentPreview').html(previewHtml).removeClass('d-none');
