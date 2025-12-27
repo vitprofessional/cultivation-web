@@ -1010,6 +1010,10 @@
             // Base URL for building absolute paths (falls back to url('/'))
             let APP_URL = {!! json_encode(env('APP_URL') ?: url('/')) !!};
             APP_URL = (APP_URL || '').replace(/\/+$/,'');
+            // Align scheme with current page to avoid mixed-content
+            if(window.location?.protocol === 'https:' && APP_URL.startsWith('http:')){
+                APP_URL = APP_URL.replace(/^http:/,'https:');
+            }
             $(document).ready(function() {
                 $(".alert").fadeTo(2000, 500).slideUp(500, function() {
                     $(".alert").slideUp(500);
@@ -1088,6 +1092,20 @@
                         const isAbsolute = /^(?:https?:)?\/\//i.test(attachment) || /^data:/i.test(attachment);
                         if (isAbsolute) {
                             attachmentPath = attachment;
+                            // If page is HTTPS, try to use HTTPS for same-host absolute HTTP URLs
+                            if(window.location?.protocol === 'https:' && attachmentPath.startsWith('http:')){
+                                try{
+                                    const u = new URL(attachmentPath);
+                                    if(u.host === window.location.host){
+                                        attachmentPath = attachmentPath.replace(/^http:/,'https:');
+                                    } else {
+                                        // Attempt https upgrade even cross-host; browser will decide
+                                        attachmentPath = attachmentPath.replace(/^http:/,'https:');
+                                    }
+                                }catch(_){
+                                    attachmentPath = attachmentPath.replace(/^http:/,'https:');
+                                }
+                            }
                         } else {
                             const rel = sanitizeRelativePath(attachment);
                             if (rel.includes('/')) {
