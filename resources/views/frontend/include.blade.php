@@ -1138,12 +1138,24 @@
                         let previewHtml = '';
                         if(['jpg','jpeg','png','webp','gif','avif'].includes(attachExt)){
                             previewHtml = `<img src="${attachmentPath}" alt="attachment" class="img-fluid rounded border">`;
-                        } else if(attachExt === 'pdf'){
-                            // Use object/embed for broader PDF compatibility
-                            previewHtml = `<object data="${attachmentPath}" type="application/pdf" style="width:100%;height:70vh"><embed src="${attachmentPath}" type="application/pdf" /></object>`;
-                        }
-                        if(previewHtml){
                             $('#noticeAttachmentPreview').html(previewHtml).removeClass('d-none');
+                        } else if(attachExt === 'pdf'){
+                            // Show loading state, then try to fetch PDF and embed via Blob URL to bypass attachment disposition
+                            $('#noticeAttachmentPreview').html('<div class="text-muted small">Loading PDF preview…</div>').removeClass('d-none');
+                            (async function tryEmbedPdf(url){
+                                try{
+                                    const res = await fetch(url, {cache:'no-cache'});
+                                    if(!res.ok) throw new Error('HTTP '+res.status);
+                                    const blob = await res.blob();
+                                    const blobUrl = URL.createObjectURL(blob);
+                                    window.__noticeBlobUrl = blobUrl;
+                                    const html = `<object data="${blobUrl}" type="application/pdf" style="width:100%;height:70vh"><embed src="${blobUrl}" type="application/pdf" /></object>`;
+                                    $('#noticeAttachmentPreview').html(html).removeClass('d-none');
+                                }catch(e){
+                                    const fb = `<div class="alert alert-warning">PDF preview unavailable. <a href="${url}" target="_blank" rel="noopener">Open PDF in new tab</a></div>`;
+                                    $('#noticeAttachmentPreview').html(fb).removeClass('d-none');
+                                }
+                            })(attachmentPath);
                         } else {
                             $('#noticeAttachmentPreview').addClass('d-none').empty();
                         }
@@ -1332,6 +1344,8 @@
                     $('#noticeSheetHeading').removeClass('d-none');
                     $('#noticePrintBtn').removeClass('d-none');
                     $('#noticeSignWrap').removeClass('d-none');
+                    // Revoke any blob URL created for PDF preview
+                    if(window.__noticeBlobUrl){ try{ URL.revokeObjectURL(window.__noticeBlobUrl); }catch(_){} window.__noticeBlobUrl = null; }
                     $('body').removeClass('modal-open').css('overflow','');
                     $('.modal-backdrop').remove();
                 });
