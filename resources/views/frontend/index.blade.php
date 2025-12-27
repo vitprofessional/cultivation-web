@@ -68,12 +68,12 @@ Enter to learn & Leave to serve
                                 data-title="{{ $ntc->headline }}"
                                 data-body64="{{ base64_encode($__nb2) }}"
                                 data-date="{{ $rawDate ? $rawDate->format('d M Y') : '' }}"
-                                data-attachment="{{ !empty($ntc->attachment) ? url('/').'/public/'.$ntc->attachment : '' }}"
+                                data-attachment="{{ !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '' }}"
                                 data-attachtype="{{ !empty($ntc->attachment) ? strtolower(pathinfo($ntc->attachment, PATHINFO_EXTENSION)) : '' }}">
                                 <i class="fa-regular fa-eye"></i> View
                             </button>
                             @php
-                                $fileHref = !empty($ntc->attachment) ? url('/').'/public/'.$ntc->attachment : '#';
+                                $fileHref = !empty($ntc->attachment) ? env('APP_URL').'/public/'.$ntc->attachment : '#';
                                 $fileName = !empty($ntc->attachment) ? basename($ntc->attachment) : '';
                             @endphp
                             <a class="btn btn-outline-light btn-sm {{ empty($ntc->attachment) ? 'disabled' : '' }}"
