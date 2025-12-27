@@ -1072,6 +1072,17 @@
                         }
                     }
 
+                    function getUrlOrigin(u){
+                        try{
+                            const full = new URL(u, window.location.href);
+                            return full.origin;
+                        }catch(_){ return ''; }
+                    }
+                    function isSameOrigin(u){
+                        const o = getUrlOrigin(u);
+                        return !!o && o === window.location.origin;
+                    }
+
                     let attachmentPath = '';
                     if (attachment && attachment.length) {
                         const isAbsolute = /^(?:https?:)?\/\//i.test(attachment) || /^data:/i.test(attachment);
@@ -1140,22 +1151,39 @@
                             previewHtml = `<img src="${attachmentPath}" alt="attachment" class="img-fluid rounded border">`;
                             $('#noticeAttachmentPreview').html(previewHtml).removeClass('d-none');
                         } else if(attachExt === 'pdf'){
-                            // Show loading state, then try to fetch PDF and embed via Blob URL to bypass attachment disposition
-                            $('#noticeAttachmentPreview').html('<div class="text-muted small">Loading PDF preview…</div>').removeClass('d-none');
-                            (async function tryEmbedPdf(url){
-                                try{
-                                    const res = await fetch(url, {cache:'no-cache'});
-                                    if(!res.ok) throw new Error('HTTP '+res.status);
-                                    const blob = await res.blob();
-                                    const blobUrl = URL.createObjectURL(blob);
-                                    window.__noticeBlobUrl = blobUrl;
-                                    const html = `<object data="${blobUrl}" type="application/pdf" style="width:100%;height:70vh"><embed src="${blobUrl}" type="application/pdf" /></object>`;
-                                    $('#noticeAttachmentPreview').html(html).removeClass('d-none');
-                                }catch(e){
-                                    const fb = `<div class="alert alert-warning">PDF preview unavailable. <a href="${url}" target="_blank" rel="noopener">Open PDF in new tab</a></div>`;
-                                    $('#noticeAttachmentPreview').html(fb).removeClass('d-none');
-                                }
-                            })(attachmentPath);
+                            const sameOrigin = isSameOrigin(attachmentPath);
+                            const mcBlocked = (window.location.protocol === 'https:' && attachmentPath.startsWith('http:'));
+                            if(mcBlocked){
+                                $('#noticeAttachmentPreview').html(`<div class="alert alert-warning">Cannot load HTTP resource on HTTPS page. <a href="${attachmentPath}" target="_blank" rel="noopener">Open PDF in new tab</a></div>`).removeClass('d-none');
+                            } else if(sameOrigin){
+                                // Prefer Blob if same-origin to bypass attachment disposition
+                                $('#noticeAttachmentPreview').html('<div class="text-muted small">Loading PDF preview…</div>').removeClass('d-none');
+                                (async function tryEmbedPdf(url){
+                                    try{
+                                        const res = await fetch(url, {cache:'no-cache'});
+                                        const status = res.status;
+                                        const ctype = res.headers.get('content-type') || '';
+                                        if(!res.ok){ throw new Error('HTTP '+status); }
+                                        const blob = await res.blob();
+                                        const blobUrl = URL.createObjectURL(blob);
+                                        window.__noticeBlobUrl = blobUrl;
+                                        const html = `<object data="${blobUrl}" type="application/pdf" style="width:100%;height:70vh"><embed src="${blobUrl}" type="application/pdf" /></object>`;
+                                        $('#noticeAttachmentPreview').html(html).removeClass('d-none');
+                                        $('#noticeAttachmentPreview').append(`<div id="noticeDebugInfo" class="text-muted small mt-2">Loaded ${status} ${ctype ? '('+ctype+')' : ''}</div>`);
+                                    }catch(e){
+                                        console.warn('Notice PDF blob preview failed:', e);
+                                        // Fallback to direct embed/iframe
+                                        const html = `<object data="${attachmentPath}" type="application/pdf" style="width:100%;height:70vh"><embed src="${attachmentPath}" type="application/pdf" /></object>`;
+                                        $('#noticeAttachmentPreview').html(html).removeClass('d-none');
+                                        $('#noticeAttachmentPreview').append(`<div id="noticeDebugInfo" class="text-muted small mt-2">Preview via direct URL; if blank, <a href="${attachmentPath}" target="_blank" rel="noopener">open in new tab</a>.</div>`);
+                                    }
+                                })(attachmentPath);
+                            } else {
+                                // Cross-origin: embed directly, browsers will handle
+                                const html = `<object data="${attachmentPath}" type="application/pdf" style="width:100%;height:70vh"><embed src="${attachmentPath}" type="application/pdf" /></object>`;
+                                $('#noticeAttachmentPreview').html(html).removeClass('d-none');
+                                $('#noticeAttachmentPreview').append(`<div id="noticeDebugInfo" class="text-muted small mt-2">Cross-origin PDF preview; if it doesn't render, <a href="${attachmentPath}" target="_blank" rel="noopener">open in new tab</a>.</div>`);
+                            }
                         } else {
                             $('#noticeAttachmentPreview').addClass('d-none').empty();
                         }
@@ -1340,6 +1368,7 @@
                 // Ensure body scroll restores after modal closed
                 document.getElementById('noticeModal').addEventListener('hidden.bs.modal', function(){
                     $('#noticeAttachmentPreview').addClass('d-none').empty();
+                    $('#noticeDebugInfo').remove();
                     // Reset visibility state
                     $('#noticeSheetHeading').removeClass('d-none');
                     $('#noticePrintBtn').removeClass('d-none');
