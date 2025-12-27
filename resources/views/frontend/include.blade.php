@@ -1088,35 +1088,32 @@
                     }
 
                     let attachmentPath = '';
+                    let candidateUrls = [];
                     if (attachment && attachment.length) {
                         const isAbsolute = /^(?:https?:)?\/\//i.test(attachment) || /^data:/i.test(attachment);
                         if (isAbsolute) {
-                            attachmentPath = attachment;
-                            // If page is HTTPS, try to use HTTPS for same-host absolute HTTP URLs
-                            if(window.location?.protocol === 'https:' && attachmentPath.startsWith('http:')){
-                                try{
-                                    const u = new URL(attachmentPath);
-                                    if(u.host === window.location.host){
-                                        attachmentPath = attachmentPath.replace(/^http:/,'https:');
-                                    } else {
-                                        // Attempt https upgrade even cross-host; browser will decide
-                                        attachmentPath = attachmentPath.replace(/^http:/,'https:');
-                                    }
-                                }catch(_){
-                                    attachmentPath = attachmentPath.replace(/^http:/,'https:');
-                                }
+                            let abs = attachment;
+                            // If page is HTTPS, try to use HTTPS for absolute HTTP URLs
+                            if(window.location?.protocol === 'https:' && abs.startsWith('http:')){
+                                try{ abs = abs.replace(/^http:/,'https:'); }catch(_){}
                             }
+                            candidateUrls.push(abs);
                         } else {
                             const rel = sanitizeRelativePath(attachment);
-                            if (rel.includes('/')) {
-                                // assume attachment already contains a relative path like upload/notice/xyz.pdf
-                                attachmentPath = APP_URL + '/public/' + rel;
-                            } else if (rel) {
-                                // bare filename: default bucket
-                                attachmentPath = APP_URL + '/public/upload/notice/' + encodeURIComponent(rel);
+                            const fname = safeBasename(rel);
+                            if (rel && rel.includes('/')) {
+                                // Relative path provided
+                                candidateUrls.push(APP_URL + '/public/' + rel);
+                                candidateUrls.push(APP_URL + '/' + rel);
+                            } else if (fname) {
+                                // Bare filename: try common buckets
+                                candidateUrls.push(APP_URL + '/public/upload/notice/' + encodeURIComponent(fname));
+                                candidateUrls.push(APP_URL + '/public/upload/' + encodeURIComponent(fname));
+                                candidateUrls.push(APP_URL + '/job-placement/resource/media/notice/' + encodeURIComponent(fname));
                             }
                         }
                     }
+                    attachmentPath = candidateUrls[0] || '';
                     const attachExt = (safeBasename(attachmentPath).split('.').pop() || '').toLowerCase();
 
                     // Prefer base64 body to safely carry HTML and decode as UTF-8
@@ -1176,31 +1173,46 @@
                             } else if(sameOrigin){
                                 // Prefer Blob if same-origin to bypass attachment disposition
                                 $('#noticeAttachmentPreview').html('<div class="text-muted small">Loading PDF preview…</div>').removeClass('d-none');
-                                (async function tryEmbedPdf(url){
+                                (async function tryEmbedPdf(urls){
                                     try{
-                                        const res = await fetch(url, {cache:'no-cache'});
-                                        const status = res.status;
-                                        const ctype = res.headers.get('content-type') || '';
-                                        if(!res.ok){ throw new Error('HTTP '+status); }
-                                        const blob = await res.blob();
-                                        const blobUrl = URL.createObjectURL(blob);
-                                        window.__noticeBlobUrl = blobUrl;
-                                        const html = `<object data="${blobUrl}" type="application/pdf" style="width:100%;height:70vh"><embed src="${blobUrl}" type="application/pdf" /></object>`;
-                                        $('#noticeAttachmentPreview').html(html).removeClass('d-none');
-                                        $('#noticeAttachmentPreview').append(`<div id="noticeDebugInfo" class="text-muted small mt-2">Loaded ${status} ${ctype ? '('+ctype+')' : ''}</div>`);
+                                        let lastErr; let loadedInfo = '';
+                                        for(const u of urls){
+                                            try{
+                                                const res = await fetch(u, {cache:'no-cache'});
+                                                const status = res.status;
+                                                const ctype = res.headers.get('content-type') || '';
+                                                if(!res.ok){ lastErr = new Error('HTTP '+status); continue; }
+                                                const blob = await res.blob();
+                                                const blobUrl = URL.createObjectURL(blob);
+                                                window.__noticeBlobUrl = blobUrl;
+                                                const html = `<object data=\"${blobUrl}\" type=\"application/pdf\" style=\"width:100%;height:70vh\"><embed src=\"${blobUrl}\" type=\"application/pdf\" /></object>`;
+                                                $('#noticeAttachmentPreview').html(html).removeClass('d-none');
+                                                $('#noticeAttachmentPreview').append(`<div id=\"noticeDebugInfo\" class=\"text-muted small mt-2\">Loaded ${status} ${ctype ? '('+ctype+')' : ''} from ${u}</div>`);
+                                                return;
+                                            }catch(e){ lastErr = e; }
+                                        }
+                                        throw lastErr || new Error('Preview failed');
                                     }catch(e){
                                         console.warn('Notice PDF blob preview failed:', e);
-                                        // Fallback to direct embed/iframe
-                                        const html = `<object data="${attachmentPath}" type="application/pdf" style="width:100%;height:70vh"><embed src="${attachmentPath}" type="application/pdf" /></object>`;
-                                        $('#noticeAttachmentPreview').html(html).removeClass('d-none');
-                                        $('#noticeAttachmentPreview').append(`<div id="noticeDebugInfo" class="text-muted small mt-2">Preview via direct URL; if blank, <a href="${attachmentPath}" target="_blank" rel="noopener">open in new tab</a>.</div>`);
+                                        // Fallback to direct embed/iframe; try candidates in order
+                                        let html = '';
+                                        for(const u of candidateUrls){
+                                            html = `<object data=\"${u}\" type=\"application/pdf\" style=\"width:100%;height:70vh\"><embed src=\"${u}\" type=\"application/pdf\" /></object>`;
+                                            $('#noticeAttachmentPreview').html(html).removeClass('d-none');
+                                            $('#noticeAttachmentPreview').append(`<div id=\"noticeDebugInfo\" class=\"text-muted small mt-2\">Preview via direct URL; if blank, <a href=\"${u}\" target=\"_blank\" rel=\"noopener\">open in new tab</a>.</div>`);
+                                            break;
+                                        }
                                     }
-                                })(attachmentPath);
+                                })(candidateUrls.length ? candidateUrls : [attachmentPath]);
                             } else {
                                 // Cross-origin: embed directly, browsers will handle
-                                const html = `<object data="${attachmentPath}" type="application/pdf" style="width:100%;height:70vh"><embed src="${attachmentPath}" type="application/pdf" /></object>`;
-                                $('#noticeAttachmentPreview').html(html).removeClass('d-none');
-                                $('#noticeAttachmentPreview').append(`<div id="noticeDebugInfo" class="text-muted small mt-2">Cross-origin PDF preview; if it doesn't render, <a href="${attachmentPath}" target="_blank" rel="noopener">open in new tab</a>.</div>`);
+                                let html = '';
+                                for(const u of candidateUrls){
+                                    html = `<object data=\"${u}\" type=\"application/pdf\" style=\"width:100%;height:70vh\"><embed src=\"${u}\" type=\"application/pdf\" /></object>`;
+                                    $('#noticeAttachmentPreview').html(html).removeClass('d-none');
+                                    $('#noticeAttachmentPreview').append(`<div id=\"noticeDebugInfo\" class=\"text-muted small mt-2\">Cross-origin PDF preview; if it doesn't render, <a href=\"${u}\" target=\"_blank\" rel=\"noopener\">open in new tab</a>.</div>`);
+                                    break;
+                                }
                             }
                         } else {
                             $('#noticeAttachmentPreview').addClass('d-none').empty();
