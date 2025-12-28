@@ -1175,8 +1175,33 @@
                         // inline preview for images/pdf
                         let previewHtml = '';
                         if(['jpg','jpeg','png','webp','gif','avif'].includes(attachExt)){
-                            previewHtml = `<img src="${attachmentPath}" alt="attachment" class="img-fluid rounded border">`;
-                            $('#noticeAttachmentPreview').html(previewHtml).removeClass('d-none');
+                            const sameOrigin = isSameOrigin(attachmentPath);
+                            const mcBlocked = (window.location.protocol === 'https:' && attachmentPath.startsWith('http:'));
+                            if(mcBlocked){
+                                $('#noticeAttachmentPreview').html(`<div class="alert alert-warning">Cannot load HTTP resource on HTTPS page. <a href="${attachmentPath}" target="_blank" rel="noopener">Open image in new tab</a></div>`).removeClass('d-none');
+                            } else if(sameOrigin){
+                                $('#noticeAttachmentPreview').html('<div class="text-muted small">Loading image…</div>').removeClass('d-none');
+                                (async function(){
+                                    try{
+                                        const res = await fetch(attachmentPath, {cache:'no-cache'});
+                                        if(!res.ok){ throw new Error('HTTP '+res.status); }
+                                        const blob = await res.blob();
+                                        const blobUrl = URL.createObjectURL(blob);
+                                        window.__noticeBlobUrl = blobUrl;
+                                        const html = `<img src="${blobUrl}" alt="attachment" class="img-fluid rounded border">`;
+                                        $('#noticeAttachmentPreview').html(html).removeClass('d-none');
+                                        try{ window.__noticeAttachment = { url: attachmentPath, filename: dlName, ext: attachExt }; }catch(_){}
+                                    }catch(e){
+                                        // Fallback to direct image src
+                                        const html = `<img src="${attachmentPath}" alt="attachment" class="img-fluid rounded border">`;
+                                        $('#noticeAttachmentPreview').html(html).removeClass('d-none');
+                                    }
+                                })();
+                            } else {
+                                // Cross-origin image: let browser load directly
+                                previewHtml = `<img src="${attachmentPath}" alt="attachment" class="img-fluid rounded border">`;
+                                $('#noticeAttachmentPreview').html(previewHtml).removeClass('d-none');
+                            }
                         } else if(attachExt === 'pdf'){
                             const sameOrigin = isSameOrigin(attachmentPath);
                             const mcBlocked = (window.location.protocol === 'https:' && attachmentPath.startsWith('http:'));
@@ -1381,7 +1406,7 @@
                     try{
                         const att = window.__noticeAttachment;
                         if(att && att.url && ['pdf','jpg','jpeg','png','webp','gif','avif'].includes((att.ext||'').toLowerCase())){
-                            const href = (window.__noticeBlobUrl && att.ext.toLowerCase()==='pdf') ? window.__noticeBlobUrl : att.url;
+                            const href = window.__noticeBlobUrl ? window.__noticeBlobUrl : att.url;
                             const a = document.createElement('a');
                             a.href = href;
                             a.download = att.filename || 'attachment';
