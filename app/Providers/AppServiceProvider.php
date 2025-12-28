@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Force HTTPS URLs when the configured app URL uses https
+        $scheme = parse_url(config('app.url'), PHP_URL_SCHEME);
+        if ($scheme === 'https') {
+            URL::forceScheme('https');
+        }
     }
 }
