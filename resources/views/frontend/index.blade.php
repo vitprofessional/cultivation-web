@@ -56,6 +56,11 @@ Enter to learn & Leave to serve
                         $nday = $rawDate ? $rawDate->format('d') : '';
                         $nmon = $rawDate ? $rawDate->format('M') : '';
                         $__nb2 = ($ntc->body ?? $ntc->details ?? $ntc->description ?? '');
+                        // Build absolute attachment URL as APP_URL/public/upload/notice/{filename}
+                        $__baseUrl = rtrim(config('app.url') ?: url('/'), '/');
+                        if (preg_match('#/public$#i', $__baseUrl)) { $__baseUrl = preg_replace('#/public$#i', '', $__baseUrl); }
+                        $__file = !empty($ntc->attachment) ? basename((string)$ntc->attachment) : '';
+                        $__attachUrl = $__file ? ($__baseUrl . '/public/upload/notice/' . rawurlencode($__file)) : '';
                     @endphp
                     <div class="notice-item {{ $loop->iteration > 5 ? 'extra-notice' : '' }}">
                         <div class="notice-date" aria-label="Notice date {{ $rawDate ? $rawDate->format('d M Y') : '' }}">
@@ -69,19 +74,23 @@ Enter to learn & Leave to serve
                                 data-body64="{{ base64_encode($__nb2) }}"
                                 data-date="{{ $rawDate ? $rawDate->format('d M Y') : '' }}"
                                 data-attachment="{{ !empty($ntc->attachment) ? url('/').'/public/'.$ntc->attachment : '' }}"
+                                @if($__attachUrl) data-attachment-url="{{ $__attachUrl }}" @endif
                                 data-attachtype="{{ !empty($ntc->attachment) ? strtolower(pathinfo($ntc->attachment, PATHINFO_EXTENSION)) : '' }}">
                                 <i class="fa-regular fa-eye"></i> View
                             </button>
                             @php
-                                $fileHref = !empty($ntc->attachment) ? url('/').'/public/'.$ntc->attachment : '#';
-                                $fileName = !empty($ntc->attachment) ? basename($ntc->attachment) : '';
+                                $fileHref = $__attachUrl ?: (!empty($ntc->attachment) ? url('/').'/public/'.$ntc->attachment : '');
+                                $fileName = $__file;
                             @endphp
-                            <a class="btn btn-outline-light btn-sm {{ empty($ntc->attachment) ? 'disabled' : '' }}"
-                               href="{{ $fileHref }}"
-                               @if(!empty($fileName)) download="{{ $fileName }}" @endif
-                               aria-disabled="{{ empty($ntc->attachment) ? 'true' : 'false' }}">
-                                <i class="fa-solid fa-download"></i> File
-                            </a>
+                            @if(!empty($fileHref))
+                                <a class="btn btn-outline-light btn-sm notice-file-download"
+                                   href="{{ $fileHref }}"
+                                   @if(!empty($fileName)) download="{{ $fileName }}" @endif
+                                   data-url="{{ $fileHref }}"
+                                   @if(!empty($fileName)) data-filename="{{ $fileName }}" @endif>
+                                    <i class="fa-solid fa-download"></i> File
+                                </a>
+                            @endif
                         </div>
                     </div>
                 @endforeach

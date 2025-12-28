@@ -540,7 +540,7 @@
                             <!-- Logo on the left -->
                             <div class="header-logo">
                                 @if(!empty($config->logo))
-                                    <img src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
+                                    <img src="{{ config('app.url') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
                                 @else
                                     <img src="{{ asset('/public/') }}/logo.png" alt="Jahanara Ayub Academic" />
                                 @endif
@@ -611,7 +611,7 @@
                             </button>
                             <span class="navbar-brand text-white mb-0 h1 text-truncate">
                                  @if(!empty($config->logo))
-                                    <img class="img-fluid" style="max-width: 50px;" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
+                                    <img class="img-fluid" style="max-width: 50px;" src="{{ config('app.url') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
                                 @else
                                     <img class="img-fluid" style="max-width: 50px;" src="{{ asset('/public/') }}/logo.png" alt="Jahanara Ayub Academic" />
                                 @endif
@@ -629,7 +629,7 @@
                     <div class="offcanvas-body">
                         <div class="text-center mb-4">
                             @if(!empty($config->logo))
-                                <img class="img-fluid" style="max-width: 80px;" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
+                                <img class="img-fluid" style="max-width: 80px;" src="{{ config('app.url') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo" />
                             @else
                                 <img class="img-fluid" style="max-width: 80px;" src="{{ asset('/public/') }}/logo.png" alt="Jahanara Ayub Academic" />
                             @endif
@@ -933,7 +933,7 @@
                             <div class="ns-header text-center position-relative">
                                 <div class="ns-logo mx-auto mb-2">
                                     @if(!empty($config->logo))
-                                        <img src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo">
+                                        <img src="{{ config('app.url') }}/public/upload/image/cultivation/{{$config->logo}}" alt="Logo">
                                     @else
                                         <img src="{{ asset('/public/') }}/logo.png" alt="Logo">
                                     @endif
@@ -957,7 +957,7 @@
                                 <div class="text-end">
                                     @if(!empty($config) && !empty($config->principalSign))
                                         <div class="mb-1">
-                                            <img src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ rawurlencode(basename($config->principalSign)) }}" alt="Authorized Signature" style="max-height:60px;max-width:220px;object-fit:contain;margin-right: 3rem !important;margin-bottom: -1.5rem;">
+                                            <img src="{{ config('app.url') }}/public/upload/image/cultivation/{{ rawurlencode(basename($config->principalSign)) }}" alt="Authorized Signature" style="max-height:60px;max-width:220px;object-fit:contain;margin-right: 3rem !important;margin-bottom: -1.5rem;">
                                         </div>
                                     @endif
                                     <div class="ns-sign-line"></div>
@@ -970,9 +970,7 @@
                         <button id="noticePdfBtn" type="button" class="btn btn-success">
                             <i class="fa-regular fa-file-pdf me-1"></i> Download PDF
                         </button>
-                        <a id="noticeAttachmentBtn" href="#" class="btn btn-outline-success d-none" download>
-                            <i class="fa-regular fa-file-arrow-down me-1"></i> Attachment
-                        </a>
+                        
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -1008,8 +1006,10 @@
         <script src="{{ asset('/') }}public/lightbox/fancybox/jquery.fancybox.min.js"></script>
         <script>
             // Base URL for building absolute paths (falls back to url('/'))
-            let APP_URL = {!! json_encode(env('APP_URL') ?: url('/')) !!};
+            let APP_URL = {!! json_encode(config('app.url') ?: url('/')) !!};
             APP_URL = (APP_URL || '').replace(/\/+$/,'');
+            // Normalize: if APP_URL ends with /public, strip it to avoid duplicating /public in constructed paths
+            if(/\/public$/i.test(APP_URL)){ APP_URL = APP_URL.replace(/\/public$/i,''); }
             // Align scheme with current page to avoid mixed-content
             if(window.location?.protocol === 'https:' && APP_URL.startsWith('http:')){
                 APP_URL = APP_URL.replace(/^http:/,'https:');
@@ -1041,6 +1041,7 @@
                     const body64 = $(this).data('body64') || '';
                     const date = $(this).data('date') || '';
                     const attachment = $(this).data('attachment') || '';
+                    const attachmentUrl = $(this).data('attachmentUrl') || '';
 
                     // Safely resolve attachment path under APP_URL/public/... (default to upload/notice for bare filenames)
                     function safeBasename(p){
@@ -1095,7 +1096,10 @@
 
                     let attachmentPath = '';
                     let candidateUrls = [];
-                    if (attachment && attachment.length) {
+                    // If server provided an absolute attachment URL, use it directly
+                    if (attachmentUrl && typeof attachmentUrl === 'string') {
+                        candidateUrls.push(attachmentUrl);
+                    } else if (attachment && attachment.length) {
                         const isAbsolute = /^(?:https?:)?\/\//i.test(attachment) || /^data:/i.test(attachment);
                         if (isAbsolute) {
                             let abs = attachment;
@@ -1110,13 +1114,15 @@
                             if (rel && rel.includes('/')) {
                                 // Relative path provided
                                 const encRel = encodeRelPath(rel);
-                                candidateUrls.push(APP_URL + '/public/' + encRel);
-                                candidateUrls.push(APP_URL + '/' + encRel);
+                                // Force the desired pattern when rel looks like upload/notice/...
+                                if(/^upload\/notice\//i.test(encRel)){
+                                    candidateUrls.push(APP_URL + '/public/' + encRel);
+                                } else {
+                                    candidateUrls.push(APP_URL + '/public/' + encRel);
+                                }
                             } else if (fname) {
                                 // Bare filename: try common buckets
                                 candidateUrls.push(APP_URL + '/public/upload/notice/' + encodeURIComponent(fname));
-                                candidateUrls.push(APP_URL + '/public/upload/' + encodeURIComponent(fname));
-                                candidateUrls.push(APP_URL + '/job-placement/resource/media/notice/' + encodeURIComponent(fname));
                             }
                         }
                     }
@@ -1161,12 +1167,11 @@
                         $('#noticeSheetHeading').addClass('d-none');
                         $('#noticePrintBtn').addClass('d-none');
                         $('#noticeSignWrap').addClass('d-none');
-                        // Set attachment href and download filename
+                        // Ensure Download PDF button is visible for attachments
+                        $('#noticePdfBtn').removeClass('d-none');
+                        // Record attachment info for Download PDF button behavior
                         const dlName = safeBasename(attachmentPath) || 'attachment';
-                        $('#noticeAttachmentBtn')
-                            .attr('href', attachmentPath)
-                            .attr('download', dlName)
-                            .removeClass('d-none');
+                        try{ window.__noticeAttachment = { url: attachmentPath, filename: dlName, ext: attachExt }; }catch(_){ }
                         // inline preview for images/pdf
                         let previewHtml = '';
                         if(['jpg','jpeg','png','webp','gif','avif'].includes(attachExt)){
@@ -1194,7 +1199,9 @@
                                                 window.__noticeBlobUrl = blobUrl;
                                                 const html = `<object data=\"${blobUrl}\" type=\"application/pdf\" style=\"width:100%;height:70vh\"><embed src=\"${blobUrl}\" type=\"application/pdf\" /></object>`;
                                                 $('#noticeAttachmentPreview').html(html).removeClass('d-none');
-                                                $('#noticeAttachmentPreview').append(`<div id="noticeDebugInfo" class="text-muted small mt-2">Loaded ${status} ${ctype ? '('+ctype+')' : ''}<br><span class="small">Tried: ${urls.map(x=>`<a href='${x}' target='_blank' rel='noopener'>${x}</a>`).join(' , ')}</span></div>`);
+                                                // Point the download button and global to the blob for reliable downloading
+                                                try{ window.__noticeBlobUrl = blobUrl; window.__noticeAttachment = { url: attachmentPath, filename: dlName, ext: 'pdf' }; }catch(_){}
+                                                // Removed debug info line
                                                 return;
                                             }catch(e){ lastErr = e; }
                                         }
@@ -1206,7 +1213,7 @@
                                         for(const u of candidateUrls){
                                             html = `<object data=\"${u}\" type=\"application/pdf\" style=\"width:100%;height:70vh\"><embed src=\"${u}\" type=\"application/pdf\" /></object>`;
                                             $('#noticeAttachmentPreview').html(html).removeClass('d-none');
-                                            $('#noticeAttachmentPreview').append(`<div id="noticeDebugInfo" class="text-muted small mt-2">Preview via direct URL; if blank, <a href="${u}" target="_blank" rel="noopener">open in new tab</a>.<br><span class="small">Tried: ${candidateUrls.map(x=>`<a href='${x}' target='_blank' rel='noopener'>${x}</a>`).join(' , ')}</span></div>`);
+                                            // Removed debug info line
                                             break;
                                         }
                                     }
@@ -1217,7 +1224,7 @@
                                 for(const u of candidateUrls){
                                     html = `<object data=\"${u}\" type=\"application/pdf\" style=\"width:100%;height:70vh\"><embed src=\"${u}\" type=\"application/pdf\" /></object>`;
                                     $('#noticeAttachmentPreview').html(html).removeClass('d-none');
-                                    $('#noticeAttachmentPreview').append(`<div id=\"noticeDebugInfo\" class=\"text-muted small mt-2\">Cross-origin PDF preview; if it doesn't render, <a href=\"${u}\" target=\"_blank\" rel=\"noopener\">open in new tab</a>.</div>`);
+                                    // Removed debug info line
                                     break;
                                 }
                             }
@@ -1229,8 +1236,10 @@
                         $('#noticeSheetHeading').removeClass('d-none');
                         $('#noticePrintBtn').removeClass('d-none');
                         $('#noticeSignWrap').removeClass('d-none');
-                        $('#noticeAttachmentBtn').addClass('d-none').attr('href', '#').removeAttr('download');
+                        // Hide Download PDF for text-only notices
+                        $('#noticePdfBtn').addClass('d-none');
                         $('#noticeAttachmentPreview').addClass('d-none').empty();
+                        try{ window.__noticeAttachment = null; }catch(_){}
                     }
 
                     const modalEl = document.getElementById('noticeModal');
@@ -1247,8 +1256,27 @@
                     downloadNoticePdf();
                 });
 
+                // Homepage "File" button: fetch + blob download when same-origin
+                $(document).on('click', 'a.notice-file-download', async function(e){
+                    try{
+                        const url = $(this).data('url') || this.href;
+                        const filename = $(this).data('filename') || $(this).attr('download') || safeBasename(url) || 'file';
+                        const sameOrigin = isSameOrigin(url);
+                        if(!url || !sameOrigin){ return; }
+                        e.preventDefault();
+                        const res = await fetch(url, {cache:'no-cache'});
+                        if(!res.ok){ window.open(url, '_blank'); return; }
+                        const blob = await res.blob();
+                        const blobUrl = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = blobUrl; a.download = filename;
+                        document.body.appendChild(a); a.click(); a.remove();
+                        setTimeout(()=>{ try{ URL.revokeObjectURL(blobUrl); }catch(_){} }, 1000);
+                    }catch(_){ /* fall back to default */ }
+                });
+
                 async function inlineNoticeImages(root){
-                    const imgs = root.querySelectorAll('.ns-header img, .ns-sign img');
+                    const imgs = root.querySelectorAll('.ns-header img, .ns-sign img, #noticeModalBody img');
                     const tasks = Array.from(imgs).map(async (img)=>{
                         try{
                             const url = img.getAttribute('src');
@@ -1349,9 +1377,30 @@
                 async function downloadNoticePdf(){
                     const el = document.getElementById('noticeSheet');
                     if(!el) return;
+                    // If an attachment exists (pdf/image), download it from source
+                    try{
+                        const att = window.__noticeAttachment;
+                        if(att && att.url && ['pdf','jpg','jpeg','png','webp','gif','avif'].includes((att.ext||'').toLowerCase())){
+                            const href = (window.__noticeBlobUrl && att.ext.toLowerCase()==='pdf') ? window.__noticeBlobUrl : att.url;
+                            const a = document.createElement('a');
+                            a.href = href;
+                            a.download = att.filename || 'attachment';
+                            document.body.appendChild(a);
+                            a.click();
+                            a.remove();
+                            return;
+                        }
+                    }catch(_){ }
+                    // Otherwise, convert the text notice to PDF
                     ensureHtml2Pdf().then(()=>{
-                        // Clone and scale to fit one page
+                        // Clone into an offscreen wrapper to ensure visibility for html2canvas
                         const wrapper = document.createElement('div');
+                        wrapper.style.position = 'fixed';
+                        wrapper.style.left = '0';
+                        wrapper.style.top = '0';
+                        wrapper.style.background = '#fff';
+                        wrapper.style.opacity = '0.01';
+                        wrapper.style.pointerEvents = 'none';
                         const clone = el.cloneNode(true);
                         // Remove attachment preview for PDF
                         const prev = clone.querySelector('#noticeAttachmentPreview');
@@ -1365,35 +1414,47 @@
                             clone.id = 'pdfSheet';
                             wrapper.appendChild(clone);
                             document.body.appendChild(wrapper);
-
-                            // Compute scale to keep single page (A4)
-                            const mmRef = document.createElement('div');
-                            mmRef.style.width = '1mm';
-                            mmRef.style.height = '0';
-                            document.body.appendChild(mmRef);
-                            const pxPerMm = mmRef.getBoundingClientRect().width || 3.78;
-                            mmRef.remove();
-                            const pageW = 210 * pxPerMm;
-                            const pageH = 297 * pxPerMm;
-                            const elW = clone.scrollWidth;
-                            const elH = clone.scrollHeight;
-                            const scale = Math.min(pageW / elW, pageH / elH, 1);
-                            clone.style.transformOrigin = 'top left';
-                            clone.style.transform = `scale(${scale})`;
-                            // html2pdf: generate from wrapper
-                            const opt = {
-                                margin: 0,
-                                filename: (document.getElementById('noticeModalLabel')?.textContent || 'notice') + '.pdf',
-                                image: { type: 'jpeg', quality: 0.98 },
-                                html2canvas: { scale: 2, useCORS: true },
-                                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                                pagebreak: { mode: ['avoid-all','css','legacy'] }
+                            // Allow layout to settle
+                            await new Promise(r=>setTimeout(r,50));
+                            const makePdf = async ()=>{
+                                try{
+                                    const h2c = window.html2canvas;
+                                    const jspdfCtor = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : (window.jsPDF || null);
+                                    if(!h2c || !jspdfCtor){ throw new Error('PDF libs missing'); }
+                                    const canvas = await h2c(clone, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+                                    const imgData = canvas.toDataURL('image/jpeg', 0.98);
+                                    const pdf = new jspdfCtor('p','mm','a4');
+                                    const pageW = 210; const pageH = 297;
+                                    let imgW = pageW; let imgH = canvas.height * imgW / canvas.width;
+                                    if(imgH > pageH){
+                                        imgH = pageH; imgW = canvas.width * imgH / canvas.height;
+                                        if(imgW > pageW){
+                                            const s = pageW / imgW; imgW *= s; imgH *= s;
+                                        }
+                                    }
+                                    const x = (pageW - imgW)/2; const y = (pageH - imgH)/2;
+                                    pdf.addImage(imgData, 'JPEG', x, y, imgW, imgH);
+                                    const fname = (document.getElementById('noticeModalLabel')?.textContent || 'notice') + '.pdf';
+                                    pdf.save(fname);
+                                }catch(e){
+                                    // Fallback to html2pdf if available
+                                    try{
+                                        const opt = {
+                                            margin: 0,
+                                            filename: (document.getElementById('noticeModalLabel')?.textContent || 'notice') + '.pdf',
+                                            image: { type: 'jpeg', quality: 0.98 },
+                                            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+                                            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                                        };
+                                        await html2pdf().set(opt).from(clone).save();
+                                    }catch(_){
+                                        printNoticeSheet();
+                                    }
+                                }finally{
+                                    wrapper.remove();
+                                }
                             };
-                            html2pdf().set(opt).from(wrapper).save().then(()=>{
-                                wrapper.remove();
-                            }).catch(()=>{
-                                wrapper.remove();
-                            });
+                            makePdf();
                         };
                         runPdf();
                     }).catch(()=>{
@@ -1410,8 +1471,10 @@
                     $('#noticeSheetHeading').removeClass('d-none');
                     $('#noticePrintBtn').removeClass('d-none');
                     $('#noticeSignWrap').removeClass('d-none');
+                    $('#noticePdfBtn').removeClass('d-none');
                     // Revoke any blob URL created for PDF preview
                     if(window.__noticeBlobUrl){ try{ URL.revokeObjectURL(window.__noticeBlobUrl); }catch(_){} window.__noticeBlobUrl = null; }
+                    try{ window.__noticeAttachment = null; }catch(_){}
                     $('body').removeClass('modal-open').css('overflow','');
                     $('.modal-backdrop').remove();
                 });
