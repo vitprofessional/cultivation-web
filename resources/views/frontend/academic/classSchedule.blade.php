@@ -42,7 +42,7 @@ Class Schedule
                                 <td>{{ $itemDepartment->departmentName }}</td>
                                 <td>{{ $itemSession->session }}</td>
                                 <td>{{$data->created_at}}</td>
-                                <td><a data-fancybox data-type="iframe" href="{{ env('APP_URL') }}/public/upload/image/cultivation/classRoutine/{{ $data->attachment }}" target="_blank"> <i class="fa fa-eye" style="color: green;"></i> </a></td>
+                                <td><a data-fancybox data-type="iframe" href="{{ config('app.url') }}/public/upload/image/cultivation/classRoutine/{{ $data->attachment }}" target="_blank"> <i class="fa fa-eye" style="color: green;"></i> </a></td>
                             </tr>  
                         @endforeach         
                         </tbody>

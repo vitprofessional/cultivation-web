@@ -19,8 +19,8 @@ Student Profile
 @php
     $name = trim(($student->fullName ?? '').' '.($student->sureName ?? '')) ?: 'Unknown';
     $photo = !empty($student->avatar)
-        ? env('APP_URL').'/public/upload/image/student/'.rawurlencode(basename($student->avatar))
-        : env('APP_URL').'/public/avatar.png';
+        ? config('app.url').'/public/upload/image/student/'.rawurlencode(basename($student->avatar))
+        : config('app.url').'/public/avatar.png';
 @endphp
 <div class="container">
   <div class="profile-wrap">

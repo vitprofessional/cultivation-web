@@ -28,9 +28,9 @@ $config =App\Models\ServerConfig::first()
                 @foreach($Datakey as $data)
                 <table class="table table-bordered">
                     @if(!empty($data->avatar))
-                    <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $data->avatar }}"></td>
+                    <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ config('app.url') }}/public/upload/image/cultivation/{{ $data->avatar }}"></td>
                     @else
-                    <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ env('APP_URL') }}/public/avatar.png"></td>
+                    <td style="width:10%"><img  class="w-100 img-thumbnail" src="{{ config('app.url') }}/public/avatar.png"></td>
                     @endif
                     <td style="width:90%">
                         <table class="table table-bordered">

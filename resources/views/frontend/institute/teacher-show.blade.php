@@ -20,8 +20,8 @@ Teacher Profile
     $name = $name !== '' ? $name : 'Unknown';
     $designation = \App\Models\TeacherManagement::getDesignationName($teacher->designation ?? null);
     $photo = !empty($teacher->avatar)
-        ? env('APP_URL').'/public/upload/image/teacher/'.rawurlencode(basename($teacher->avatar))
-        : env('APP_URL').'/public/avatar.png';
+        ? config('app.url').'/public/upload/image/teacher/'.rawurlencode(basename($teacher->avatar))
+        : config('app.url').'/public/avatar.png';
 @endphp
 <div class="container">
     <div class="profile-wrap">

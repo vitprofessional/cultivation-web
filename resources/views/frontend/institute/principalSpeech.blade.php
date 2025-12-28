@@ -78,11 +78,11 @@ Principal's Message
                         @php
                             $avatarPath = null;
                             if(isset($configLocal) && !empty($configLocal->avatar)){
-                                $avatarPath = env('APP_URL') . '/public/upload/image/cultivation/' . rawurlencode(basename($configLocal->avatar));
+                                $avatarPath = config('app.url') . '/public/upload/image/cultivation/' . rawurlencode(basename($configLocal->avatar));
                             } elseif(isset($principal) && $principal && !empty($principal->avatar)) {
-                                $avatarPath = env('APP_URL') . '/public/upload/image/teacher/' . rawurlencode(basename($principal->avatar));
+                                $avatarPath = config('app.url') . '/public/upload/image/teacher/' . rawurlencode(basename($principal->avatar));
                             } else {
-                                $avatarPath = env('APP_URL') . '/public/avatar.png';
+                                $avatarPath = config('app.url') . '/public/avatar.png';
                             }
                             $displayName = isset($configLocal) && !empty($configLocal->principalName)
                                 ? $configLocal->principalName

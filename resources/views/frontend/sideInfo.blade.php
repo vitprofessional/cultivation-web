@@ -1,8 +1,8 @@
     @php
         $config = \App\Models\ServerConfig::first();
         $principalAvatar = !empty($config?->avatar)
-            ? env('APP_URL').'/public/upload/image/cultivation/'.rawurlencode(basename($config->avatar))
-            : env('APP_URL').'/public/avatar.png';
+            ? config('app.url').'/public/upload/image/cultivation/'.rawurlencode(basename($config->avatar))
+            : config('app.url').'/public/avatar.png';
     @endphp
     <aside class="principal-standalone mb-3" aria-labelledby="principalHeading">
     <div class="plain-heading" id="principalHeading"><i class="fa-solid fa-user-graduate me-1"></i> <span>Principal / Head Master (প্রধান শিক্ষক)</span></div>
@@ -19,7 +19,7 @@
     <div class="sidebar-section mb-3">
         <div class="section-heading"><i class="fa-solid fa-user-tie me-1"></i> <span>Education Minister</span></div>
         <div class="text-center p-3">
-            @php($eduImg = !empty($config->eduMinImg) ? env('APP_URL').'/public/upload/image/cultivation/'.rawurlencode(basename($config->eduMinImg)) : env('APP_URL').'/public/avatar.png')
+            @php($eduImg = !empty($config->eduMinImg) ? config('app.url').'/public/upload/image/cultivation/'.rawurlencode(basename($config->eduMinImg)) : config('app.url').'/public/avatar.png')
             <img class="avatar-circle mb-2" src="{{ $eduImg }}" alt="Education Minister portrait">
             <p class="fw-semibold small mb-0">{{ $config->eduMinName }}</p>
         </div>
@@ -29,7 +29,7 @@
     <div class="sidebar-section mb-3">
         <div class="section-heading"><i class="fa-solid fa-user-tie me-1"></i> <span>Board Chairman</span></div>
         <div class="text-center p-3">
-            @php($bcImg = !empty($config->boardChairmanImg) ? env('APP_URL').'/public/upload/image/cultivation/'.rawurlencode(basename($config->boardChairmanImg)) : env('APP_URL').'/public/avatar.png')
+            @php($bcImg = !empty($config->boardChairmanImg) ? config('app.url').'/public/upload/image/cultivation/'.rawurlencode(basename($config->boardChairmanImg)) : config('app.url').'/public/avatar.png')
             <img class="avatar-circle mb-2" src="{{ $bcImg }}" alt="Board Chairman portrait">
             <p class="fw-semibold small mb-0">{{ $config->boardChairmanName }}</p>
         </div>
@@ -68,7 +68,7 @@
             <div class="section-heading" id="songHeading"><i class="fa-solid fa-music me-1"></i> <span>National Song</span></div>
             <div class="px-3 pb-2">
                 <audio controls class="w-100 sidebar-audio">
-                    <source src="{{ env('APP_URL') }}/public/music/bd_national_anthem.mp3" type="audio/mpeg" />
+                    <source src="{{ config('app.url') }}/public/music/bd_national_anthem.mp3" type="audio/mpeg" />
                 </audio>
             </div>
         </div>

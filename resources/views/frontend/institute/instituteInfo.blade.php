@@ -51,7 +51,7 @@ $config =App\Models\ServerConfig::first()
 
         <div class="row align-items-center mt-0">
              <div class="col-md-8 col-12 mx-auto">
-                <img  class="w-75 wow fadeIn animated" data-wow-delay="1s" src="{{ env('APP_URL') }}/public/upload/image/cultivation/{{ $data->heroImg}}">
+                <img  class="w-75 wow fadeIn animated" data-wow-delay="1s" src="{{ config('app.url') }}/public/upload/image/cultivation/{{ $data->heroImg}}">
            </div>
              <div class="col-md-10 col-12 mx-auto">
                 <h4 class="mt-4">About Us</h4>

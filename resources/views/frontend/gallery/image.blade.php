@@ -94,8 +94,8 @@ Memorable Moment
         @if($Datakey->count() > 0) 
             @foreach($Datakey as $data)
                 <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="gallery-card" role="button" tabindex="0" onclick="showImageModal('{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}', '{{ $data->title ?? 'Gallery Image' }}', '{{ $data->description ?? 'Beautiful moment captured' }}')" onkeypress="if(event.key==='Enter'){showImageModal('{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}', '{{ $data->title ?? 'Gallery Image' }}', '{{ $data->description ?? 'Beautiful moment captured' }}')}">
-                        <img loading="lazy" decoding="async" src="{{ env('APP_URL') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}" 
+                    <div class="gallery-card" role="button" tabindex="0" onclick="showImageModal('{{ config('app.url') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}', '{{ $data->title ?? 'Gallery Image' }}', '{{ $data->description ?? 'Beautiful moment captured' }}')" onkeypress="if(event.key==='Enter'){showImageModal('{{ config('app.url') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}', '{{ $data->title ?? 'Gallery Image' }}', '{{ $data->description ?? 'Beautiful moment captured' }}')}">
+                        <img loading="lazy" decoding="async" src="{{ config('app.url') }}/public/upload/image/PhotoGallery/{{ $data->avatar }}" 
                              alt="{{ $data->title ?? 'Gallery image' }}"
                              class="g-img" />
                         <div class="g-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>

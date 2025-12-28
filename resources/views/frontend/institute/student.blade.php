@@ -56,8 +56,8 @@ $config =App\Models\ServerConfig::first()
                                         $sectionName = optional($sections[$std->sectionName] ?? null)->section ?? '-';
                                         $deptName = optional($departments[$std->departmentName] ?? null)->departmentName ?? '-';
                                         $photo = !empty($std->avatar)
-                                                ? env('APP_URL').'/public/upload/image/student/'.rawurlencode(basename($std->avatar))
-                                                : env('APP_URL').'/public/avatar.png';
+                                                ? config('app.url').'/public/upload/image/student/'.rawurlencode(basename($std->avatar))
+                                                : config('app.url').'/public/avatar.png';
                                     @endphp
                                     <tr>
                                         <td data-order="{{ (int)($std->className ?? 0) }}">{{ e($className) }}</td>

@@ -52,8 +52,8 @@ $config =App\Models\ServerConfig::first()
                     $name = $name !== '' ? $name : 'Unknown';
                     $designation = \App\Models\TeacherManagement::getDesignationName($data->designation ?? null);
                     $photo = !empty($data->avatar)
-                        ? env('APP_URL').'/public/upload/image/teacher/'.rawurlencode(basename($data->avatar))
-                        : env('APP_URL').'/public/avatar.png';
+                        ? config('app.url').'/public/upload/image/teacher/'.rawurlencode(basename($data->avatar))
+                        : config('app.url').'/public/avatar.png';
                 @endphp
                 <div class="lect-card">
                     <div class="lect-photo-wrap">

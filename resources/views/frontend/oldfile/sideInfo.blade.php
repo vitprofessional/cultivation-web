@@ -22,7 +22,7 @@
         <div class="bg-success p-2 h5 mb-0"><i class="fa-solid fa-message-music"></i> National Song</div>
         <a href="#" class="list-group-item list-group-item-action">
             <audio controls="" style="width: 100%;" class="mt-3">
-                <source src="{{ env('APP_URL') }}/public/music/bd_national_anthem.mp3" type="audio/mpeg" />
+                <source src="{{ config('app.url') }}/public/music/bd_national_anthem.mp3" type="audio/mpeg" />
             </audio>
         </a>
     </div>
