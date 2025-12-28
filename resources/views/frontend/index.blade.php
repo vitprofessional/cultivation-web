@@ -59,6 +59,7 @@ Enter to learn & Leave to serve
                         // Build absolute attachment URL as APP_URL/public/upload/notice/{filename}
                         $__baseUrl = rtrim(config('app.url') ?: url('/'), '/');
                         if (preg_match('#/public$#i', $__baseUrl)) { $__baseUrl = preg_replace('#/public$#i', '', $__baseUrl); }
+                        if (request()->isSecure() && preg_match('#^http:#i', $__baseUrl)) { $__baseUrl = preg_replace('#^http:#i', 'https:', $__baseUrl); }
                         $__file = !empty($ntc->attachment) ? basename((string)$ntc->attachment) : '';
                         $__attachUrl = $__file ? ($__baseUrl . '/public/upload/notice/' . rawurlencode($__file)) : '';
                     @endphp

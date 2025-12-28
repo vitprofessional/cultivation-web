@@ -26,6 +26,8 @@
                             $baseUrl = rtrim(config('app.url') ?: url('/'), '/');
                             // If APP_URL ends with /public, strip it to avoid double /public/public
                             if (preg_match('#/public$#i', $baseUrl)) { $baseUrl = preg_replace('#/public$#i', '', $baseUrl); }
+                            // If current request is HTTPS but base URL is HTTP, normalize to HTTPS
+                            if (request()->isSecure() && preg_match('#^http:#i', $baseUrl)) { $baseUrl = preg_replace('#^http:#i', 'https:', $baseUrl); }
                             $attachmentFile = $attachment ? basename((string)$attachment) : '';
                             $attachmentUrl = $attachmentFile ? ($baseUrl.'/public/upload/notice/'.rawurlencode($attachmentFile)) : '';
                         @endphp

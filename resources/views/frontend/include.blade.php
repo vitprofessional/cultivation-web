@@ -1096,9 +1096,13 @@
 
                     let attachmentPath = '';
                     let candidateUrls = [];
-                    // If server provided an absolute attachment URL, use it directly
+                    // If server provided an absolute attachment URL, normalize and use it
                     if (attachmentUrl && typeof attachmentUrl === 'string') {
-                        candidateUrls.push(attachmentUrl);
+                        let abs = attachmentUrl;
+                        if(window.location?.protocol === 'https:' && abs.startsWith('http:')){
+                            try{ abs = abs.replace(/^http:/,'https:'); }catch(_){}
+                        }
+                        candidateUrls.push(abs);
                     } else if (attachment && attachment.length) {
                         const isAbsolute = /^(?:https?:)?\/\//i.test(attachment) || /^data:/i.test(attachment);
                         if (isAbsolute) {
