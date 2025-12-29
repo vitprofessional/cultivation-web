@@ -917,12 +917,12 @@
                 <div class="modal-content">
                     <div class="modal-header bg-success text-white">
                         <div class="d-flex align-items-center gap-2">
-                            <i class="fa-regular fa-bullhorn"></i>
+                            <i class="fa-solid fa-bullhorn"></i>
                             <h5 class="modal-title mb-0" id="noticeModalLabel">Notice</h5>
                         </div>
                         <div class="d-flex align-items-center gap-2">
                             <button id="noticePrintBtn" type="button" class="btn btn-light btn-sm">
-                                <i class="fa-regular fa-print"></i> Print
+                                <i class="fa-solid fa-print"></i> Print
                             </button>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -940,9 +940,9 @@
                                 </div>
                                 <h2 class="ns-title mb-1">@if(!empty($config->instituteName)) {{ $config->instituteName }} @else Institute Name @endif</h2>
                                 <div class="ns-meta">
-                                    <h3><i class="fa-regular fa-location-dot"></i> @if(!empty($config->address)){{ $config->address }}@else Address @endif</h3>
-                                    <h4 class="ms-3"><i class="fa-regular fa-phone"></i> @if(!empty($config->officeMobile)){{ $config->officeMobile }}@endif</h4>
-                                    <h4 class="ms-3"><i class="fa-regular fa-envelope"></i> @if(!empty($config->officeEmail)){{ $config->officeEmail }}@endif</h4>
+                                    <h3><i class="fa-solid fa-location-dot"></i> @if(!empty($config->address)){{ $config->address }}@else Address @endif</h3>
+                                    <h4 class="ms-3"><i class="fa-solid fa-phone"></i> @if(!empty($config->officeMobile)){{ $config->officeMobile }}@endif</h4>
+                                    <h4 class="ms-3"><i class="fa-solid fa-envelope"></i> @if(!empty($config->officeEmail)){{ $config->officeEmail }}@endif</h4>
                                 </div>
                                 <div class="ns-date-abs text-end small">
                                     <div>Date: <span id="noticeSheetDate">—</span></div>
@@ -1362,6 +1362,26 @@
                     win.document.body.appendChild(printable);
                     win.document.close();
                     win.focus();
+                    // Ensure external stylesheets and webfonts are loaded before printing
+                    try{
+                        const d = win.document;
+                        const linkPromises = Array.from(d.querySelectorAll('link[rel="stylesheet"]')).map(link => new Promise(resolve => {
+                            // If stylesheet already parsed, proceed
+                            if(link.sheet){ resolve(true); return; }
+                            link.addEventListener('load', () => resolve(true), { once: true });
+                            link.addEventListener('error', () => resolve(true), { once: true });
+                            // Fallback timeout in case no events fire
+                            setTimeout(() => resolve(true), 1500);
+                        }));
+                        await Promise.all(linkPromises);
+                        if(d.fonts && d.fonts.ready){
+                            // Wait for webfonts to finish loading, but cap to avoid hanging
+                            await Promise.race([ d.fonts.ready, new Promise(r => setTimeout(r, 1500)) ]);
+                        } else {
+                            // Minimal delay for environments without FontFaceSet
+                            await new Promise(r => setTimeout(r, 800));
+                        }
+                    }catch(_){ /* ignore */ }
                     // Auto-scale to fit exactly one A4 page
                     (function(){
                         try{
