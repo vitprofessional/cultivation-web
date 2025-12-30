@@ -240,8 +240,40 @@ class FrontController extends Controller
     }
 
     //front web site str
-    public function internalResult(){
-        return view('frontend.result.internalResult');
+    public function internalResult(Request $request){
+        // Filters
+        $classId   = $request->query('class');
+        $sectionId = $request->query('section');
+        $deptId    = $request->query('department');
+        $sessId    = $request->query('session');
+
+        $query = Marksheet::query();
+        if(!empty($classId))   { $query->where('assignClass', $classId); }
+        if(!empty($sectionId)) { $query->where('assignSection', $sectionId); }
+        if(!empty($deptId))    { $query->where('assignDepartment', $deptId); }
+        if(!empty($sessId))    { $query->where('assignSession', $sessId); }
+
+        $result = $query->orderBy('id','desc')->get();
+
+        // Option lists
+        $classes   = \App\Models\classManage::orderBy('className','asc')->get();
+        $sections  = \App\Models\sectionManage::orderBy('section','asc')->get();
+        $depts     = \App\Models\Department::orderBy('departmentName','asc')->get();
+        $sessions  = \App\Models\sessionManage::orderBy('session','desc')->get();
+
+        return view('frontend.result.internalResult',[
+            'Datakey'  => $result,
+            'classes'  => $classes,
+            'sections' => $sections,
+            'depts'    => $depts,
+            'sessions' => $sessions,
+            'filters'  => [
+                'class'     => $classId,
+                'section'   => $sectionId,
+                'department'=> $deptId,
+                'session'   => $sessId,
+            ],
+        ]);
     }
 
 

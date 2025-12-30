@@ -17,11 +17,70 @@ Internal Result
                 </div>
                 <div class="card-body">
                     <!-- On tables -->
+                        <form method="GET" action="{{ route('internalResult') }}" class="row g-3 mb-3">
+                            <div class="col-12 col-md-3">
+                                <label class="form-label">Class</label>
+                                <select name="class" class="form-select">
+                                    <option value="">All</option>
+                                    @isset($classes)
+                                        @foreach($classes as $c)
+                                            <option value="{{ $c->id }}" @if(!empty($filters['class']) && (int)$filters['class']===(int)$c->id) selected @endif>
+                                                {{ $c->className }}
+                                            </option>
+                                        @endforeach
+                                    @endisset
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <label class="form-label">Section</label>
+                                <select name="section" class="form-select">
+                                    <option value="">All</option>
+                                    @isset($sections)
+                                        @foreach($sections as $s)
+                                            <option value="{{ $s->id }}" @if(!empty($filters['section']) && (int)$filters['section']===(int)$s->id) selected @endif>
+                                                {{ $s->section }}
+                                            </option>
+                                        @endforeach
+                                    @endisset
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <label class="form-label">Department</label>
+                                <select name="department" class="form-select">
+                                    <option value="">All</option>
+                                    @isset($depts)
+                                        @foreach($depts as $d)
+                                            <option value="{{ $d->id }}" @if(!empty($filters['department']) && (int)$filters['department']===(int)$d->id) selected @endif>
+                                                {{ $d->departmentName }}
+                                            </option>
+                                        @endforeach
+                                    @endisset
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <label class="form-label">Session</label>
+                                <select name="session" class="form-select">
+                                    <option value="">All</option>
+                                    @isset($sessions)
+                                        @foreach($sessions as $ss)
+                                            <option value="{{ $ss->id }}" @if(!empty($filters['session']) && (int)$filters['session']===(int)$ss->id) selected @endif>
+                                                {{ $ss->session }}
+                                            </option>
+                                        @endforeach
+                                    @endisset
+                                </select>
+                            </div>
+                            <div class="col-12 d-flex gap-2">
+                                <button type="submit" class="btn btn-success">Filter</button>
+                                <a href="{{ route('internalResult') }}" class="btn btn-outline-secondary">Reset</a>
+                            </div>
+                        </form>
                     <table id="myTable" class="display border" >
                         <thead>
                             <tr>
-                                <th>SL</th>
                                 <th>Semister</th>
+                                <th>Class</th>
+                                <th>Section</th>
                                 <th>Department</th>
                                 <th>Session</th>
                                 <th>Publish Date</th>
@@ -29,14 +88,33 @@ Internal Result
                             </tr> 
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>3rd Semister</td>
-                                <td>Honours</td>
-                                <td>2024-25</td>
-                                <td>25 Jan 2025</td>
-                                <td><a data-fancybox data-type="iframe" href="#" target="_blank"> <i class="fa fa-eye" style="color: green;"></i> </a></td>
-                            </tr>          
+                        @if(isset($Datakey) && $Datakey->count() > 0)
+                            @foreach($Datakey as $data)
+                                <tr>
+                                    <td>{{ $data->title ?? 'N/A' }}</td>
+                                    @php 
+                                        $itemClass      = !empty($data->assignClass) ? \App\Models\classManage::find($data->assignClass) : null;
+                                        $itemSection    = !empty($data->assignSection) ? \App\Models\sectionManage::find($data->assignSection) : null;
+                                        $itemDepartment = !empty($data->assignDepartment) ? \App\Models\Department::find($data->assignDepartment) : null;
+                                        $itemSession    = !empty($data->assignSession) ? \App\Models\sessionManage::find($data->assignSession) : null;
+                                    @endphp
+                                    <td>{{ $itemClass->className ?? '—' }}</td>
+                                    <td>{{ $itemSection->section ?? '—' }}</td>
+                                    <td>{{ $itemDepartment->departmentName ?? '—' }}</td>
+                                    <td>{{ $itemSession->session ?? '—' }}</td>
+                                    <td>{{ $data->created_at ?? '' }}</td>
+                                    <td>
+                                        @if(!empty($data->attachment))
+                                            <a data-fancybox data-type="iframe" href="{{ config('app.url') }}/public/upload/image/cultivation/internalResult/{{ $data->attachment }}" target="_blank">
+                                                <i class="fa fa-eye" style="color: green;"></i>
+                                            </a>
+                                        @else
+                                            <span class="text-muted">No file</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif        
                         </tbody>
                     </table>                         
                 </div>
