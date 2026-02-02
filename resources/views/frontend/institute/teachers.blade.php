@@ -40,46 +40,48 @@ $config =App\Models\ServerConfig::first()
 </style>
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-12 text-center con-title mt-4">
-            <h2 class="wow fadeInLeft animated my-4" data-wow-delay=".60s"> Let's have a look of <span>@if(!empty($config->instituteName)){{ $config->instituteName }}@else Jahanara Ayub Academy @endif</span> Teachers</h2>
-       </div>
-    </div>
-    @if($Datakey->count()>0)
-        <div class="lecturer-grid">
-            @foreach($Datakey as $data)
-                @php
-                    $name = trim(($data->firstName ?? '').' '.($data->lastName ?? ''));
-                    $name = $name !== '' ? $name : 'Unknown';
-                    $designation = \App\Models\TeacherManagement::getDesignationName($data->designation ?? null);
-                    $photo = !empty($data->avatar)
-                        ? config('app.url').'/public/upload/image/teacher/'.rawurlencode(basename($data->avatar))
-                        : config('app.url').'/public/avatar.png';
-                @endphp
-                <div class="lect-card">
-                    <div class="lect-photo-wrap">
-                        <img class="lect-photo" src="{{ $photo }}" alt="{{ e($name) }}" loading="lazy">
-                    </div>
-                    <h3 class="lect-name">{{ e($name) }}</h3>
-                    @if(!empty($designation))
-                        <div class="lect-designation">{{ e($designation) }}</div>
-                    @endif
-                    <div class="lect-contact">
-                        @if(!empty($data->email))<span><i class="fa-solid fa-envelope"></i> {{ e($data->email) }}</span>@endif
-                        @if(!empty($data->mobile))<span><i class="fa-solid fa-phone"></i> {{ e($data->mobile) }}</span>@endif
-                    </div>
-                    @if(!empty($data->address))
-                        <div class="lect-address"><i class="fa-solid fa-location-dot"></i>{{ e($data->address) }}</div>
-                    @endif
-                    <div class="lect-actions">
-                        <a href="{{ route('teacher.show', ['id' => $data->id]) }}" aria-label="View profile"><i class="fa-regular fa-eye"></i> Profile</a>
-                        @if(!empty($data->email))<a href="mailto:{{ e($data->email) }}" aria-label="Send email"><i class="fa-solid fa-paper-plane"></i> Email</a>@endif
-                    </div>
+        <div class="col-11 mx-auto">
+            <div class="text-center con-title mt-4">
+                <h2 class="wow fadeInLeft animated my-4" data-wow-delay=".60s"> Let's have a look of <span>@if(!empty($config->instituteName)){{ $config->instituteName }}@else Jahanara Ayub Academy @endif</span> Teachers</h2>
+            </div>
+            @if($Datakey->count()>0)
+                <div class="lecturer-grid">
+                    @foreach($Datakey as $data)
+                        @php
+                            $name = trim(($data->firstName ?? '').' '.($data->lastName ?? ''));
+                            $name = $name !== '' ? $name : 'Unknown';
+                            $designation = \App\Models\TeacherManagement::getDesignationName($data->designation ?? null);
+                            $photo = !empty($data->avatar)
+                                ? config('app.url').'/public/upload/image/teacher/'.rawurlencode(basename($data->avatar))
+                                : config('app.url').'/public/avatar.png';
+                        @endphp
+                        <div class="lect-card">
+                            <div class="lect-photo-wrap">
+                                <img class="lect-photo" src="{{ $photo }}" alt="{{ e($name) }}" loading="lazy">
+                            </div>
+                            <h3 class="lect-name">{{ e($name) }}</h3>
+                            @if(!empty($designation))
+                                <div class="lect-designation">{{ e($designation) }}</div>
+                            @endif
+                            <div class="lect-contact">
+                                @if(!empty($data->email))<span><i class="fa-solid fa-envelope"></i> {{ e($data->email) }}</span>@endif
+                                @if(!empty($data->mobile))<span><i class="fa-solid fa-phone"></i> {{ e($data->mobile) }}</span>@endif
+                            </div>
+                            @if(!empty($data->address))
+                                <div class="lect-address"><i class="fa-solid fa-location-dot"></i>{{ e($data->address) }}</div>
+                            @endif
+                            <div class="lect-actions">
+                                <a href="{{ route('teacher.show', ['id' => $data->id]) }}" aria-label="View profile"><i class="fa-regular fa-eye"></i> Profile</a>
+                                @if(!empty($data->email))<a href="mailto:{{ e($data->email) }}" aria-label="Send email"><i class="fa-solid fa-paper-plane"></i> Email</a>@endif
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
+            @else
+                <div class="alert alert-info my-4">Sorry! No data found</div>
+            @endif
         </div>
-    @else
-        <div class="alert alert-info my-4">Sorry! No data found</div>
-    @endif
+    </div>
 </div>
 
 

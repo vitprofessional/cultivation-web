@@ -4,10 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class StaffManagement extends Model
 {
     public static function getDesignationName($designation) {
+        if (empty($designation) && $designation !== '0') {
+            return 'Teacher';
+        }
+
+        if (!is_numeric($designation)) {
+            return trim($designation);
+        }
+
+        // Try to fetch designation name from `designations` DB table first
+        try {
+            $dbName = DB::table('designations')->where('id', (int)$designation)->value('name');
+            if (!empty($dbName)) return $dbName;
+        } catch (\Exception $e) {
+            // ignore DB errors and fall back to hardcoded list
+        }
+
         $designations = [
             1 => 'Administrative Officer',
             2 => 'Office Assistant-cum-Computer Operator',

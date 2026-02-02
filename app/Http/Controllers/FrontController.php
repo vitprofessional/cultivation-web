@@ -9,6 +9,7 @@ use App\Models\SemisterPlan;
 use App\Models\StudentManagement;
 use App\Models\StaffManagement;
 use App\Models\TeacherManagement;
+use Illuminate\Support\Facades\Log;
 use App\Models\CultivationAdmin;
 use App\Models\HomeInfo;
 use App\Models\HomeSlider;
@@ -216,6 +217,17 @@ class FrontController extends Controller
     //teacher list page
     public function teacherPage(){
         $syllabus  =   TeacherManagement::orderBy('rank','asc')->get();
+        // Debug: log designation raw value and resolved name for first few records
+        try {
+            foreach ($syllabus->take(8) as $s) {
+                $raw = $s->designation ?? null;
+                $resolved = TeacherManagement::getDesignationName($raw);
+                Log::info('Teacher designation debug', ['id' => $s->id, 'raw' => $raw, 'resolved' => $resolved]);
+            }
+        } catch (\Exception $e) {
+            Log::warning('Designation debug failed: '.$e->getMessage());
+        }
+
         return view('frontend.institute.teachers',['Datakey'=>$syllabus]);
     }
 

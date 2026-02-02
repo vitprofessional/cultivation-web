@@ -4,11 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class TeacherManagement extends Model
 {
     use HasFactory;
     public static function getDesignationName($designation) {
+        // If designation is empty, return default
+        if (empty($designation) && $designation !== '0') {
+            return 'Teacher';
+        }
+
+        // If the stored value is already a text name, return it directly
+        if (!is_numeric($designation)) {
+            return trim($designation);
+        }
+
+        // Try to get designation name from `designations` DB table first (if present)
+        try {
+            $dbName = DB::table('designations')->where('id', (int)$designation)->value('name');
+            if (!empty($dbName)) return $dbName;
+        } catch (\Exception $e) {
+            // ignore DB errors and fall back to hardcoded list
+        }
+
         $designations = [
             1 => 'Principal',
             2 => 'Principal(Incharge)',
