@@ -5,7 +5,7 @@
             : config('app.url').'/public/avatar.png';
     @endphp
     <aside class="principal-standalone mb-3" aria-labelledby="principalHeading">
-    <div class="plain-heading" id="principalHeading"><i class="fa-solid fa-user-graduate me-1"></i> <span>Principal / Head Master (প্রধান শিক্ষক)</span></div>
+    <div class="plain-heading" id="principalHeading"><i class="fa-solid fa-user-graduate me-1"></i> <span>Head of Institute</span></div>
         <div class="text-center">
             <img class="principal-photo w-100 rounded shadow-sm" src="{{ $principalAvatar }}" alt="Principal portrait" loading="lazy">
             <div class="principal-caption mt-2">

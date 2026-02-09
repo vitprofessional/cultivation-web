@@ -7,7 +7,7 @@
     <div class="row mb-3 sidebar-stack-mobile">
         <div class="col-10 mx-auto">
             <div class="principal-standalone mb-3">
-                <div class="plain-heading"><i class="fa-solid fa-user-graduate me-1"></i> <span>Principal (প্রধান শিক্ষক)</span></div>
+                <div class="plain-heading"><i class="fa-solid fa-user-graduate me-1"></i> <span>Head of Institute</span></div>
                 <div class="text-center">
                     <img class="principal-photo" src="{{ $principalAvatar }}" alt="Principal portrait" loading="lazy">
                     <div class="principal-caption">
