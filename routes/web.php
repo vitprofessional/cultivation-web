@@ -29,10 +29,43 @@ Route::get('/class/schedule',[
     'newClassSchedule'
 ])->name('newClassSchedule');
 
+// View single class routine using V2 formula
+Route::get('/class/schedule/{id}', [
+    FrontController::class,
+    'viewClassRoutine'
+])->whereNumber('id')->name('classRoutine.view');
+
+Route::get('/class/schedule/{id}/print', [
+    FrontController::class,
+    'printClassRoutine'
+])->whereNumber('id')->name('classRoutine.print');
+
+// Download PDF of routine (server-generated)
+Route::get('/class/schedule/{id}/download', [
+    FrontController::class,
+    'downloadClassRoutine'
+])->whereNumber('id')->name('classRoutine.download');
+
 Route::get('/exam/schedule',[
     FrontController::class,
     'newExamSchedule'
 ])->name('newExamSchedule');
+
+// Exam routine actions
+Route::get('/exam/schedule/{id}', [
+    FrontController::class,
+    'viewExamRoutine'
+])->whereNumber('id')->name('examRoutine.view');
+
+Route::get('/exam/schedule/{id}/print', [
+    FrontController::class,
+    'printExamRoutine'
+])->whereNumber('id')->name('examRoutine.print');
+
+Route::get('/exam/schedule/{id}/download', [
+    FrontController::class,
+    'downloadExamRoutine'
+])->whereNumber('id')->name('examRoutine.download');
 
 Route::get('/semister/plan',[
     FrontController::class,

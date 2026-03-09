@@ -72,14 +72,13 @@ class FrontController extends Controller
             $cultivation->userType      = "Admin";
             $cultivation->adminUser     = $requ->cultivationUser;
             $cultivation->loginPassword = $authPass;
-            
-            if($cultivation->save()):
-                return back()->with('success','Success! Admin profile created successfully');
-            else:
-                return back()->with('success','error! There was an error. Please try later');
-            endif;
+        if($cultivation->save()):
+            return back()->with('success','Success! Admin profile created successfully');
+        else:
+            return back()->with('success','error! There was an error. Please try later');
         endif;
-    }
+    endif;
+}
     
     public function adminLogout(){
         Session::flush();
@@ -125,16 +124,227 @@ class FrontController extends Controller
         return view('frontend.academic.syllabus',['Datakey'=>$syllabus]);
     }
 
-    public function newClassSchedule()
-    {   
-        $result=ClassRoutine::get();
-        return view('frontend.academic.classSchedule',['Datakey'=>$result]);
+    public function newClassSchedule(Request $request)
+    {
+        // Build query with eager-loaded relations
+        $query = ClassRoutine::with(['class','department','session','entries']);
+
+        // Apply optional filters from query string for a professional UX
+        if ($request->filled('class')) {
+            $query->where('assignClass', $request->query('class'));
+        }
+        if ($request->filled('department')) {
+            $query->where('assignDepartment', $request->query('department'));
+        }
+        if ($request->filled('session')) {
+            $query->where('assignSession', $request->query('session'));
+        }
+
+        $result = $query->orderBy('created_at','desc')->get();
+
+        // Lists for filter dropdowns
+        $classes = \App\Models\classManage::orderBy('className','asc')->get();
+        $departments = \App\Models\Department::orderBy('departmentName','asc')->get();
+        $sessions = \App\Models\sessionManage::orderBy('id','desc')->get();
+
+        return view('frontend.academic.classSchedule', [
+            'Datakey' => $result,
+            'classes' => $classes,
+            'departments' => $departments,
+            'sessions' => $sessions,
+        ]);
     }
 
-    public function newExamSchedule()
+    // Show single routine in schedule grid (V2 formula)
+    public function viewClassRoutine($id)
     {
-        $result=ExamRoutine::get();
-        return view('frontend.academic.examSchedule',['Datakey'=>$result]);
+        $routine = ClassRoutine::with(['class','department','session','entries'])->findOrFail($id);
+        $entries = $routine->entries ?? collect();
+        return view('frontend.academic.classRoutineView', ['routine' => $routine, 'entries' => $entries]);
+    }
+
+    public function printClassRoutine($id)
+    {
+        $routine = ClassRoutine::with(['class','department','session','entries'])->findOrFail($id);
+        $entries = $routine->entries ?? collect();
+        // Use the PDF-optimized standalone view for printing to avoid layout/assets issues
+        return view('frontend.academic.classRoutinePdf', ['routine' => $routine, 'entries' => $entries, 'printMode' => true]);
+    }
+
+    // Server-generated PDF download (requires barryvdh/laravel-dompdf)
+    public function downloadClassRoutine($id)
+    {
+        $routine = ClassRoutine::with(['class','department','session','entries'])->findOrFail($id);
+        $entries = $routine->entries ?? collect();
+
+        $data = ['routine' => $routine, 'entries' => $entries, 'printMode' => true];
+        // Quick check: ensure the Dompdf PDF facade is available
+        if (!class_exists(\Barryvdh\DomPDF\Facade::class) && !class_exists('PDF') && !app()->bound('dompdf')) {
+            return redirect()->back()->with('error', 'PDF generation package not installed. Run `composer require barryvdh/laravel-dompdf` and ensure the service is configured.');
+        }
+
+        try {
+            // Use a standalone PDF-optimized view to avoid layout/css assets causing blank pages
+            $pdf = \PDF::loadView('frontend.academic.classRoutinePdf', $data)->setPaper('a4', 'landscape');
+            return $pdf->download('class_routine_'.$id.'.pdf');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'PDF generation failed: ' . $e->getMessage());
+        }
+    }
+
+    public function newExamSchedule(Request $request)
+    {
+        $query = ExamRoutine::with(['class','department','session']);
+
+        if ($request->filled('class')) {
+            $query->where('assignClass', $request->query('class'));
+        }
+        if ($request->filled('department')) {
+            $query->where('assignDepartment', $request->query('department'));
+        }
+        if ($request->filled('session')) {
+            $query->where('assignSession', $request->query('session'));
+        }
+
+        $result = $query->orderBy('created_at','desc')->get();
+
+        // Lists for filter dropdowns
+        $classes = \App\Models\classManage::orderBy('className','asc')->get();
+        $departments = \App\Models\Department::orderBy('departmentName','asc')->get();
+        $sessions = \App\Models\sessionManage::orderBy('id','desc')->get();
+
+        return view('frontend.academic.examSchedule', [
+            'Datakey' => $result,
+            'classes' => $classes,
+            'departments' => $departments,
+            'sessions' => $sessions,
+        ]);
+    }
+
+    // View single exam routine (embed attachment or show message)
+    public function viewExamRoutine($id)
+    {
+        $routine = ExamRoutine::with(['class','department','session','entries'])->findOrFail($id);
+        $entries = $routine->entries ?? collect();
+
+        // Resolve subject names when missing by looking up common subjects table columns
+        try {
+            $ids = $entries->pluck('subject_id')->filter()->unique()->values()->all();
+            $subjectMap = [];
+            if (!empty($ids)) {
+                $colsToTry = ['subjectName','subject_name','name','subjectName'];
+                foreach ($colsToTry as $col) {
+                    try {
+                        if (\Illuminate\Support\Facades\Schema::hasColumn('subjects', $col)) {
+                            $subjectMap = (array) \DB::table('subjects')->whereIn('id', $ids)->pluck($col, 'id')->all();
+                            if (!empty($subjectMap)) {
+                                break;
+                            }
+                        }
+                    } catch (\Throwable $inner) {
+                        // continue trying other column names
+                        continue;
+                    }
+                }
+            }
+            if (!empty($subjectMap)) {
+                foreach ($entries as $entry) {
+                    if (empty($entry->subject_name) && !empty($entry->subject_id) && isset($subjectMap[$entry->subject_id])) {
+                        $entry->subject_name = $subjectMap[$entry->subject_id];
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            // ignore lookup failures
+        }
+
+        return view('frontend.academic.examRoutineView', ['routine' => $routine, 'entries' => $entries]);
+    }
+
+    // Print exam routine using printable standalone view
+    public function printExamRoutine($id)
+    {
+        $routine = ExamRoutine::with(['class','department','session','entries'])->findOrFail($id);
+        $entries = $routine->entries ?? collect();
+
+        try {
+            $ids = $entries->pluck('subject_id')->filter()->unique()->values()->all();
+            $subjectMap = [];
+            if (!empty($ids)) {
+                // try common column names
+                $colsToTry = ['subjectName','subject_name','name','subjectName'];
+                foreach ($colsToTry as $col) {
+                    try {
+                        if (\Illuminate\Support\Facades\Schema::hasColumn('subjects', $col)) {
+                            $subjectMap = (array) \DB::table('subjects')->whereIn('id', $ids)->pluck($col, 'id')->all();
+                            if (!empty($subjectMap)) break;
+                        }
+                    } catch (\Throwable $inner) {
+                        continue;
+                    }
+                }
+            }
+            if (!empty($subjectMap)) {
+                foreach ($entries as $entry) {
+                    if (empty($entry->subject_name) && !empty($entry->subject_id) && isset($subjectMap[$entry->subject_id])) {
+                        $entry->subject_name = $subjectMap[$entry->subject_id];
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+        }
+
+        return view('frontend.academic.examRoutinePdf', ['routine' => $routine, 'entries' => $entries, 'printMode' => true]);
+    }
+
+    // Download exam routine: if attachment is PDF, serve file; otherwise render PDF server-side
+    public function downloadExamRoutine($id)
+    {
+        $routine = ExamRoutine::with(['class','department','session','entries'])->findOrFail($id);
+
+        $attachment = $routine->attachment ?? '';
+        $filePath = public_path('upload/image/cultivation/examRoutine/' . ($attachment));
+
+        if ($attachment && file_exists($filePath) && strtolower(pathinfo($filePath, PATHINFO_EXTENSION)) === 'pdf') {
+            return response()->download($filePath, 'exam_routine_'.$id.'.pdf');
+        }
+
+        if (!class_exists(\Barryvdh\DomPDF\Facade::class) && !class_exists('PDF') && !app()->bound('dompdf')) {
+            return redirect()->back()->with('error', 'PDF generation package not installed.');
+        }
+
+        try {
+            $entries = $routine->entries ?? collect();
+            // ensure subject names resolved for PDF generation
+            try {
+                $ids = $entries->pluck('subject_id')->filter()->unique()->values()->all();
+                $subjectMap = [];
+                if (!empty($ids)) {
+                    $colsToTry = ['subjectName','subject_name','name','subjectName'];
+                    foreach ($colsToTry as $col) {
+                        try {
+                            if (\Illuminate\Support\Facades\Schema::hasColumn('subjects', $col)) {
+                                $subjectMap = (array) \DB::table('subjects')->whereIn('id', $ids)->pluck($col, 'id')->all();
+                                if (!empty($subjectMap)) break;
+                            }
+                        } catch (\Throwable $inner) { continue; }
+                    }
+                }
+                if (!empty($subjectMap)) {
+                    foreach ($entries as $entry) {
+                        if (empty($entry->subject_name) && !empty($entry->subject_id) && isset($subjectMap[$entry->subject_id])) {
+                            $entry->subject_name = $subjectMap[$entry->subject_id];
+                        }
+                    }
+                }
+            } catch (\Throwable $e) {}
+
+            $data = ['routine' => $routine, 'entries' => $entries, 'printMode' => true];
+            $pdf = \PDF::loadView('frontend.academic.examRoutinePdf', $data)->setPaper('a4','portrait');
+            return $pdf->download('exam_routine_'.$id.'.pdf');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'PDF generation failed: ' . $e->getMessage());
+        }
     }
 
     public function newSemister()
