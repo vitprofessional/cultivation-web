@@ -1,4 +1,4 @@
-@extends('frontend.include')
+@extends($frontendLayout ?? config('frontend.layout'))
 @section('fronttitle')
 Memorable Moment
 @endsection

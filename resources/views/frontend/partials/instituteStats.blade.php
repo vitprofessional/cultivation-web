@@ -6,7 +6,7 @@
         <div class="col-12 mx-auto my-4">
             @if($insInfo)
             <div class="row align-items-center">
-                <div class="col-md-3 col-12 mb-3 mb-md-0">
+                <div class="col-md-4 col-12 mb-3 mb-md-0">
                     <div class="bg-success text-white details-box p-3 h-100">
                         <div class="details-box-icon">
                             <i class="fa-solid fa-school-flag metric-icon"></i>
@@ -24,18 +24,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-12 mb-3 mb-md-0">
-                    <div class="bg-success text-white details-box p-3 h-100">
-                        <div class="details-box-icon">
-                            <i class="fa-solid fa-book-open-reader metric-icon"></i>
-                        </div>
-                        <div class="details-box-content">
-                            <h3>Green Campus</h3>
-                            <p>{{ $insInfo->landSize }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-12 mb-3 mb-md-0">
+                <div class="col-md-4 col-12 mb-3 mb-md-0">
                     <div class="bg-success text-white details-box p-3 h-100">
                         <div class="details-box-icon">
                             <i class="fa-solid fa-chalkboard-user metric-icon"></i>
@@ -46,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-12">
+                <div class="col-md-4 col-12">
                     <div class="bg-success text-white details-box p-3 h-100">
                         <div class="details-box-icon">
                             <i class="fa-solid fa-users metric-icon"></i>
@@ -71,18 +60,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-12 mb-3 mb-md-0">
-                    <div class="bg-success text-white details-box p-3 h-100">
-                        <div class="details-box-icon">
-                            <i class="fa-solid fa-book-open-reader"></i>
-                        </div>
-                        <div class="details-box-content">
-                            <h3>Green Campus</h3>
-                            <p>26 Acres</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-12 mb-3 mb-md-0">
+                <div class="col-md-4 col-12 mb-3 mb-md-0">
                     <div class="bg-success text-white details-box p-3 h-100">
                         <div class="details-box-icon">
                             <i class="fa-solid fa-chalkboard-user"></i>
@@ -93,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-12">
+                <div class="col-md-4 col-12">
                     <div class="bg-success text-white details-box p-3 h-100">
                         <div class="details-box-icon">
                             <i class="fa-solid fa-users"></i>

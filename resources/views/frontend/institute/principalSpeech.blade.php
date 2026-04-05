@@ -1,6 +1,6 @@
-@extends('frontend.include')
+@extends($frontendLayout ?? config('frontend.layout'))
 @section('fronttitle')
-Principal's Message
+Head of Institute Message
 @endsection
 @section('frontcontent')
 <style>
@@ -54,14 +54,17 @@ Principal's Message
 
  <section>
     <div class="container">
+        @php
+            $configLocal = isset($config) ? $config : \App\Models\ServerConfig::first();
+            $speechTitle = $frontendSpeechTitle ?? "Principal's Message";
+        @endphp
         <div class="principal-hero">
-            <h1 class="my-3">Message from the <span class="text-primary">Principal</span></h1>
+            <h1 class="my-3">{{ $speechTitle }}</h1>
             <small>Guidance, values, and inspiration for our students and community</small>
         </div>
 
         @php
             // Prefer ServerConfig for institute and principal details
-            $configLocal = isset($config) ? $config : \App\Models\ServerConfig::first();
             if(isset($configLocal) && !empty($configLocal->instituteName)){
                 $insName = $configLocal->instituteName;
             } elseif(isset($cultivation) && $cultivation && !empty($cultivation->institueName)) {

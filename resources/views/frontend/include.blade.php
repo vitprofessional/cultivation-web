@@ -650,7 +650,7 @@
                                 <div class="collapse" id="mobileInstituteMenu">
                                     <ul class="list-unstyled ps-4">
                                         <li><a class="nav-link py-2" href="{{route('institutePage')}}">About Us</a></li>
-                                        <li><a class="nav-link py-2" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
+                                        <li><a class="nav-link py-2" href="{{route('principalSpeechPage')}}">{{ $frontendSpeechNavLabel ?? "Principal's Message" }}</a></li>
                                         <li><a class="nav-link py-2" href="{{route('student')}}">Student List</a></li>
                                         <li><a class="nav-link py-2" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
                                         <li><a class="nav-link py-2" href="{{route('teacherPage')}}">Lecturer Corner</a></li>
@@ -737,7 +737,7 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="{{route('institutePage')}}">About Us</a></li>
-                                            <li><a class="dropdown-item" href="{{route('principalSpeechPage')}}">Principal Speech</a></li>
+                                            <li><a class="dropdown-item" href="{{route('principalSpeechPage')}}">{{ $frontendSpeechNavLabel ?? "Principal's Message" }}</a></li>
                                             <li><a class="dropdown-item" href="{{route('student')}}">Student List</a></li>
                                             <li><a class="dropdown-item" href="{{route('exprincipalPage')}}">EX-Principals</a></li>
                                             <li><a class="dropdown-item" href="{{route('teacherPage')}}">Lecturer Corner</a></li>

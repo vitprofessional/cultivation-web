@@ -1,4 +1,4 @@
-@extends('frontend.include') @section('fronttitle') Placement Cell @endsection @section('frontcontent')
+@extends($frontendLayout ?? config('frontend.layout')) @section('fronttitle') Placement Cell @endsection @section('frontcontent')
 <section>
     <div class="container mt-4">
         <div class="row">

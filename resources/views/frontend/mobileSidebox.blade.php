@@ -18,6 +18,27 @@
                 </div>
             </div>
         </div>
+        @php
+            $principalSpeech = \App\Models\PrincipalSpeech::first();
+            $speechTitle = $frontendSpeechTitle ?? "Principal's Message";
+            $principalSpeechLead = !empty($config->principalImportantSpeech)
+                ? $config->principalImportantSpeech
+                : (!empty($principalSpeech?->importantSpeech) ? $principalSpeech->importantSpeech : 'We want to make good students as well as good people.');
+            $principalSpeechBody = !empty($config->principalGeneralSpeech)
+                ? $config->principalGeneralSpeech
+                : (!empty($principalSpeech?->generalSpeech) ? $principalSpeech->generalSpeech : '');
+            $principalSpeechExcerpt = \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($principalSpeechBody))), 130, '...');
+        @endphp
+        <div class="col-10 mx-auto">
+            <div class="sidebar-section mb-3 principal-message-box">
+                <div class="section-heading"><i class="fa-solid fa-quote-left me-1"></i> <span>{{ $speechTitle }}</span></div>
+                <div class="p-3 bg-white">
+                    <p class="small fw-semibold text-secondary mb-2">“{{ $principalSpeechLead }}”</p>
+                    <p class="small text-muted mb-3">{{ $principalSpeechExcerpt ?: 'A brief note from the head of institute.' }}</p>
+                    <a class="btn btn-outline-success btn-sm w-100" href="{{ route('principalSpeechPage') }}">Read More</a>
+                </div>
+            </div>
+        </div>
         @if(!empty($config->eduMinName))
         <div class="col-10 mx-auto">
             <div class="sidebar-section sidebar-resource-box mb-3">
