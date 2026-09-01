@@ -19,23 +19,20 @@ Enter to learn & Leave to serve
 
 /* Professional homepage polish */
 .home-section-title{font-weight:800; letter-spacing:.2px; margin-bottom:1rem; color:#112958}
-.sidebar-column,.main-content-column{padding-left:.55rem;padding-right:.55rem}
-.infobox .card{border:1px solid #e3edf1; border-radius:.7rem; box-shadow: 0 8px 20px rgba(39,60,102,.08)}
-.infobox .card-header{border:0; border-radius:.7rem .7rem 0 0; font-weight:700}
-.list-group-item{border:0; padding:.45rem 0}
-.list-group-item i{color:#21a7d0}
-.section-band{background:#f8fbfc;border:1px solid #dceef4;border-radius:.75rem;padding:1.5rem 1.5rem;margin-bottom:1.5rem;box-shadow:0 8px 20px rgba(39,60,102,.06)}
-.section-band:last-of-type{margin-bottom:0}
-.section-band h2.home-section-title{margin-bottom:1rem}
-.home-section-title + .text-muted-intro{margin-top:-.5rem;margin-bottom:1rem;font-size:.9rem;color:#6c757d}
-.section-tight > *:last-child{margin-bottom:0!important}
-.info-cluster.section-band{padding-top:1.25rem}
 .metric-icon{transform:scale(.9);opacity:.6;transition:transform .6s ease, opacity .6s ease}
 .metric-icon.in{transform:scale(1);opacity:1}
 
+/* At-a-Glance statistics */
+.at-glance{margin:1.5rem 0 2rem}
+.at-glance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.at-glance-item{background:linear-gradient(135deg,#1686aa 0%,#0f5a7b 100%);color:#fff;padding:1.2rem;border-radius:.8rem;text-align:center;box-shadow:0 6px 18px rgba(22,134,170,.15);transition:transform .3s ease,box-shadow .3s ease}
+.at-glance-item:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(22,134,170,.25)}
+.at-glance-value{font-size:1.85rem;font-weight:900;line-height:1;margin-bottom:.5rem}
+.at-glance-label{font-size:.85rem;font-weight:700;opacity:.95}
+
 /* Latest notice spacing and readability */
-.latest-notice{padding:1.25rem 1.25rem 1rem;border:1px solid #dceef4;border-radius:.75rem;background:#fff;box-shadow:0 6px 16px rgba(39,60,102,.06)}
-.latest-notice-header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.85rem}
+.latest-notice{padding:.85rem 1rem;border:1px solid #dceef4;border-radius:.6rem;background:#fff;box-shadow:0 6px 16px rgba(39,60,102,.06)}
+.latest-notice-header{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.7rem}
 .notice-list{display:flex;flex-direction:column;gap:.55rem}
 .notice-item{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:.75rem;padding:.62rem .7rem;border:1px solid #e6eef1;border-radius:.6rem;background:#fdfefe}
 .notice-date{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#e7f9fb;border:1px solid #cfeef7;border-radius:.5rem;padding:.2rem .25rem;min-height:52px}
@@ -49,20 +46,43 @@ Enter to learn & Leave to serve
 .notice-actions .btn-light:hover{background:#e7f9fb;border-color:#b9d7e5;color:#112958}
 .notice-actions .btn-outline-light{background:#fff;border-color:#9bb6c7;color:#273c66}
 .notice-actions .btn-outline-light:hover{background:#273c66;border-color:#273c66;color:#fff}
-.notice-empty{padding:.85rem 1rem;border:1px dashed #cfe3ec;border-radius:.55rem;background:#f8fbfc;color:#6d7d8b}
+.notice-empty{padding:.15rem 0;color:#6d7d8b;font-size:.9rem}
 
-/* Featured principal speech block */
-.speech-feature{border:1px solid #dceef4;border-radius:.85rem;overflow:hidden;background:linear-gradient(180deg,#ffffff 0%,#f8fbfc 100%);box-shadow:0 10px 24px rgba(39,60,102,.08)}
-.speech-feature .feature-header{padding:1rem 1.15rem;background:linear-gradient(90deg,#273c66,#112958);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-.speech-feature .feature-header h2{margin:0;color:#fff;font-size:1.25rem}
-.speech-feature .feature-body{padding:1.15rem}
-.speech-feature .speech-quote{font-size:1.05rem;line-height:1.7;color:#112958;font-weight:700;margin-bottom:.85rem}
-.speech-feature .speech-summary{color:#6d7d8b;line-height:1.8;margin-bottom:1rem;text-align:justify}
-.speech-feature .speech-meta{display:flex;align-items:center;gap:.85rem;margin-bottom:1rem}
-.speech-feature .speech-avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid #e7f9fb;box-shadow:0 6px 14px rgba(39,60,102,.10)}
-.speech-feature .speech-name{font-weight:800;color:#112958;margin:0;line-height:1.2}
-.speech-feature .speech-role{color:#6d7d8b;font-size:.9rem;margin:0}
-.speech-feature .btn{min-width:150px}
+/* Leadership section */
+.leadership-spotlight{background:#fff;border-radius:.9rem;border:1px solid #d9e8ed;padding:1.8rem;box-shadow:0 8px 24px rgba(39,60,102,.08);margin:1.5rem 0 2rem}
+.leadership-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+.leadership-avatar{width:180px;height:180px;border-radius:50%;object-fit:cover;border:4px solid #e7f9fb;box-shadow:0 8px 20px rgba(22,134,170,.15)}
+.leadership-content h2{font-size:1.5rem;margin-bottom:.75rem}
+.leadership-title{font-size:.95rem;color:#6d7d8b;margin-bottom:1.25rem;font-weight:600}
+.leadership-quote{font-size:1.15rem;line-height:1.8;color:#112958;font-weight:700;margin:1.25rem 0;padding-left:1rem;border-left:3px solid #21a7d0}
+.leadership-text{font-size:.95rem;line-height:1.8;color:#505050;margin-bottom:1.5rem}
+.leadership-link{font-weight:700;color:#1686aa;text-decoration:none}
+.leadership-link:hover{text-decoration:underline}
+
+/* Academic and Student Services */
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin:1.5rem 0 2rem}
+.service-card{background:#fff;border:1px solid #d9e8ed;border-radius:.8rem;padding:1.5rem;transition:all .3s ease;cursor:pointer}
+.service-card:hover{border-color:#21a7d0;box-shadow:0 8px 24px rgba(33,167,208,.12);transform:translateY(-2px)}
+.service-icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;background:#e7f9fb;color:#1686aa;border-radius:.6rem;font-size:1.3rem;margin-bottom:.8rem}
+.service-card h3{font-size:1rem;font-weight:800;color:#112958;margin-bottom:.6rem}
+.service-card p{font-size:.9rem;color:#505050;line-height:1.6;margin:0}
+.service-links{display:flex;flex-direction:column;gap:.4rem;margin-top:.8rem}
+.service-links a{font-size:.85rem;color:#1686aa;text-decoration:none;font-weight:600;display:flex;align-items:center;gap:.4rem}
+.service-links a:hover{color:#0f5a7b;text-decoration:underline}
+
+/* Verified public-service shortcuts immediately following the hero and notices. */
+.quick-access{margin-bottom:1.5rem}
+.quick-access-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.8rem}
+.quick-access-heading h2{margin:0}
+.quick-access-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7rem}
+.quick-access-item{display:flex;align-items:center;gap:.7rem;min-height:70px;padding:.8rem;border:1px solid #dce8ed;border-radius:.6rem;background:#fff;color:#112958;text-decoration:none;box-shadow:0 4px 12px rgba(39,60,102,.05);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.quick-access-item:hover,.quick-access-item:focus{color:#112958;border-color:#21a7d0;box-shadow:0 8px 20px rgba(33,167,208,.12);transform:translateY(-2px)}
+.quick-access-icon{display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border-radius:50%;background:#e7f9fb;color:#1686aa;font-size:.95rem}
+.quick-access-label{font-family:var(--edu-heading-font);font-size:.86rem;font-weight:800;line-height:1.25}
+.quick-access-item:focus-visible{outline:2px solid var(--edu-primary);outline-offset:2px}
+.home-page .edu-main-inner > .row > .row{display:contents}
+.home-page .edu-main-inner > .row > .row > .latest-notice{order:-2}
+.home-page .edu-main-inner > .row > .row > .quick-access{order:-1}
 
 /* Gallery visual balance */
 .home-gallery .card{border:1px solid #e3edf1;border-radius:.8rem;box-shadow:0 8px 20px rgba(39,60,102,.06)}
@@ -83,25 +103,43 @@ Enter to learn & Leave to serve
 
 /* Mobile balancing */
 @media (max-width: 991px){
-    .sidebar-column,.main-content-column{padding-left:.35rem;padding-right:.35rem}
-    .section-band{padding:1rem;margin-bottom:1rem}
     .latest-notice{padding:1rem .85rem .85rem}
+    .quick-access-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
     .notice-item{grid-template-columns:52px 1fr;grid-template-areas:"date title" "date actions";row-gap:.45rem}
     .notice-date{grid-area:date}
     .notice-title{grid-area:title;font-size:.95rem}
     .notice-actions{grid-area:actions;justify-content:flex-start}
+    .at-glance-grid{grid-template-columns:repeat(2,1fr);gap:.8rem}
+    .leadership-grid{grid-template-columns:1fr;gap:1.5rem}
+    .leadership-avatar{width:140px;height:140px}
+    .services-grid{grid-template-columns:1fr}
     .home-gallery .card-header{padding:.85rem .9rem}
     .gallery-card .g-img{height:180px}
 }
 
 @media (max-width: 575px){
     .home-section-title{font-size:1.35rem}
-    .latest-notice-header{align-items:flex-start;flex-direction:column}
-    .latest-notice-header .btn{width:100%}
-    .notice-item{padding:.55rem}
-    .notice-actions{flex-wrap:wrap;gap:.35rem}
-    .notice-actions .btn{min-height:34px;padding:.32rem .55rem;font-size:.78rem}
-    .section-band{border-radius:.65rem;padding:.9rem .8rem}
+    .latest-notice{padding:.8rem .7rem}
+    .latest-notice-header{align-items:flex-start;flex-direction:column;gap:.5rem}
+    .latest-notice-header .btn{width:100%;font-size:.8rem}
+    .notice-item{padding:.5rem;gap:.55rem}
+    .notice-date{min-height:48px}
+    .nd-day{font-size:.85rem}
+    .nd-month{font-size:.65rem}
+    .notice-actions{flex-wrap:wrap;gap:.25rem}
+    .notice-actions .btn{min-height:32px;padding:.28rem .5rem;font-size:.75rem}
+    .quick-access{margin-bottom:1rem}
+    .quick-access-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}
+    .quick-access-item{gap:.55rem;min-height:64px;padding:.65rem}
+    .quick-access-label{font-size:.78rem}
+    .at-glance-grid{grid-template-columns:repeat(2,1fr);gap:.6rem}
+    .at-glance-item{padding:1rem}
+    .at-glance-value{font-size:1.5rem}
+    .at-glance-label{font-size:.8rem}
+    .leadership-grid{grid-template-columns:1fr}
+    .leadership-avatar{width:100px;height:100px}
+    .leadership-content h2{font-size:1.2rem}
+    .leadership-quote{font-size:1rem;margin:.8rem 0;padding-left:.8rem}
     .home-gallery .card-header{padding:.75rem .75rem}
     .home-gallery .card-body{padding:.8rem .75rem .95rem}
     .gallery-card .g-img{height:160px}
@@ -139,19 +177,8 @@ Enter to learn & Leave to serve
             </div>
             @else
             <div class="col-12 mx-auto section-band section-tight">
-                <h2 class="home-section-title mb-2">Welcome to Jahanara-Ayub Academy</h2>
-                <p class="text-justify mb-3">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s... <a href="#">Read more</a></p>
-                <div class="card border-0 shadow-sm mb-0">
-                    <div class="card-header bg-success text-white py-2 h5 mb-0">Mission & Vision</div>
-                    <div class="card-body pb-3 pt-3">
-                        <figure class="text-center mb-3">
-                            <blockquote class="blockquote mb-0">
-                                <p class="h5 fw-semibold mb-0">When an unknown printer took a galley of type and scrambled it to make a type specimen book...</p>
-                            </blockquote>
-                        </figure>
-                        <div class="text-success small">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</div>
-                    </div>
-                </div>
+                <h2 class="home-section-title mb-2">Institute Information</h2>
+                <p class="mb-0 text-muted">The institute profile will be published here when it is available.</p>
             </div>
             @endif
         @include('frontend.partials.instituteStats')
@@ -217,10 +244,39 @@ Enter to learn & Leave to serve
             </div>
             @endif
         @else
-            <div class="notice-empty">No notices available right now. Please check back later.</div>
+            <div class="notice-empty">No notices are currently published.</div>
         @endif
     </div>
+    <section class="col-12 mx-auto quick-access" aria-labelledby="quickAccessTitle">
+        <div class="quick-access-heading">
+            <h2 id="quickAccessTitle" class="home-section-title">Quick Access</h2>
+        </div>
+        <div class="quick-access-grid">
+            <a class="quick-access-item" href="{{ route('internalResult') }}">
+                <span class="quick-access-icon"><i class="fa-solid fa-square-poll-vertical"></i></span>
+                <span class="quick-access-label">Online Result</span>
+            </a>
+            <a class="quick-access-item" href="{{ route('allNotices') }}">
+                <span class="quick-access-icon"><i class="fa-solid fa-bullhorn"></i></span>
+                <span class="quick-access-label">Notice Board</span>
+            </a>
+            <a class="quick-access-item" href="{{ route('newClassSchedule') }}">
+                <span class="quick-access-icon"><i class="fa-solid fa-calendar-days"></i></span>
+                <span class="quick-access-label">Class Routine</span>
+            </a>
+            <a class="quick-access-item" href="{{ route('newExamSchedule') }}">
+                <span class="quick-access-icon"><i class="fa-solid fa-clipboard-list"></i></span>
+                <span class="quick-access-label">Exam Routine</span>
+            </a>
+            <a class="quick-access-item" href="{{ route('newSyllabus') }}">
+                <span class="quick-access-icon"><i class="fa-solid fa-book-open"></i></span>
+                <span class="quick-access-label">Syllabus</span>
+            </a>
+        </div>
+    </section>
+
     @php
+        // Prepare principal speech data
         $principalSpeech = \App\Models\PrincipalSpeech::first();
         $speechTitle = $frontendSpeechTitle ?? "Principal's Message";
         $principalSpeechLead = !empty($config->principalImportantSpeech)
@@ -231,144 +287,90 @@ Enter to learn & Leave to serve
             : (!empty($principalSpeech?->generalSpeech) ? $principalSpeech->generalSpeech : '');
         $principalSpeechExcerpt = \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($principalSpeechBody))), 300, '...');
         $principalSpeechAvatar = !empty($config->avatar)
-            ? config('app.url').'/public/upload/image/cultivation/'.rawurlencode(basename($config->avatar))
-            : config('app.url').'/public/avatar.png';
+            ? asset('public/upload/image/cultivation/' . rawurlencode(basename($config->avatar)))
+            : asset('public/avatar.png');
     @endphp
-    <div class="col-12 mx-auto mb-4 scale-on-scroll speech-feature p-0">
-        <div class="feature-header">
-            <h2 class="home-section-title mb-0 text-white">{{ $speechTitle }}</h2>
-            <a href="{{ route('principalSpeechPage') }}" class="btn btn-outline-light btn-sm">Read More</a>
-        </div>
-        <div class="feature-body">
-            <div class="speech-meta">
-                <img class="speech-avatar" src="{{ $principalSpeechAvatar }}" alt="Principal portrait">
-                <div>
-                    <p class="speech-name">{{ $config->principalName ?? 'Engr. Abu Yousuf' }}</p>
-                    <p class="speech-role">{{ $config->principalDesignation ?? 'Principal' }}</p>
-                </div>
+
+    <!-- Leadership Spotlight -->
+    <div class="col-12 mx-auto scale-on-scroll leadership-spotlight">
+        <div class="leadership-grid">
+            <div class="leadership-content">
+                <h2>{{ $speechTitle }}</h2>
+                <p class="leadership-title">{{ $config->principalDesignation ?? 'Principal' }}</p>
+                <div class="leadership-quote">"{{ $principalSpeechLead }}"</div>
+                <p class="leadership-text">{{ $principalSpeechExcerpt ?: 'Building excellence in education and nurturing future leaders.' }}</p>
+                <a href="{{ route('principalSpeechPage') }}" class="leadership-link">Read Full Message →</a>
             </div>
-            <div class="speech-quote">“{{ $principalSpeechLead }}”</div>
-            <div class="speech-summary">{{ $principalSpeechExcerpt ?: 'A brief note from the head of institute and the direction we are building together.' }}</div>
+            <div class="text-center">
+                <img class="leadership-avatar" src="{{ $principalSpeechAvatar }}" alt="{{ $config->principalName ?? 'Principal' }}">
+                <p class="mt-3 mb-0 fw-bold" style="color:#112958">{{ $config->principalName ?? 'Engr. Abu Yousuf' }}</p>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-lg-3 mx-auto d-none d-lg-block sidebar-column">
-    @yield('sideinfo')
-</div>
 
-<div class="col-11 d-block d-lg-none mx-auto">
-    @include('frontend.mobileSidebox')   
-</div>
+    <div class="col-12 mx-auto at-glance">
+        <div class="at-glance-grid">
+            <div class="at-glance-item">
+                <div class="at-glance-value">{{ $insData?->establishDate ?? '2015' }}</div>
+                <div class="at-glance-label">ESTABLISHED</div>
+            </div>
+            <div class="at-glance-item">
+                <div class="at-glance-value">{{ $insData?->totalTeacher ?? '25+' }}</div>
+                <div class="at-glance-label">FACULTY MEMBERS</div>
+            </div>
+            <div class="at-glance-item">
+                <div class="at-glance-value">{{ $insData?->totalStudent ?? '1500+' }}</div>
+                <div class="at-glance-label">STUDENTS</div>
+            </div>
+        </div>
+    </div>
 
-<div class="col-11 col-lg-9 mx-auto main-content-column">
-    <div class="row align-items-start">
+    <!-- Modern Academic & Student Services -->
+    <div class="col-12 mx-auto">
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-book"></i></div>
+                <h3>Admission & Programs</h3>
+                <p>Explore our comprehensive academic programs designed to nurture excellence and innovation.</p>
+                <div class="service-links">
+                    <a href="#">Honors Admission</a>
+                    <a href="#">XI Class Admission</a>
+                </div>
+            </div>
 
-        <div class="row g-0 d-none d-md-block section-band info-cluster py-3">
-            <div class="col-12 mx-auto my-4 row">
-                <!-- info box start here -->
-                <div class="col-6 mx-auto my-4 infobox">
-                    <div class="card rounded-0">
-                        <div class="card-header rounded-0 bg-success text-white h5">
-                            Admission Info
-                        </div>
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-12 col-md-3">
-                                    <img src="{{ asset('/public/') }}/img/forms.jpg" class="w-100" alt="Institute">
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i> Honors Admission</li>
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i> XI Class Admission</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-building"></i></div>
+                <h3>About Institute</h3>
+                <p>Discover our institution's mission, vision, and the leadership guiding our community.</p>
+                <div class="service-links">
+                    <a href="{{route('institutePage')}}">About Us</a>
+                    <a href="{{route('comitteePage')}}">Managing Committee</a>
                 </div>
-                <div class="col-6 mx-auto my-4 infobox">
-                    <div class="card rounded-0">
-                        <div class="card-header rounded-0 bg-success text-white h5">
-                            Institute Info
-                        </div>
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-12 col-md-3">
-                                    <img src="{{ asset('/public/') }}/img/institute.jpg" class="w-100" alt="Institute">
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i><a href="{{route('institutePage')}}"> About Us</a></li>
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i><a href="{{route('teacherPage')}}"> Teacher Database</a></li>
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i><a href="{{route('staffPage')}}"> Staff Database</a> </li>
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i><a href="{{route('principalSpeechPage')}}"> {{ $frontendSpeechNavLabel ?? "Principal's Message" }}</a></li>
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i><a href="{{route('comitteePage')}}"> Managing Comittee</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <h3>Academic Resources</h3>
+                <p>Access curriculum, routines, syllabi, and all resources to support your academic journey.</p>
+                <div class="service-links">
+                    <a href="{{route('newSyllabus')}}">Syllabus</a>
+                    <a href="{{route('newClassSchedule')}}">Class Routine</a>
+                    <a href="{{route('newExamSchedule')}}">Exam Routine</a>
                 </div>
-                <div class="col-6 mx-auto my-4 infobox">
-                    <div class="card rounded-0">
-                        <div class="card-header rounded-0 bg-success text-white h5">
-                            Academic
-                        </div>
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-12 col-md-3">
-                                    <img src="{{ asset('/public/') }}/img/academic.png" class="w-100" alt="Institute">
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i> <a href=""> Semister Plan</a></li>
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i><a  href="{{route('newSyllabus')}}"> Syllabus</a>
-                                        </li>
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i><a href="{{route('newClassSchedule')}}"> Class Routine</a> </li>
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i> <a href="{{route('newExamSchedule')}}"> Exam Routine</a> </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 mx-auto my-4 infobox">
-                    <div class="card rounded-0">
-                        <div class="card-header rounded-0 bg-success text-white h5">
-                            Student Corner
-                        </div>
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-12 col-md-3">
-                                    <img src="{{ asset('/public/') }}/img/studentCorner.png" class="w-100" alt="Institute">
-                                </div>
-                                <div class="col-12 col-md-9">
-                                    <ul class="list-group list-group-flush">
-                                        
-                                            <li class="list-group-item">
-                                                <i class="fa-regular fa-arrow-turn-down-right"></i> 
-                                                <a href="{{route('student')}}">
-                                                    Student Database
-                                                </a>
-                                            </li>
-                                                <li class="list-group-item">
-                                                    <i class="fa-regular fa-arrow-turn-down-right"></i> 
-                                                <a href="">
-                                                    X-Student Archive
-                                                </a>
-                                                </li>
-                                        
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i><a href="{{route('placementCellView')}}"> Placement Cell</a></li>
-                                        
-                                        <li class="list-group-item"><i class="fa-regular fa-arrow-turn-down-right"></i> <a href="{{route('jobNeedyStudentView')}}">Job Seekers</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon"><i class="fa-solid fa-people-group"></i></div>
+                <h3>Student Opportunities</h3>
+                <p>Engage with student databases, placement support, and career development programs.</p>
+                <div class="service-links">
+                    <a href="{{route('student')}}">Student Database</a>
+                    <a href="{{route('placementCellView')}}">Placement Cell</a>
+                    <a href="{{route('jobNeedyStudentView')}}">Job Seekers</a>
                 </div>
             </div>
         </div>
+    </div>
 
         <hr class="my-4">
         <!-- Photo Gallery -->

@@ -1,8 +1,8 @@
     @php
         $config = \App\Models\ServerConfig::first();
         $principalAvatar = !empty($config?->avatar)
-            ? config('app.url').'/public/upload/image/cultivation/'.rawurlencode(basename($config->avatar))
-            : config('app.url').'/public/avatar.png';
+            ? asset('public/upload/image/cultivation/' . rawurlencode(basename($config->avatar)))
+            : asset('public/avatar.png');
     @endphp
     <div class="row mb-3 sidebar-stack-mobile">
         <div class="col-10 mx-auto">
@@ -69,7 +69,7 @@
                     <div class="resource-sub mb-3">
                         <div class="subheading"><i class="fa-solid fa-music me-1"></i> National Song</div>
                         <audio controls class="w-100 sidebar-audio">
-                            <source src="{{ config('app.url') }}/public/music/bd_national_anthem.mp3" type="audio/mpeg" />
+                            <source src="{{ asset('public/music/bd_national_anthem.mp3') }}" type="audio/mpeg" />
                         </audio>
                     </div>
                     <div class="resource-sub sidebar-links">

@@ -1,14 +1,18 @@
 @php
     $insInfo = \App\Models\InstituteDetails::first();
+    $config = \App\Models\ServerConfig::first();
+    $instituteName = !empty($config?->instituteName) ? $config->instituteName : 'Jahanara Ayub Academy';
 @endphp
-<div class="row">
+<div class="row hero-section">
     <div class="col-12">
-        <div id="carouselExampleCaptions" class="carousel slide">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-touch="true">
+            @if($sliderData->count() > 1)
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                @foreach($sliderData as $slider)
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}" @if($loop->first) aria-current="true" @endif aria-label="Slide {{ $loop->iteration }}"></button>
+                @endforeach
             </div>
+            @endif
             <div class="carousel-inner">
                 @if($sliderData->count()>0)
                 @php
@@ -16,10 +20,16 @@
                 @endphp
                 @foreach($sliderData as $slider)
                 <div class="carousel-item @if($sl == 1) active @endif">
-                    <img src="{{ config('app.url') }}/public/upload/image/webHomepage/{{$slider->avatar}}" class="d-block w-100" style="height:450px" alt="..." />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>{{ $slider->headLine }}</h5>
-                        <p>{{ $slider->detail }}</p>
+                    <img src="{{ asset('public/upload/image/webHomepage/' . rawurlencode(basename($slider->avatar))) }}" class="d-block w-100" alt="{{ $slider->headLine ?: $instituteName }}" />
+                    <div class="carousel-caption">
+                        <h1 class="hero-title">{{ $instituteName }}</h1>
+                        @if(!empty($slider->detail))
+                            <p class="hero-copy">{{ $slider->detail }}</p>
+                        @endif
+                        <div class="hero-actions">
+                            <a href="{{ route('institutePage') }}" class="btn btn-primary">Explore Institute</a>
+                            <a href="{{ route('internalResult') }}" class="btn btn-outline-light">View Result</a>
+                        </div>
                     </div>
                 </div>
                 @php
@@ -28,28 +38,19 @@
                 @endforeach
                 @else
                 <div class="carousel-item active">
-                    <img src="{{ config('app.url') }}/public/img/slider/slider1.jpg" class="d-block w-100" style="height:450px" alt="..." />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
-                        <p>Some representative placeholder content for the first slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ config('app.url') }}/public/img/slider/slider2.jpg" class="d-block w-100" alt="..." />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Second slide label</h5>
-                        <p>Some representative placeholder content for the second slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ config('app.url') }}/public/img/slider/slider3.jpg" class="d-block w-100" alt="..." />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Third slide label</h5>
-                        <p>Some representative placeholder content for the third slide.</p>
+                    <img src="{{ asset('public/img/slider/slider1.jpg') }}" class="d-block w-100" alt="Institute campus" />
+                    <div class="carousel-caption">
+                        <h1 class="hero-title">{{ $instituteName }}</h1>
+                        <p class="hero-copy">Institute information, notices, academic services, and results in one place.</p>
+                        <div class="hero-actions">
+                            <a href="{{ route('institutePage') }}" class="btn btn-primary">Explore Institute</a>
+                            <a href="{{ route('internalResult') }}" class="btn btn-outline-light">View Result</a>
+                        </div>
                     </div>
                 </div>
                 @endif
             </div>
+            @if($sliderData->count() > 1)
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
@@ -58,6 +59,7 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
+            @endif
         </div>
     </div>
 </div>

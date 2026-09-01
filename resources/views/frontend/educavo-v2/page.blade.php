@@ -16,6 +16,12 @@
             Jahanara Ayub Academy | @yield('fronttitle')
         @endif
     </title>
+    <meta name="description" content="{{ !empty($config->instituteName) ? $config->instituteName . ' - institute information, academic services, notices, results, and student resources.' : 'Institute information, academic services, notices, results, and student resources.' }}">
+    <link rel="canonical" href="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ !empty($config->instituteName) ? $config->instituteName : 'Jahanara Ayub Academy' }}">
+    <meta property="og:description" content="Institute information, academic services, notices, results, and student resources.">
+    <meta property="og:url" content="{{ url()->current() }}">
 
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -179,26 +185,76 @@
         .topbar-area {
             background: #f8fbfc;
             border-bottom: 1px solid #dceef4;
+            font-size: 0.78rem;
         }
 
         .topbar-area .topbar-contact li a,
         .topbar-area .topbar-right li,
         .topbar-area .topbar-right li span {
-            color: var(--edu-light-text);
+            color: #526273;
+        }
+
+        .institution-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e3edf1;
+        }
+
+        .institution-header-inner {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            min-height: 106px;
+            padding: 18px 0;
+        }
+
+        .institution-mark {
+            width: 68px;
+            height: 68px;
+            flex: 0 0 68px;
+            border: 1px solid #d5e4e9;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .institution-name {
+            color: var(--edu-heading);
+            font-family: var(--edu-heading-font);
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin: 0;
+        }
+
+        .institution-meta {
+            color: var(--edu-muted);
+            font-size: 0.88rem;
+            margin: 7px 0 0;
+        }
+
+        .utility-link {
+            color: var(--edu-secondary) !important;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .utility-link:hover,
+        .utility-link:focus {
+            color: var(--edu-primary) !important;
         }
 
         .edu-menu .navbar-nav .nav-link {
             color: #ffffff;
-            font-weight: 600;
+            font-weight: 700;
             font-family: var(--edu-heading-font);
-            font-size: 15px;
-            letter-spacing: 0.2px;
-            padding: 20px 14px;
+            font-size: 14px;
+            letter-spacing: 0;
+            padding: 17px 14px;
         }
 
         .edu-menu .navbar-nav .nav-link:hover,
         .edu-menu .navbar-nav .nav-link:focus {
-            color: var(--edu-primary);
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .edu-menu .dropdown-menu {
@@ -229,6 +285,77 @@
             font-weight: 700;
             letter-spacing: 0.2px;
         }
+
+        .home-page .edu-page-title {
+            display: none;
+        }
+
+        .hero-section {
+            position: relative;
+            background: var(--edu-heading);
+        }
+
+        .hero-section .carousel,
+        .hero-section .carousel-inner,
+        .hero-section .carousel-item {
+            height: clamp(330px, 39vw, 520px);
+        }
+
+        .hero-section .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-section .carousel-item::after {
+            background: linear-gradient(90deg, rgba(17, 41, 88, 0.9) 0%, rgba(17, 41, 88, 0.58) 47%, rgba(17, 41, 88, 0.13) 100%);
+            content: '';
+            inset: 0;
+            position: absolute;
+        }
+
+        .hero-section .carousel-caption {
+            bottom: auto;
+            left: 50%;
+            padding: 0 24px;
+            right: auto;
+            text-align: left;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: min(1240px, 100%);
+            z-index: 1;
+        }
+
+        .hero-eyebrow {
+            color: #d9f4fb;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            margin: 0 0 10px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            color: #ffffff !important;
+            font-size: clamp(2rem, 4vw, 3.6rem);
+            max-width: 760px;
+            margin: 0;
+        }
+
+        .hero-copy {
+            color: #edf7f9 !important;
+            font-size: 1rem;
+            line-height: 1.65;
+            margin: 14px 0 22px;
+            max-width: 580px;
+        }
+
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+        .hero-actions .btn { min-width: 154px; }
+        .hero-actions .btn-primary { background: var(--edu-primary); border-color: var(--edu-primary); color: #ffffff; }
+        .hero-actions .btn-primary:hover, .hero-actions .btn-primary:focus { background: #1692ba; border-color: #1692ba; color: #ffffff; }
+        .hero-actions .btn-outline-light { background: transparent !important; border-color: rgba(255, 255, 255, 0.82) !important; color: #ffffff !important; }
+        .hero-actions .btn-outline-light:hover, .hero-actions .btn-outline-light:focus { background: #ffffff !important; color: var(--edu-heading) !important; }
 
         .rs-footer {
             margin-top: 26px;
@@ -564,8 +691,16 @@
             }
 
             .topbar-area {
-                display: none;
+                display: block;
             }
+
+            .topbar-area .topbar-contact { justify-content: center; }
+            .topbar-area .topbar-right { display: none; }
+            .institution-header-inner { min-height: 88px; padding: 13px 0; }
+            .institution-mark { height: 56px; width: 56px; flex-basis: 56px; }
+            .institution-name { font-size: 1.42rem; }
+            .institution-meta { font-size: 0.8rem; margin-top: 4px; }
+            .hero-section .carousel-caption { padding: 0 28px; }
 
             .edu-content-wrap {
                 min-height: auto;
@@ -612,6 +747,19 @@
                 padding: 12px;
             }
 
+            .topbar-area { padding: 6px 0; }
+            .topbar-area .topbar-contact { gap: 8px 14px; }
+            .institution-header-inner { gap: 11px; min-height: 76px; padding: 10px 0; }
+            .institution-mark { height: 48px; width: 48px; flex-basis: 48px; }
+            .institution-name { font-size: 1.1rem; }
+            .institution-meta { font-size: 0.73rem; line-height: 1.4; }
+            .hero-section .carousel, .hero-section .carousel-inner, .hero-section .carousel-item { height: 350px; }
+            .hero-section .carousel-item::after { background: linear-gradient(90deg, rgba(17, 41, 88, 0.9), rgba(17, 41, 88, 0.5)); }
+            .hero-section .carousel-caption { padding: 0 22px; }
+            .hero-title { font-size: 2rem; }
+            .hero-copy { font-size: 0.9rem; margin: 10px 0 18px; }
+            .hero-actions .btn { min-width: 136px; }
+
             .home-style2 .btn,
             .home-style2 .btn-sm,
             .home-style2 .btn-lg {
@@ -636,7 +784,7 @@
 
     @stack('styles')
 </head>
-<body class="home-style2">
+<body class="home-style2 {{ request()->routeIs('homePage') ? 'home-page' : '' }}">
     <div id="loader" class="loader">
         <div class="loader-container">
             <div class="loader-icon">
@@ -652,51 +800,56 @@
                     <div class="row y-middle">
                         <div class="col-md-7">
                             <ul class="topbar-contact">
+                                @if(!empty($config?->officeEmail))
                                 <li>
                                     <i class="flaticon-email"></i>
-                                    <a href="mailto:{{ !empty($config->officeEmail) ? $config->officeEmail : 'support@rstheme.com' }}">
-                                        {{ !empty($config->officeEmail) ? $config->officeEmail : 'support@rstheme.com' }}
+                                    <a href="mailto:{{ $config->officeEmail }}">
+                                        {{ $config->officeEmail }}
                                     </a>
                                 </li>
+                                @endif
+                                @if(!empty($config?->officeMobile))
                                 <li>
                                     <i class="flaticon-call"></i>
-                                    <a href="tel:{{ !empty($config->officeMobile) ? preg_replace('/\s+/', '', $config->officeMobile) : '+0885898745' }}">
-                                        {{ !empty($config->officeMobile) ? $config->officeMobile : '(+088) 589-8745' }}
+                                    <a href="tel:{{ preg_replace('/\s+/', '', $config->officeMobile) }}">
+                                        {{ $config->officeMobile }}
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </div>
                         <div class="col-md-5 text-right">
                             <ul class="topbar-right">
-                                <li class="login-register">
-                                    <i class="fa fa-map-marker"></i>
-                                    <span>{{ !empty($config->address) ? $config->address : 'North Shampur, Burichong, Cumilla' }}</span>
-                                </li>
+                                <li><a class="utility-link" href="{{ route('allNotices') }}">Notice Board</a></li>
+                                <li><a class="utility-link" href="{{ route('internalResult') }}">Result</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="institution-header">
+                <div class="container">
+                    <a class="institution-header-inner text-decoration-none" href="{{ route('homePage') }}">
+                        @if(!empty($config?->logo))
+                            <img class="institution-mark" src="{{ asset('public/upload/image/cultivation/' . rawurlencode(basename($config->logo))) }}" alt="{{ $config->instituteName ?? 'Institute' }} logo">
+                        @else
+                            <img class="institution-mark" src="{{ asset('public/logo.png') }}" alt="Institute logo">
+                        @endif
+                        <div>
+                            <p class="institution-name">{{ !empty($config?->instituteName) ? $config->instituteName : 'Jahanara Ayub Academy' }}</p>
+                            @if(!empty($config?->address))
+                                <p class="institution-meta"><i class="fa fa-map-marker"></i> {{ $config->address }}</p>
+                            @endif
+                        </div>
+                    </a>
+                </div>
+            </div>
+
             <div class="menu-area menu-sticky edu-menu" style="background:var(--edu-secondary);">
                 <div class="container">
                     <div class="row y-middle">
-                        <div class="col-lg-3">
-                            <div class="logo-part py-2">
-                                <a class="edu-brand" href="{{ route('homePage') }}">
-                                    @if(!empty($config->logo))
-                                        <img src="{{ config('app.url') }}/public/upload/image/cultivation/{{ $config->logo }}" alt="logo">
-                                    @else
-                                        <img src="{{ asset('public/logo.png') }}" alt="logo">
-                                    @endif
-                                    <span class="text-white fw-bold d-none d-md-inline">
-                                        {{ !empty($config->instituteName) ? $config->instituteName : 'Jahanara Ayub Academy' }}
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-9">
+                        <div class="col-12">
                             <nav class="navbar navbar-expand-lg py-0">
                                 <button class="navbar-toggler text-white border-0 ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainEduMenu" aria-controls="mainEduMenu" aria-expanded="false" aria-label="Toggle navigation">
                                     <i class="fa fa-bars"></i>
@@ -769,7 +922,7 @@
         <div class="container">
             <div class="edu-main-card">
                 @hasSection('fronttitle')
-                    <div class="edu-page-title">@yield('fronttitle')</div>
+                    <h1 class="edu-page-title">@yield('fronttitle')</h1>
                 @endif
                 <div class="edu-main-inner">
                     <div class="row">
@@ -827,7 +980,6 @@
         </div>
     </footer>
 
-    <script src="{{ asset('public/assets/js/jquery-1.9.1.min.js') }}"></script>
     <script src="{{ asset('public/educavo/assets/js/modernizr-2.8.3.min.js') }}"></script>
     <script src="{{ asset('public/educavo/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('public/educavo/assets/js/bootstrap.min.js') }}"></script>
